@@ -10,7 +10,6 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/projects" />
-            <option value="$PROJECT_DIR$/projects/cpp" />
             <option value="$PROJECT_DIR$/projects/java" />
           </set>
         </option>

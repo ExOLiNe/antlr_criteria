@@ -1,12 +1,12 @@
 package com.exoline.mycriteria
 
+import com.exoline.mycriteria.generated.MyCriteriaLexer
 import com.exoline.mycriteria.walk.MyCriteriaVisitorImpl
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import org.antlr.v4.runtime.CharStreams
 import org.antlr.v4.runtime.CommonTokenStream
 import java.io.File
 import java.nio.charset.Charset
-import com.exoline.mycriteria.generated.MyCriteriaLexer
 import com.exoline.mycriteria.generated.MyCriteriaParser
 
 class Some

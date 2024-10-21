@@ -4,4 +4,3 @@ plugins {
 rootProject.name = "antlr_criteria"
 
 include("projects:java")
-include("projects:cpp")
