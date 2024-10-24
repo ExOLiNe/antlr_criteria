@@ -12,7 +12,10 @@ dependencies {
     testImplementation(kotlin("test"))
 }
 
+val testsDir: String by extra
+
 tasks.test {
+    systemProperty("tests.dir", testsDir)
     useJUnitPlatform()
 }
 

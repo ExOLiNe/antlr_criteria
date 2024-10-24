@@ -1,8 +1,7 @@
 package com.exoline.mycriteria.walk
 
-import com.exoline.mycriteria.*
-import com.exoline.mycriteria.generated.MyCriteriaBaseVisitor
-import com.exoline.mycriteria.generated.MyCriteriaParser
+import com.exoline.mycriteria.generated.grammar.MyCriteriaBaseVisitor
+import com.exoline.mycriteria.generated.grammar.MyCriteriaParser
 
 class PrettyVisitor : MyCriteriaBaseVisitor<String>() {
     private var indentLevel = 0
@@ -12,6 +11,14 @@ class PrettyVisitor : MyCriteriaBaseVisitor<String>() {
 
     private fun indent(): String {
         return " ".repeat(indentLevel * 1)
+    }
+
+    override fun visitStrLiteral(ctx: MyCriteriaParser.StrLiteralContext): String {
+        return ctx.text
+    }
+
+    override fun visitInfixFuncCall(ctx: MyCriteriaParser.InfixFuncCallContext?): String {
+        return super.visitInfixFuncCall(ctx)
     }
 
     override fun visitNull(ctx: MyCriteriaParser.NullContext): String {
@@ -79,7 +86,7 @@ class PrettyVisitor : MyCriteriaBaseVisitor<String>() {
     }
 
     override fun visitObjectAccessParser(ctx: MyCriteriaParser.ObjectAccessParserContext): String {
-        return "object[\"${ctx.text}\"]"
+        return ctx.text
     }
 
     override fun visitFuncCall(ctx: MyCriteriaParser.FuncCallContext): String {

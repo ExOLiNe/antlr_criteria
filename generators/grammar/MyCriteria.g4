@@ -3,18 +3,21 @@
  */
 grammar MyCriteria;
 
+app: expr;
+
 // Parser rules
 expr: expr op=('*'|'/') expr    # MulDiv
     | expr op=('+'|'-') expr    # AddSub
     | (STR '(' (expr ',')* expr? ')') # FuncCall
     | expr STR expr             # InfixFuncCall
-    | expr op=('>'|'<'|'<='|'>='|'==') expr # comparison
+    | expr op=('>'|'<'|'<='|'>='|'=='|'!=') expr # comparison
     | expr op=('&&'|'||') expr  # AndOr
     | '!' expr                  # NotExpr
     | '(' expr ')'              # ParenExpr
     | BOOL                      # Bool
     | INT                       # Int
     | objectAccessParser        # ObjectAccess
+    | STR_LITERAL               # StrLiteral
     | NULL_T                      # Null
     ;
 

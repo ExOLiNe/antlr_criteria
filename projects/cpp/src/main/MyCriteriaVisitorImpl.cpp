@@ -5,7 +5,7 @@ std::any MyCriteriaVisitorImpl::visitFuncCall(MyCriteriaParser::FuncCallContext 
 }
 
 std::any MyCriteriaVisitorImpl::visitNull(MyCriteriaParser::NullContext *context) {
-    return std::any();
+    return {};
 }
 
 std::any MyCriteriaVisitorImpl::visitComparison(MyCriteriaParser::ComparisonContext *context) {

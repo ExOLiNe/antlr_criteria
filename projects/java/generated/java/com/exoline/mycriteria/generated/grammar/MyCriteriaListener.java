@@ -8,18 +8,6 @@ import org.antlr.v4.runtime.tree.ParseTreeListener;
  */
 public interface MyCriteriaListener extends ParseTreeListener {
 	/**
-	 * Enter a parse tree produced by the {@code FuncCall}
-	 * labeled alternative in {@link MyCriteriaParser#expr}.
-	 * @param ctx the parse tree
-	 */
-	void enterFuncCall(MyCriteriaParser.FuncCallContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code FuncCall}
-	 * labeled alternative in {@link MyCriteriaParser#expr}.
-	 * @param ctx the parse tree
-	 */
-	void exitFuncCall(MyCriteriaParser.FuncCallContext ctx);
-	/**
 	 * Enter a parse tree produced by the {@code Null}
 	 * labeled alternative in {@link MyCriteriaParser#expr}.
 	 * @param ctx the parse tree
@@ -43,18 +31,6 @@ public interface MyCriteriaListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitComparison(MyCriteriaParser.ComparisonContext ctx);
-	/**
-	 * Enter a parse tree produced by the {@code Bool}
-	 * labeled alternative in {@link MyCriteriaParser#expr}.
-	 * @param ctx the parse tree
-	 */
-	void enterBool(MyCriteriaParser.BoolContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code Bool}
-	 * labeled alternative in {@link MyCriteriaParser#expr}.
-	 * @param ctx the parse tree
-	 */
-	void exitBool(MyCriteriaParser.BoolContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code MulDiv}
 	 * labeled alternative in {@link MyCriteriaParser#expr}.
@@ -80,18 +56,6 @@ public interface MyCriteriaListener extends ParseTreeListener {
 	 */
 	void exitAddSub(MyCriteriaParser.AddSubContext ctx);
 	/**
-	 * Enter a parse tree produced by the {@code ObjectAccess}
-	 * labeled alternative in {@link MyCriteriaParser#expr}.
-	 * @param ctx the parse tree
-	 */
-	void enterObjectAccess(MyCriteriaParser.ObjectAccessContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code ObjectAccess}
-	 * labeled alternative in {@link MyCriteriaParser#expr}.
-	 * @param ctx the parse tree
-	 */
-	void exitObjectAccess(MyCriteriaParser.ObjectAccessContext ctx);
-	/**
 	 * Enter a parse tree produced by the {@code InfixFuncCall}
 	 * labeled alternative in {@link MyCriteriaParser#expr}.
 	 * @param ctx the parse tree
@@ -103,6 +67,66 @@ public interface MyCriteriaListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitInfixFuncCall(MyCriteriaParser.InfixFuncCallContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code Int}
+	 * labeled alternative in {@link MyCriteriaParser#expr}.
+	 * @param ctx the parse tree
+	 */
+	void enterInt(MyCriteriaParser.IntContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code Int}
+	 * labeled alternative in {@link MyCriteriaParser#expr}.
+	 * @param ctx the parse tree
+	 */
+	void exitInt(MyCriteriaParser.IntContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code StrLiteral}
+	 * labeled alternative in {@link MyCriteriaParser#expr}.
+	 * @param ctx the parse tree
+	 */
+	void enterStrLiteral(MyCriteriaParser.StrLiteralContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code StrLiteral}
+	 * labeled alternative in {@link MyCriteriaParser#expr}.
+	 * @param ctx the parse tree
+	 */
+	void exitStrLiteral(MyCriteriaParser.StrLiteralContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code FuncCall}
+	 * labeled alternative in {@link MyCriteriaParser#expr}.
+	 * @param ctx the parse tree
+	 */
+	void enterFuncCall(MyCriteriaParser.FuncCallContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code FuncCall}
+	 * labeled alternative in {@link MyCriteriaParser#expr}.
+	 * @param ctx the parse tree
+	 */
+	void exitFuncCall(MyCriteriaParser.FuncCallContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code Bool}
+	 * labeled alternative in {@link MyCriteriaParser#expr}.
+	 * @param ctx the parse tree
+	 */
+	void enterBool(MyCriteriaParser.BoolContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code Bool}
+	 * labeled alternative in {@link MyCriteriaParser#expr}.
+	 * @param ctx the parse tree
+	 */
+	void exitBool(MyCriteriaParser.BoolContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code ObjectAccess}
+	 * labeled alternative in {@link MyCriteriaParser#expr}.
+	 * @param ctx the parse tree
+	 */
+	void enterObjectAccess(MyCriteriaParser.ObjectAccessContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code ObjectAccess}
+	 * labeled alternative in {@link MyCriteriaParser#expr}.
+	 * @param ctx the parse tree
+	 */
+	void exitObjectAccess(MyCriteriaParser.ObjectAccessContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code NotExpr}
 	 * labeled alternative in {@link MyCriteriaParser#expr}.
@@ -140,17 +164,15 @@ public interface MyCriteriaListener extends ParseTreeListener {
 	 */
 	void exitAndOr(MyCriteriaParser.AndOrContext ctx);
 	/**
-	 * Enter a parse tree produced by the {@code Int}
-	 * labeled alternative in {@link MyCriteriaParser#expr}.
+	 * Enter a parse tree produced by {@link MyCriteriaParser#app}.
 	 * @param ctx the parse tree
 	 */
-	void enterInt(MyCriteriaParser.IntContext ctx);
+	void enterApp(MyCriteriaParser.AppContext ctx);
 	/**
-	 * Exit a parse tree produced by the {@code Int}
-	 * labeled alternative in {@link MyCriteriaParser#expr}.
+	 * Exit a parse tree produced by {@link MyCriteriaParser#app}.
 	 * @param ctx the parse tree
 	 */
-	void exitInt(MyCriteriaParser.IntContext ctx);
+	void exitApp(MyCriteriaParser.AppContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link MyCriteriaParser#objectAccessParser}.
 	 * @param ctx the parse tree

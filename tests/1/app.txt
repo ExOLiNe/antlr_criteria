@@ -1,2 +1,2 @@
-object['some'] > 10
+object['some'] != 'dfsaf'
             || object['some'] == 'hello'

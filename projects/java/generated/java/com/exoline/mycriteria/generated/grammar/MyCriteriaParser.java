@@ -19,12 +19,13 @@ public class MyCriteriaParser extends Parser {
 	public static final int
 		T__0=1, T__1=2, T__2=3, T__3=4, T__4=5, T__5=6, T__6=7, T__7=8, T__8=9, 
 		T__9=10, T__10=11, T__11=12, T__12=13, T__13=14, T__14=15, T__15=16, T__16=17, 
-		T__17=18, BOOL=19, INT=20, STR_LITERAL=21, STR=22, NULL_T=23, WS=24;
+		T__17=18, T__18=19, BOOL=20, INT=21, STR_LITERAL=22, STR=23, NULL_T=24, 
+		WS=25;
 	public static final int
-		RULE_expr = 0, RULE_objectAccessParser = 1;
+		RULE_expr = 0, RULE_app = 1, RULE_objectAccessParser = 2;
 	private static String[] makeRuleNames() {
 		return new String[] {
-			"expr", "objectAccessParser"
+			"expr", "app", "objectAccessParser"
 		};
 	}
 	public static final String[] ruleNames = makeRuleNames();
@@ -32,15 +33,15 @@ public class MyCriteriaParser extends Parser {
 	private static String[] makeLiteralNames() {
 		return new String[] {
 			null, "'*'", "'/'", "'+'", "'-'", "'('", "','", "')'", "'>'", "'<'", 
-			"'<='", "'>='", "'=='", "'&&'", "'||'", "'!'", "'object'", "'['", "']'", 
-			null, null, null, null, "'null'"
+			"'<='", "'>='", "'=='", "'!='", "'&&'", "'||'", "'!'", "'object'", "'['", 
+			"']'", null, null, null, null, "'null'"
 		};
 	}
 	private static final String[] _LITERAL_NAMES = makeLiteralNames();
 	private static String[] makeSymbolicNames() {
 		return new String[] {
 			null, null, null, null, null, null, null, null, null, null, null, null, 
-			null, null, null, null, null, null, null, "BOOL", "INT", "STR_LITERAL", 
+			null, null, null, null, null, null, null, null, "BOOL", "INT", "STR_LITERAL", 
 			"STR", "NULL_T", "WS"
 		};
 	}
@@ -108,30 +109,6 @@ public class MyCriteriaParser extends Parser {
 		}
 	}
 	@SuppressWarnings("CheckReturnValue")
-	public static class FuncCallContext extends ExprContext {
-		public TerminalNode STR() { return getToken(MyCriteriaParser.STR, 0); }
-		public List<ExprContext> expr() {
-			return getRuleContexts(ExprContext.class);
-		}
-		public ExprContext expr(int i) {
-			return getRuleContext(ExprContext.class,i);
-		}
-		public FuncCallContext(ExprContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof MyCriteriaListener ) ((MyCriteriaListener)listener).enterFuncCall(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof MyCriteriaListener ) ((MyCriteriaListener)listener).exitFuncCall(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof MyCriteriaVisitor ) return ((MyCriteriaVisitor<? extends T>)visitor).visitFuncCall(this);
-			else return visitor.visitChildren(this);
-		}
-	}
-	@SuppressWarnings("CheckReturnValue")
 	public static class NullContext extends ExprContext {
 		public TerminalNode NULL_T() { return getToken(MyCriteriaParser.NULL_T, 0); }
 		public NullContext(ExprContext ctx) { copyFrom(ctx); }
@@ -170,24 +147,6 @@ public class MyCriteriaParser extends Parser {
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
 			if ( visitor instanceof MyCriteriaVisitor ) return ((MyCriteriaVisitor<? extends T>)visitor).visitComparison(this);
-			else return visitor.visitChildren(this);
-		}
-	}
-	@SuppressWarnings("CheckReturnValue")
-	public static class BoolContext extends ExprContext {
-		public TerminalNode BOOL() { return getToken(MyCriteriaParser.BOOL, 0); }
-		public BoolContext(ExprContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof MyCriteriaListener ) ((MyCriteriaListener)listener).enterBool(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof MyCriteriaListener ) ((MyCriteriaListener)listener).exitBool(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof MyCriteriaVisitor ) return ((MyCriteriaVisitor<? extends T>)visitor).visitBool(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -240,26 +199,6 @@ public class MyCriteriaParser extends Parser {
 		}
 	}
 	@SuppressWarnings("CheckReturnValue")
-	public static class ObjectAccessContext extends ExprContext {
-		public ObjectAccessParserContext objectAccessParser() {
-			return getRuleContext(ObjectAccessParserContext.class,0);
-		}
-		public ObjectAccessContext(ExprContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof MyCriteriaListener ) ((MyCriteriaListener)listener).enterObjectAccess(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof MyCriteriaListener ) ((MyCriteriaListener)listener).exitObjectAccess(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof MyCriteriaVisitor ) return ((MyCriteriaVisitor<? extends T>)visitor).visitObjectAccess(this);
-			else return visitor.visitChildren(this);
-		}
-	}
-	@SuppressWarnings("CheckReturnValue")
 	public static class InfixFuncCallContext extends ExprContext {
 		public List<ExprContext> expr() {
 			return getRuleContexts(ExprContext.class);
@@ -280,6 +219,104 @@ public class MyCriteriaParser extends Parser {
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
 			if ( visitor instanceof MyCriteriaVisitor ) return ((MyCriteriaVisitor<? extends T>)visitor).visitInfixFuncCall(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	@SuppressWarnings("CheckReturnValue")
+	public static class IntContext extends ExprContext {
+		public TerminalNode INT() { return getToken(MyCriteriaParser.INT, 0); }
+		public IntContext(ExprContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof MyCriteriaListener ) ((MyCriteriaListener)listener).enterInt(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof MyCriteriaListener ) ((MyCriteriaListener)listener).exitInt(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof MyCriteriaVisitor ) return ((MyCriteriaVisitor<? extends T>)visitor).visitInt(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	@SuppressWarnings("CheckReturnValue")
+	public static class StrLiteralContext extends ExprContext {
+		public TerminalNode STR_LITERAL() { return getToken(MyCriteriaParser.STR_LITERAL, 0); }
+		public StrLiteralContext(ExprContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof MyCriteriaListener ) ((MyCriteriaListener)listener).enterStrLiteral(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof MyCriteriaListener ) ((MyCriteriaListener)listener).exitStrLiteral(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof MyCriteriaVisitor ) return ((MyCriteriaVisitor<? extends T>)visitor).visitStrLiteral(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	@SuppressWarnings("CheckReturnValue")
+	public static class FuncCallContext extends ExprContext {
+		public TerminalNode STR() { return getToken(MyCriteriaParser.STR, 0); }
+		public List<ExprContext> expr() {
+			return getRuleContexts(ExprContext.class);
+		}
+		public ExprContext expr(int i) {
+			return getRuleContext(ExprContext.class,i);
+		}
+		public FuncCallContext(ExprContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof MyCriteriaListener ) ((MyCriteriaListener)listener).enterFuncCall(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof MyCriteriaListener ) ((MyCriteriaListener)listener).exitFuncCall(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof MyCriteriaVisitor ) return ((MyCriteriaVisitor<? extends T>)visitor).visitFuncCall(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	@SuppressWarnings("CheckReturnValue")
+	public static class BoolContext extends ExprContext {
+		public TerminalNode BOOL() { return getToken(MyCriteriaParser.BOOL, 0); }
+		public BoolContext(ExprContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof MyCriteriaListener ) ((MyCriteriaListener)listener).enterBool(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof MyCriteriaListener ) ((MyCriteriaListener)listener).exitBool(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof MyCriteriaVisitor ) return ((MyCriteriaVisitor<? extends T>)visitor).visitBool(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	@SuppressWarnings("CheckReturnValue")
+	public static class ObjectAccessContext extends ExprContext {
+		public ObjectAccessParserContext objectAccessParser() {
+			return getRuleContext(ObjectAccessParserContext.class,0);
+		}
+		public ObjectAccessContext(ExprContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof MyCriteriaListener ) ((MyCriteriaListener)listener).enterObjectAccess(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof MyCriteriaListener ) ((MyCriteriaListener)listener).exitObjectAccess(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof MyCriteriaVisitor ) return ((MyCriteriaVisitor<? extends T>)visitor).visitObjectAccess(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -347,24 +384,6 @@ public class MyCriteriaParser extends Parser {
 			else return visitor.visitChildren(this);
 		}
 	}
-	@SuppressWarnings("CheckReturnValue")
-	public static class IntContext extends ExprContext {
-		public TerminalNode INT() { return getToken(MyCriteriaParser.INT, 0); }
-		public IntContext(ExprContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof MyCriteriaListener ) ((MyCriteriaListener)listener).enterInt(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof MyCriteriaListener ) ((MyCriteriaListener)listener).exitInt(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof MyCriteriaVisitor ) return ((MyCriteriaVisitor<? extends T>)visitor).visitInt(this);
-			else return visitor.visitChildren(this);
-		}
-	}
 
 	public final ExprContext expr() throws RecognitionException {
 		return expr(0);
@@ -382,7 +401,7 @@ public class MyCriteriaParser extends Parser {
 			int _alt;
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(29);
+			setState(32);
 			_errHandler.sync(this);
 			switch (_input.LA(1)) {
 			case STR:
@@ -392,52 +411,52 @@ public class MyCriteriaParser extends Parser {
 				_prevctx = _localctx;
 
 				{
-				setState(5);
+				setState(7);
 				match(STR);
-				setState(6);
+				setState(8);
 				match(T__4);
-				setState(12);
+				setState(14);
 				_errHandler.sync(this);
 				_alt = getInterpreter().adaptivePredict(_input,0,_ctx);
 				while ( _alt!=2 && _alt!=org.antlr.v4.runtime.atn.ATN.INVALID_ALT_NUMBER ) {
 					if ( _alt==1 ) {
 						{
 						{
-						setState(7);
+						setState(9);
 						expr(0);
-						setState(8);
+						setState(10);
 						match(T__5);
 						}
 						} 
 					}
-					setState(14);
+					setState(16);
 					_errHandler.sync(this);
 					_alt = getInterpreter().adaptivePredict(_input,0,_ctx);
 				}
-				setState(16);
+				setState(18);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
-				if ((((_la) & ~0x3f) == 0 && ((1L << _la) & 14254112L) != 0)) {
+				if ((((_la) & ~0x3f) == 0 && ((1L << _la) & 32702496L) != 0)) {
 					{
-					setState(15);
+					setState(17);
 					expr(0);
 					}
 				}
 
-				setState(18);
+				setState(20);
 				match(T__6);
 				}
 				}
 				break;
-			case T__14:
+			case T__15:
 				{
 				_localctx = new NotExprContext(_localctx);
 				_ctx = _localctx;
 				_prevctx = _localctx;
-				setState(19);
-				match(T__14);
-				setState(20);
-				expr(6);
+				setState(21);
+				match(T__15);
+				setState(22);
+				expr(7);
 				}
 				break;
 			case T__4:
@@ -445,11 +464,11 @@ public class MyCriteriaParser extends Parser {
 				_localctx = new ParenExprContext(_localctx);
 				_ctx = _localctx;
 				_prevctx = _localctx;
-				setState(21);
-				match(T__4);
-				setState(22);
-				expr(0);
 				setState(23);
+				match(T__4);
+				setState(24);
+				expr(0);
+				setState(25);
 				match(T__6);
 				}
 				break;
@@ -458,7 +477,7 @@ public class MyCriteriaParser extends Parser {
 				_localctx = new BoolContext(_localctx);
 				_ctx = _localctx;
 				_prevctx = _localctx;
-				setState(25);
+				setState(27);
 				match(BOOL);
 				}
 				break;
@@ -467,17 +486,26 @@ public class MyCriteriaParser extends Parser {
 				_localctx = new IntContext(_localctx);
 				_ctx = _localctx;
 				_prevctx = _localctx;
-				setState(26);
+				setState(28);
 				match(INT);
 				}
 				break;
-			case T__15:
+			case T__16:
 				{
 				_localctx = new ObjectAccessContext(_localctx);
 				_ctx = _localctx;
 				_prevctx = _localctx;
-				setState(27);
+				setState(29);
 				objectAccessParser();
+				}
+				break;
+			case STR_LITERAL:
+				{
+				_localctx = new StrLiteralContext(_localctx);
+				_ctx = _localctx;
+				_prevctx = _localctx;
+				setState(30);
+				match(STR_LITERAL);
 				}
 				break;
 			case NULL_T:
@@ -485,7 +513,7 @@ public class MyCriteriaParser extends Parser {
 				_localctx = new NullContext(_localctx);
 				_ctx = _localctx;
 				_prevctx = _localctx;
-				setState(28);
+				setState(31);
 				match(NULL_T);
 				}
 				break;
@@ -493,7 +521,7 @@ public class MyCriteriaParser extends Parser {
 				throw new NoViableAltException(this);
 			}
 			_ctx.stop = _input.LT(-1);
-			setState(48);
+			setState(51);
 			_errHandler.sync(this);
 			_alt = getInterpreter().adaptivePredict(_input,4,_ctx);
 			while ( _alt!=2 && _alt!=org.antlr.v4.runtime.atn.ATN.INVALID_ALT_NUMBER ) {
@@ -501,16 +529,16 @@ public class MyCriteriaParser extends Parser {
 					if ( _parseListeners!=null ) triggerExitRuleEvent();
 					_prevctx = _localctx;
 					{
-					setState(46);
+					setState(49);
 					_errHandler.sync(this);
 					switch ( getInterpreter().adaptivePredict(_input,3,_ctx) ) {
 					case 1:
 						{
 						_localctx = new MulDivContext(new ExprContext(_parentctx, _parentState));
 						pushNewRecursionContext(_localctx, _startState, RULE_expr);
-						setState(31);
-						if (!(precpred(_ctx, 12))) throw new FailedPredicateException(this, "precpred(_ctx, 12)");
-						setState(32);
+						setState(34);
+						if (!(precpred(_ctx, 13))) throw new FailedPredicateException(this, "precpred(_ctx, 13)");
+						setState(35);
 						((MulDivContext)_localctx).op = _input.LT(1);
 						_la = _input.LA(1);
 						if ( !(_la==T__0 || _la==T__1) ) {
@@ -521,17 +549,17 @@ public class MyCriteriaParser extends Parser {
 							_errHandler.reportMatch(this);
 							consume();
 						}
-						setState(33);
-						expr(13);
+						setState(36);
+						expr(14);
 						}
 						break;
 					case 2:
 						{
 						_localctx = new AddSubContext(new ExprContext(_parentctx, _parentState));
 						pushNewRecursionContext(_localctx, _startState, RULE_expr);
-						setState(34);
-						if (!(precpred(_ctx, 11))) throw new FailedPredicateException(this, "precpred(_ctx, 11)");
-						setState(35);
+						setState(37);
+						if (!(precpred(_ctx, 12))) throw new FailedPredicateException(this, "precpred(_ctx, 12)");
+						setState(38);
 						((AddSubContext)_localctx).op = _input.LT(1);
 						_la = _input.LA(1);
 						if ( !(_la==T__2 || _la==T__3) ) {
@@ -542,32 +570,32 @@ public class MyCriteriaParser extends Parser {
 							_errHandler.reportMatch(this);
 							consume();
 						}
-						setState(36);
-						expr(12);
+						setState(39);
+						expr(13);
 						}
 						break;
 					case 3:
 						{
 						_localctx = new InfixFuncCallContext(new ExprContext(_parentctx, _parentState));
 						pushNewRecursionContext(_localctx, _startState, RULE_expr);
-						setState(37);
-						if (!(precpred(_ctx, 9))) throw new FailedPredicateException(this, "precpred(_ctx, 9)");
-						setState(38);
+						setState(40);
+						if (!(precpred(_ctx, 10))) throw new FailedPredicateException(this, "precpred(_ctx, 10)");
+						setState(41);
 						match(STR);
-						setState(39);
-						expr(10);
+						setState(42);
+						expr(11);
 						}
 						break;
 					case 4:
 						{
 						_localctx = new ComparisonContext(new ExprContext(_parentctx, _parentState));
 						pushNewRecursionContext(_localctx, _startState, RULE_expr);
-						setState(40);
-						if (!(precpred(_ctx, 8))) throw new FailedPredicateException(this, "precpred(_ctx, 8)");
-						setState(41);
+						setState(43);
+						if (!(precpred(_ctx, 9))) throw new FailedPredicateException(this, "precpred(_ctx, 9)");
+						setState(44);
 						((ComparisonContext)_localctx).op = _input.LT(1);
 						_la = _input.LA(1);
-						if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & 7936L) != 0)) ) {
+						if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & 16128L) != 0)) ) {
 							((ComparisonContext)_localctx).op = (Token)_errHandler.recoverInline(this);
 						}
 						else {
@@ -575,20 +603,20 @@ public class MyCriteriaParser extends Parser {
 							_errHandler.reportMatch(this);
 							consume();
 						}
-						setState(42);
-						expr(9);
+						setState(45);
+						expr(10);
 						}
 						break;
 					case 5:
 						{
 						_localctx = new AndOrContext(new ExprContext(_parentctx, _parentState));
 						pushNewRecursionContext(_localctx, _startState, RULE_expr);
-						setState(43);
-						if (!(precpred(_ctx, 7))) throw new FailedPredicateException(this, "precpred(_ctx, 7)");
-						setState(44);
+						setState(46);
+						if (!(precpred(_ctx, 8))) throw new FailedPredicateException(this, "precpred(_ctx, 8)");
+						setState(47);
 						((AndOrContext)_localctx).op = _input.LT(1);
 						_la = _input.LA(1);
-						if ( !(_la==T__12 || _la==T__13) ) {
+						if ( !(_la==T__13 || _la==T__14) ) {
 							((AndOrContext)_localctx).op = (Token)_errHandler.recoverInline(this);
 						}
 						else {
@@ -596,14 +624,14 @@ public class MyCriteriaParser extends Parser {
 							_errHandler.reportMatch(this);
 							consume();
 						}
-						setState(45);
-						expr(8);
+						setState(48);
+						expr(9);
 						}
 						break;
 					}
 					} 
 				}
-				setState(50);
+				setState(53);
 				_errHandler.sync(this);
 				_alt = getInterpreter().adaptivePredict(_input,4,_ctx);
 			}
@@ -616,6 +644,51 @@ public class MyCriteriaParser extends Parser {
 		}
 		finally {
 			unrollRecursionContexts(_parentctx);
+		}
+		return _localctx;
+	}
+
+	@SuppressWarnings("CheckReturnValue")
+	public static class AppContext extends ParserRuleContext {
+		public ExprContext expr() {
+			return getRuleContext(ExprContext.class,0);
+		}
+		public AppContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_app; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof MyCriteriaListener ) ((MyCriteriaListener)listener).enterApp(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof MyCriteriaListener ) ((MyCriteriaListener)listener).exitApp(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof MyCriteriaVisitor ) return ((MyCriteriaVisitor<? extends T>)visitor).visitApp(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+
+	public final AppContext app() throws RecognitionException {
+		AppContext _localctx = new AppContext(_ctx, getState());
+		enterRule(_localctx, 2, RULE_app);
+		try {
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(54);
+			expr(0);
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
 		}
 		return _localctx;
 	}
@@ -647,27 +720,13 @@ public class MyCriteriaParser extends Parser {
 
 	public final ObjectAccessParserContext objectAccessParser() throws RecognitionException {
 		ObjectAccessParserContext _localctx = new ObjectAccessParserContext(_ctx, getState());
-		enterRule(_localctx, 2, RULE_objectAccessParser);
+		enterRule(_localctx, 4, RULE_objectAccessParser);
 		int _la;
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(51);
-			match(T__15);
-			setState(53); 
-			_errHandler.sync(this);
-			_la = _input.LA(1);
-			do {
-				{
-				{
-				setState(52);
-				match(T__16);
-				}
-				}
-				setState(55); 
-				_errHandler.sync(this);
-				_la = _input.LA(1);
-			} while ( _la==T__16 );
+			setState(56);
+			match(T__16);
 			setState(58); 
 			_errHandler.sync(this);
 			_la = _input.LA(1);
@@ -675,15 +734,29 @@ public class MyCriteriaParser extends Parser {
 				{
 				{
 				setState(57);
-				match(STR_LITERAL);
+				match(T__17);
 				}
 				}
 				setState(60); 
 				_errHandler.sync(this);
 				_la = _input.LA(1);
+			} while ( _la==T__17 );
+			setState(63); 
+			_errHandler.sync(this);
+			_la = _input.LA(1);
+			do {
+				{
+				{
+				setState(62);
+				match(STR_LITERAL);
+				}
+				}
+				setState(65); 
+				_errHandler.sync(this);
+				_la = _input.LA(1);
 			} while ( _la==STR_LITERAL );
-			setState(62);
-			match(T__17);
+			setState(67);
+			match(T__18);
 			}
 		}
 		catch (RecognitionException re) {
@@ -707,65 +780,67 @@ public class MyCriteriaParser extends Parser {
 	private boolean expr_sempred(ExprContext _localctx, int predIndex) {
 		switch (predIndex) {
 		case 0:
-			return precpred(_ctx, 12);
+			return precpred(_ctx, 13);
 		case 1:
-			return precpred(_ctx, 11);
+			return precpred(_ctx, 12);
 		case 2:
-			return precpred(_ctx, 9);
+			return precpred(_ctx, 10);
 		case 3:
-			return precpred(_ctx, 8);
+			return precpred(_ctx, 9);
 		case 4:
-			return precpred(_ctx, 7);
+			return precpred(_ctx, 8);
 		}
 		return true;
 	}
 
 	public static final String _serializedATN =
-		"\u0004\u0001\u0018A\u0002\u0000\u0007\u0000\u0002\u0001\u0007\u0001\u0001"+
-		"\u0000\u0001\u0000\u0001\u0000\u0001\u0000\u0001\u0000\u0001\u0000\u0005"+
-		"\u0000\u000b\b\u0000\n\u0000\f\u0000\u000e\t\u0000\u0001\u0000\u0003\u0000"+
-		"\u0011\b\u0000\u0001\u0000\u0001\u0000\u0001\u0000\u0001\u0000\u0001\u0000"+
+		"\u0004\u0001\u0019F\u0002\u0000\u0007\u0000\u0002\u0001\u0007\u0001\u0002"+
+		"\u0002\u0007\u0002\u0001\u0000\u0001\u0000\u0001\u0000\u0001\u0000\u0001"+
+		"\u0000\u0001\u0000\u0005\u0000\r\b\u0000\n\u0000\f\u0000\u0010\t\u0000"+
+		"\u0001\u0000\u0003\u0000\u0013\b\u0000\u0001\u0000\u0001\u0000\u0001\u0000"+
 		"\u0001\u0000\u0001\u0000\u0001\u0000\u0001\u0000\u0001\u0000\u0001\u0000"+
-		"\u0003\u0000\u001e\b\u0000\u0001\u0000\u0001\u0000\u0001\u0000\u0001\u0000"+
+		"\u0001\u0000\u0001\u0000\u0001\u0000\u0003\u0000!\b\u0000\u0001\u0000"+
 		"\u0001\u0000\u0001\u0000\u0001\u0000\u0001\u0000\u0001\u0000\u0001\u0000"+
-		"\u0001\u0000\u0001\u0000\u0001\u0000\u0001\u0000\u0001\u0000\u0005\u0000"+
-		"/\b\u0000\n\u0000\f\u00002\t\u0000\u0001\u0001\u0001\u0001\u0004\u0001"+
-		"6\b\u0001\u000b\u0001\f\u00017\u0001\u0001\u0004\u0001;\b\u0001\u000b"+
-		"\u0001\f\u0001<\u0001\u0001\u0001\u0001\u0001\u0001\u0000\u0001\u0000"+
-		"\u0002\u0000\u0002\u0000\u0004\u0001\u0000\u0001\u0002\u0001\u0000\u0003"+
-		"\u0004\u0001\u0000\b\f\u0001\u0000\r\u000eM\u0000\u001d\u0001\u0000\u0000"+
-		"\u0000\u00023\u0001\u0000\u0000\u0000\u0004\u0005\u0006\u0000\uffff\uffff"+
-		"\u0000\u0005\u0006\u0005\u0016\u0000\u0000\u0006\f\u0005\u0005\u0000\u0000"+
-		"\u0007\b\u0003\u0000\u0000\u0000\b\t\u0005\u0006\u0000\u0000\t\u000b\u0001"+
-		"\u0000\u0000\u0000\n\u0007\u0001\u0000\u0000\u0000\u000b\u000e\u0001\u0000"+
-		"\u0000\u0000\f\n\u0001\u0000\u0000\u0000\f\r\u0001\u0000\u0000\u0000\r"+
-		"\u0010\u0001\u0000\u0000\u0000\u000e\f\u0001\u0000\u0000\u0000\u000f\u0011"+
-		"\u0003\u0000\u0000\u0000\u0010\u000f\u0001\u0000\u0000\u0000\u0010\u0011"+
-		"\u0001\u0000\u0000\u0000\u0011\u0012\u0001\u0000\u0000\u0000\u0012\u001e"+
-		"\u0005\u0007\u0000\u0000\u0013\u0014\u0005\u000f\u0000\u0000\u0014\u001e"+
-		"\u0003\u0000\u0000\u0006\u0015\u0016\u0005\u0005\u0000\u0000\u0016\u0017"+
-		"\u0003\u0000\u0000\u0000\u0017\u0018\u0005\u0007\u0000\u0000\u0018\u001e"+
-		"\u0001\u0000\u0000\u0000\u0019\u001e\u0005\u0013\u0000\u0000\u001a\u001e"+
-		"\u0005\u0014\u0000\u0000\u001b\u001e\u0003\u0002\u0001\u0000\u001c\u001e"+
-		"\u0005\u0017\u0000\u0000\u001d\u0004\u0001\u0000\u0000\u0000\u001d\u0013"+
-		"\u0001\u0000\u0000\u0000\u001d\u0015\u0001\u0000\u0000\u0000\u001d\u0019"+
-		"\u0001\u0000\u0000\u0000\u001d\u001a\u0001\u0000\u0000\u0000\u001d\u001b"+
-		"\u0001\u0000\u0000\u0000\u001d\u001c\u0001\u0000\u0000\u0000\u001e0\u0001"+
-		"\u0000\u0000\u0000\u001f \n\f\u0000\u0000 !\u0007\u0000\u0000\u0000!/"+
-		"\u0003\u0000\u0000\r\"#\n\u000b\u0000\u0000#$\u0007\u0001\u0000\u0000"+
-		"$/\u0003\u0000\u0000\f%&\n\t\u0000\u0000&\'\u0005\u0016\u0000\u0000\'"+
-		"/\u0003\u0000\u0000\n()\n\b\u0000\u0000)*\u0007\u0002\u0000\u0000*/\u0003"+
-		"\u0000\u0000\t+,\n\u0007\u0000\u0000,-\u0007\u0003\u0000\u0000-/\u0003"+
-		"\u0000\u0000\b.\u001f\u0001\u0000\u0000\u0000.\"\u0001\u0000\u0000\u0000"+
-		".%\u0001\u0000\u0000\u0000.(\u0001\u0000\u0000\u0000.+\u0001\u0000\u0000"+
-		"\u0000/2\u0001\u0000\u0000\u00000.\u0001\u0000\u0000\u000001\u0001\u0000"+
-		"\u0000\u00001\u0001\u0001\u0000\u0000\u000020\u0001\u0000\u0000\u0000"+
-		"35\u0005\u0010\u0000\u000046\u0005\u0011\u0000\u000054\u0001\u0000\u0000"+
-		"\u000067\u0001\u0000\u0000\u000075\u0001\u0000\u0000\u000078\u0001\u0000"+
-		"\u0000\u00008:\u0001\u0000\u0000\u00009;\u0005\u0015\u0000\u0000:9\u0001"+
-		"\u0000\u0000\u0000;<\u0001\u0000\u0000\u0000<:\u0001\u0000\u0000\u0000"+
-		"<=\u0001\u0000\u0000\u0000=>\u0001\u0000\u0000\u0000>?\u0005\u0012\u0000"+
-		"\u0000?\u0003\u0001\u0000\u0000\u0000\u0007\f\u0010\u001d.07<";
+		"\u0001\u0000\u0001\u0000\u0001\u0000\u0001\u0000\u0001\u0000\u0001\u0000"+
+		"\u0001\u0000\u0001\u0000\u0005\u00002\b\u0000\n\u0000\f\u00005\t\u0000"+
+		"\u0001\u0001\u0001\u0001\u0001\u0002\u0001\u0002\u0004\u0002;\b\u0002"+
+		"\u000b\u0002\f\u0002<\u0001\u0002\u0004\u0002@\b\u0002\u000b\u0002\f\u0002"+
+		"A\u0001\u0002\u0001\u0002\u0001\u0002\u0000\u0001\u0000\u0003\u0000\u0002"+
+		"\u0004\u0000\u0004\u0001\u0000\u0001\u0002\u0001\u0000\u0003\u0004\u0001"+
+		"\u0000\b\r\u0001\u0000\u000e\u000fR\u0000 \u0001\u0000\u0000\u0000\u0002"+
+		"6\u0001\u0000\u0000\u0000\u00048\u0001\u0000\u0000\u0000\u0006\u0007\u0006"+
+		"\u0000\uffff\uffff\u0000\u0007\b\u0005\u0017\u0000\u0000\b\u000e\u0005"+
+		"\u0005\u0000\u0000\t\n\u0003\u0000\u0000\u0000\n\u000b\u0005\u0006\u0000"+
+		"\u0000\u000b\r\u0001\u0000\u0000\u0000\f\t\u0001\u0000\u0000\u0000\r\u0010"+
+		"\u0001\u0000\u0000\u0000\u000e\f\u0001\u0000\u0000\u0000\u000e\u000f\u0001"+
+		"\u0000\u0000\u0000\u000f\u0012\u0001\u0000\u0000\u0000\u0010\u000e\u0001"+
+		"\u0000\u0000\u0000\u0011\u0013\u0003\u0000\u0000\u0000\u0012\u0011\u0001"+
+		"\u0000\u0000\u0000\u0012\u0013\u0001\u0000\u0000\u0000\u0013\u0014\u0001"+
+		"\u0000\u0000\u0000\u0014!\u0005\u0007\u0000\u0000\u0015\u0016\u0005\u0010"+
+		"\u0000\u0000\u0016!\u0003\u0000\u0000\u0007\u0017\u0018\u0005\u0005\u0000"+
+		"\u0000\u0018\u0019\u0003\u0000\u0000\u0000\u0019\u001a\u0005\u0007\u0000"+
+		"\u0000\u001a!\u0001\u0000\u0000\u0000\u001b!\u0005\u0014\u0000\u0000\u001c"+
+		"!\u0005\u0015\u0000\u0000\u001d!\u0003\u0004\u0002\u0000\u001e!\u0005"+
+		"\u0016\u0000\u0000\u001f!\u0005\u0018\u0000\u0000 \u0006\u0001\u0000\u0000"+
+		"\u0000 \u0015\u0001\u0000\u0000\u0000 \u0017\u0001\u0000\u0000\u0000 "+
+		"\u001b\u0001\u0000\u0000\u0000 \u001c\u0001\u0000\u0000\u0000 \u001d\u0001"+
+		"\u0000\u0000\u0000 \u001e\u0001\u0000\u0000\u0000 \u001f\u0001\u0000\u0000"+
+		"\u0000!3\u0001\u0000\u0000\u0000\"#\n\r\u0000\u0000#$\u0007\u0000\u0000"+
+		"\u0000$2\u0003\u0000\u0000\u000e%&\n\f\u0000\u0000&\'\u0007\u0001\u0000"+
+		"\u0000\'2\u0003\u0000\u0000\r()\n\n\u0000\u0000)*\u0005\u0017\u0000\u0000"+
+		"*2\u0003\u0000\u0000\u000b+,\n\t\u0000\u0000,-\u0007\u0002\u0000\u0000"+
+		"-2\u0003\u0000\u0000\n./\n\b\u0000\u0000/0\u0007\u0003\u0000\u000002\u0003"+
+		"\u0000\u0000\t1\"\u0001\u0000\u0000\u00001%\u0001\u0000\u0000\u00001("+
+		"\u0001\u0000\u0000\u00001+\u0001\u0000\u0000\u00001.\u0001\u0000\u0000"+
+		"\u000025\u0001\u0000\u0000\u000031\u0001\u0000\u0000\u000034\u0001\u0000"+
+		"\u0000\u00004\u0001\u0001\u0000\u0000\u000053\u0001\u0000\u0000\u0000"+
+		"67\u0003\u0000\u0000\u00007\u0003\u0001\u0000\u0000\u00008:\u0005\u0011"+
+		"\u0000\u00009;\u0005\u0012\u0000\u0000:9\u0001\u0000\u0000\u0000;<\u0001"+
+		"\u0000\u0000\u0000<:\u0001\u0000\u0000\u0000<=\u0001\u0000\u0000\u0000"+
+		"=?\u0001\u0000\u0000\u0000>@\u0005\u0016\u0000\u0000?>\u0001\u0000\u0000"+
+		"\u0000@A\u0001\u0000\u0000\u0000A?\u0001\u0000\u0000\u0000AB\u0001\u0000"+
+		"\u0000\u0000BC\u0001\u0000\u0000\u0000CD\u0005\u0013\u0000\u0000D\u0005"+
+		"\u0001\u0000\u0000\u0000\u0007\u000e\u0012 13<A";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());
 	static {

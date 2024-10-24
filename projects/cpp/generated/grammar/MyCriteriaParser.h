@@ -14,12 +14,12 @@ public:
   enum {
     T__0 = 1, T__1 = 2, T__2 = 3, T__3 = 4, T__4 = 5, T__5 = 6, T__6 = 7, 
     T__7 = 8, T__8 = 9, T__9 = 10, T__10 = 11, T__11 = 12, T__12 = 13, T__13 = 14, 
-    T__14 = 15, T__15 = 16, T__16 = 17, T__17 = 18, BOOL = 19, INT = 20, 
-    STR_LITERAL = 21, STR = 22, NULL_T = 23, WS = 24
+    T__14 = 15, T__15 = 16, T__16 = 17, T__17 = 18, T__18 = 19, BOOL = 20, 
+    INT = 21, STR_LITERAL = 22, STR = 23, NULL_T = 24, WS = 25
   };
 
   enum {
-    RuleExpr = 0, RuleObjectAccessParser = 1
+    RuleExpr = 0, RuleApp = 1, RuleObjectAccessParser = 2
   };
 
   explicit MyCriteriaParser(antlr4::TokenStream *input);
@@ -40,6 +40,7 @@ public:
 
 
   class ExprContext;
+  class AppContext;
   class ObjectAccessParserContext; 
 
   class  ExprContext : public antlr4::ParserRuleContext {
@@ -53,19 +54,6 @@ public:
     virtual size_t getRuleIndex() const override;
 
    
-  };
-
-  class  FuncCallContext : public ExprContext {
-  public:
-    FuncCallContext(ExprContext *ctx);
-
-    antlr4::tree::TerminalNode *STR();
-    std::vector<ExprContext *> expr();
-    ExprContext* expr(size_t i);
-    virtual void enterRule(antlr4::tree::ParseTreeListener *listener) override;
-    virtual void exitRule(antlr4::tree::ParseTreeListener *listener) override;
-
-    virtual std::any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
   };
 
   class  NullContext : public ExprContext {
@@ -86,17 +74,6 @@ public:
     antlr4::Token *op = nullptr;
     std::vector<ExprContext *> expr();
     ExprContext* expr(size_t i);
-    virtual void enterRule(antlr4::tree::ParseTreeListener *listener) override;
-    virtual void exitRule(antlr4::tree::ParseTreeListener *listener) override;
-
-    virtual std::any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
-  };
-
-  class  BoolContext : public ExprContext {
-  public:
-    BoolContext(ExprContext *ctx);
-
-    antlr4::tree::TerminalNode *BOOL();
     virtual void enterRule(antlr4::tree::ParseTreeListener *listener) override;
     virtual void exitRule(antlr4::tree::ParseTreeListener *listener) override;
 
@@ -129,17 +106,6 @@ public:
     virtual std::any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
   };
 
-  class  ObjectAccessContext : public ExprContext {
-  public:
-    ObjectAccessContext(ExprContext *ctx);
-
-    ObjectAccessParserContext *objectAccessParser();
-    virtual void enterRule(antlr4::tree::ParseTreeListener *listener) override;
-    virtual void exitRule(antlr4::tree::ParseTreeListener *listener) override;
-
-    virtual std::any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
-  };
-
   class  InfixFuncCallContext : public ExprContext {
   public:
     InfixFuncCallContext(ExprContext *ctx);
@@ -147,6 +113,63 @@ public:
     std::vector<ExprContext *> expr();
     ExprContext* expr(size_t i);
     antlr4::tree::TerminalNode *STR();
+    virtual void enterRule(antlr4::tree::ParseTreeListener *listener) override;
+    virtual void exitRule(antlr4::tree::ParseTreeListener *listener) override;
+
+    virtual std::any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
+  };
+
+  class  IntContext : public ExprContext {
+  public:
+    IntContext(ExprContext *ctx);
+
+    antlr4::tree::TerminalNode *INT();
+    virtual void enterRule(antlr4::tree::ParseTreeListener *listener) override;
+    virtual void exitRule(antlr4::tree::ParseTreeListener *listener) override;
+
+    virtual std::any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
+  };
+
+  class  StrLiteralContext : public ExprContext {
+  public:
+    StrLiteralContext(ExprContext *ctx);
+
+    antlr4::tree::TerminalNode *STR_LITERAL();
+    virtual void enterRule(antlr4::tree::ParseTreeListener *listener) override;
+    virtual void exitRule(antlr4::tree::ParseTreeListener *listener) override;
+
+    virtual std::any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
+  };
+
+  class  FuncCallContext : public ExprContext {
+  public:
+    FuncCallContext(ExprContext *ctx);
+
+    antlr4::tree::TerminalNode *STR();
+    std::vector<ExprContext *> expr();
+    ExprContext* expr(size_t i);
+    virtual void enterRule(antlr4::tree::ParseTreeListener *listener) override;
+    virtual void exitRule(antlr4::tree::ParseTreeListener *listener) override;
+
+    virtual std::any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
+  };
+
+  class  BoolContext : public ExprContext {
+  public:
+    BoolContext(ExprContext *ctx);
+
+    antlr4::tree::TerminalNode *BOOL();
+    virtual void enterRule(antlr4::tree::ParseTreeListener *listener) override;
+    virtual void exitRule(antlr4::tree::ParseTreeListener *listener) override;
+
+    virtual std::any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
+  };
+
+  class  ObjectAccessContext : public ExprContext {
+  public:
+    ObjectAccessContext(ExprContext *ctx);
+
+    ObjectAccessParserContext *objectAccessParser();
     virtual void enterRule(antlr4::tree::ParseTreeListener *listener) override;
     virtual void exitRule(antlr4::tree::ParseTreeListener *listener) override;
 
@@ -188,19 +211,23 @@ public:
     virtual std::any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
   };
 
-  class  IntContext : public ExprContext {
+  ExprContext* expr();
+  ExprContext* expr(int precedence);
+  class  AppContext : public antlr4::ParserRuleContext {
   public:
-    IntContext(ExprContext *ctx);
+    AppContext(antlr4::ParserRuleContext *parent, size_t invokingState);
+    virtual size_t getRuleIndex() const override;
+    ExprContext *expr();
 
-    antlr4::tree::TerminalNode *INT();
     virtual void enterRule(antlr4::tree::ParseTreeListener *listener) override;
     virtual void exitRule(antlr4::tree::ParseTreeListener *listener) override;
 
     virtual std::any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
+   
   };
 
-  ExprContext* expr();
-  ExprContext* expr(int precedence);
+  AppContext* app();
+
   class  ObjectAccessParserContext : public antlr4::ParserRuleContext {
   public:
     ObjectAccessParserContext(antlr4::ParserRuleContext *parent, size_t invokingState);

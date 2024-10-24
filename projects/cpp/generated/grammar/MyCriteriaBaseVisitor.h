@@ -15,19 +15,11 @@
 class  MyCriteriaBaseVisitor : public MyCriteriaVisitor {
 public:
 
-  virtual std::any visitFuncCall(MyCriteriaParser::FuncCallContext *ctx) override {
-    return visitChildren(ctx);
-  }
-
   virtual std::any visitNull(MyCriteriaParser::NullContext *ctx) override {
     return visitChildren(ctx);
   }
 
   virtual std::any visitComparison(MyCriteriaParser::ComparisonContext *ctx) override {
-    return visitChildren(ctx);
-  }
-
-  virtual std::any visitBool(MyCriteriaParser::BoolContext *ctx) override {
     return visitChildren(ctx);
   }
 
@@ -39,11 +31,27 @@ public:
     return visitChildren(ctx);
   }
 
-  virtual std::any visitObjectAccess(MyCriteriaParser::ObjectAccessContext *ctx) override {
+  virtual std::any visitInfixFuncCall(MyCriteriaParser::InfixFuncCallContext *ctx) override {
     return visitChildren(ctx);
   }
 
-  virtual std::any visitInfixFuncCall(MyCriteriaParser::InfixFuncCallContext *ctx) override {
+  virtual std::any visitInt(MyCriteriaParser::IntContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual std::any visitStrLiteral(MyCriteriaParser::StrLiteralContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual std::any visitFuncCall(MyCriteriaParser::FuncCallContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual std::any visitBool(MyCriteriaParser::BoolContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual std::any visitObjectAccess(MyCriteriaParser::ObjectAccessContext *ctx) override {
     return visitChildren(ctx);
   }
 
@@ -59,7 +67,7 @@ public:
     return visitChildren(ctx);
   }
 
-  virtual std::any visitInt(MyCriteriaParser::IntContext *ctx) override {
+  virtual std::any visitApp(MyCriteriaParser::AppContext *ctx) override {
     return visitChildren(ctx);
   }
 

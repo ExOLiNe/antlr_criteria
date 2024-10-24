@@ -7,7 +7,7 @@ ParseResult parse(std::string& programCode) {
     antlr4::CommonTokenStream tokens(&lexer);
     MyCriteriaParser parser(&tokens);
     auto tree = parser.expr();
-    MyCriteriaVisitorImpl visitor;
+    //MyCriteriaVisitorImpl visitor;
     std::cout << tree->toStringTree(&parser) << std::endl;
     return ParseResult {
         .app = []() { std::cout << "Hello" << std::endl; },
