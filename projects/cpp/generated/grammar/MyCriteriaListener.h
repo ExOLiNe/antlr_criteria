@@ -65,6 +65,12 @@ public:
   virtual void enterTest_expr(MyCriteriaParser::Test_exprContext *ctx) = 0;
   virtual void exitTest_expr(MyCriteriaParser::Test_exprContext *ctx) = 0;
 
+  virtual void enterJsonPointerInner(MyCriteriaParser::JsonPointerInnerContext *ctx) = 0;
+  virtual void exitJsonPointerInner(MyCriteriaParser::JsonPointerInnerContext *ctx) = 0;
+
+  virtual void enterJsonPointer(MyCriteriaParser::JsonPointerContext *ctx) = 0;
+  virtual void exitJsonPointer(MyCriteriaParser::JsonPointerContext *ctx) = 0;
+
   virtual void enterObjectAccessParser(MyCriteriaParser::ObjectAccessParserContext *ctx) = 0;
   virtual void exitObjectAccessParser(MyCriteriaParser::ObjectAccessParserContext *ctx) = 0;
 

@@ -7,6 +7,7 @@ import com.exoline.mycriteria.generated.grammar.MyCriteriaBaseVisitor
 import com.exoline.mycriteria.generated.grammar.MyCriteriaParser
 import kotlin.reflect.KFunction
 import kotlin.reflect.KParameter
+import kotlin.reflect.javaType
 
 sealed class Result {
     class Func(val f: F) : Result() {
@@ -81,11 +82,11 @@ class MyCriteriaVisitorImpl : MyCriteriaBaseVisitor<Result>() {
         return Result.Func { it: VarType ->
             val lEv = l(it)
             val rEv = r(it)
-            parsetimeComparison(lEv, rEv, op)
+            compare(lEv, rEv, op)
         }
     }
 
-    private fun parsetimeComparison(l: Any?, r: Any?, op: String): Boolean = when (op) {
+    private fun compare(l: Any?, r: Any?, op: String): Boolean = when (op) {
         ">" -> l > r
         "<" -> l < r
         ">=" -> l >= r
@@ -128,10 +129,10 @@ class MyCriteriaVisitorImpl : MyCriteriaBaseVisitor<Result>() {
     }
 
     override fun visitObjectAccessParser(ctx: MyCriteriaParser.ObjectAccessParserContext): Result {
-        val field = ctx.STR_LITERAL(0).text.trim('\'').trim('\"')
+        val field = ctx.jsonPointer(0).text.trim('\'').trim('\"')
         fields += field
         return Result.Func { it: VarType ->
-            it[field].toAny()
+            it.getRecursively(field)
         }
     }
 
@@ -181,42 +182,61 @@ class MyCriteriaVisitorImpl : MyCriteriaBaseVisitor<Result>() {
         }
     }
 
+    @OptIn(ExperimentalStdlibApi::class)
     override fun visitFuncCall(ctx: MyCriteriaParser.FuncCallContext): Result {
         val funcName = ctx.STR().text
-        val function = Functions.getFunction(ctx.STR().text)
-            ?: throw IllegalArgumentException("Unresolved function name")
-        val totalArgs = function.params().size
-        val nonOptionalArgs = function.params().filter {
-            !it.isOptional
-        }.size
+        val functions = Functions.getFunctions(funcName) // TODO add param filter
+        if (functions.isEmpty()) {
+            throw IllegalArgumentException("Unresolved function name")
+        }
         val expr = ctx.expr().map {
             visit(it)
         }
-        return if (expr.size in (nonOptionalArgs..totalArgs)) {
-            val f = Result.Func { it: VarType ->
-                function.call(Functions, *expr.map { x ->
-                    x(it)
-                }.toTypedArray())
-            }
-            f
-        } else {
+        val filteredFunctions = functions.filter { function ->
+            val totalArgs = function.params().size
+            val nonOptionalArgs = function.params().filter {
+                !it.isOptional
+            }.size
+            expr.size in (nonOptionalArgs..totalArgs)
+        }
+        if (filteredFunctions.isEmpty()) {
             throw IllegalArgumentException("Function $funcName called with " +
-                    "insufficient parameters. Expected: ($nonOptionalArgs..$totalArgs)," +
-                    "but got: $expr.size")
+                    "insufficient parameters. ")
+            /* TODO
+            Expected: ($nonOptionalArgs..$totalArgs)," +
+                    "but got: $expr.size
+             */
+        }
+        return Result.Func { it: VarType ->
+            val args = expr.map { x -> x(it) }
+            filteredFunctions.filter { function ->
+                val expectedArgTypes: Set<String> = function.params().map {
+                    it.type.javaType.typeName
+                }.toSet()
+                val actualArgTypes: Set<String> = args.mapNotNull {
+                    it?.javaClass?.typeName
+                }.toSet()
+                expectedArgTypes.containsAll(actualArgTypes)
+            }.first().call(Functions, *args.toTypedArray())
         }
     }
 
     override fun visitInfixFuncCall(ctx: MyCriteriaParser.InfixFuncCallContext): Result {
         val funcName = ctx.STR().text
-        val function = Functions.getFunction(ctx.STR().text) ?: throw IllegalArgumentException("Unresolved function name")
-        if (!function.isInfixFunction()) {
+        val functions = Functions.getFunctions(ctx.STR().text)
+        if (functions.isEmpty()) {
+            throw IllegalArgumentException("Unresolved function name")
+        }
+        val filteredFunctions = functions.filter { it.isInfixFunction() }
+        if (filteredFunctions.isEmpty()) {
             throw IllegalArgumentException("Function $funcName is not infix")
         }
         val expr = ctx.expr().map {
             visit(it)
         }
         return Result.Func { it: VarType ->
-            function.call(Functions, *expr.map { x ->
+            // TODO replace `first` with something else
+            filteredFunctions.first().call(Functions, *expr.map { x ->
                 x(it)
             }.toTypedArray())
         }

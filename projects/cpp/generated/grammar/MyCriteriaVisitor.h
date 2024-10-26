@@ -53,6 +53,10 @@ public:
 
     virtual std::any visitTest_expr(MyCriteriaParser::Test_exprContext *context) = 0;
 
+    virtual std::any visitJsonPointerInner(MyCriteriaParser::JsonPointerInnerContext *context) = 0;
+
+    virtual std::any visitJsonPointer(MyCriteriaParser::JsonPointerContext *context) = 0;
+
     virtual std::any visitObjectAccessParser(MyCriteriaParser::ObjectAccessParserContext *context) = 0;
 
     virtual std::any visitStrOrNum(MyCriteriaParser::StrOrNumContext *context) = 0;

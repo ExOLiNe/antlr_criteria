@@ -83,6 +83,14 @@ public:
     return visitChildren(ctx);
   }
 
+  virtual std::any visitJsonPointerInner(MyCriteriaParser::JsonPointerInnerContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual std::any visitJsonPointer(MyCriteriaParser::JsonPointerContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
   virtual std::any visitObjectAccessParser(MyCriteriaParser::ObjectAccessParserContext *ctx) override {
     return visitChildren(ctx);
   }

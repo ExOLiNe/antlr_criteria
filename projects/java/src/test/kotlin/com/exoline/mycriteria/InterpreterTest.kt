@@ -18,20 +18,20 @@ class InterpreterTest {
     @Test
     fun testParticular() {
         val program = """
-            10
+            'blabla'
         """.trimIndent()
         val stream = CharStreams.fromString(program)
         val lexer = MyCriteriaLexer(stream)
         val tokens = CommonTokenStream(lexer)
         val parser = MyCriteriaParser(tokens)
-        val tree = parser.test_expr()
+        val tree = parser.jsonPointer()
         println(tree.toStringTree())
     }
 
     @Test
     fun test() {
         val testsDir = File(System.getProperty("tests.dir"))
-        val only: Int = -1
+        val only: Int = 16//-1
         val errors = mutableListOf<() -> Unit>()
         testsDir.listFiles()?.forEach { file ->
             if (file.isDirectory) {

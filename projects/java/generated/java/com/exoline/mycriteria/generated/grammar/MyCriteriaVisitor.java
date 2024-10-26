@@ -128,6 +128,18 @@ public interface MyCriteriaVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitTest_expr(MyCriteriaParser.Test_exprContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link MyCriteriaParser#jsonPointerInner}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitJsonPointerInner(MyCriteriaParser.JsonPointerInnerContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link MyCriteriaParser#jsonPointer}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitJsonPointer(MyCriteriaParser.JsonPointerContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link MyCriteriaParser#objectAccessParser}.
 	 * @param ctx the parse tree
 	 * @return the visitor result

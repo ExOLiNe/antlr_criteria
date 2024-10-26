@@ -67,6 +67,12 @@ public:
   virtual void enterTest_expr(MyCriteriaParser::Test_exprContext * /*ctx*/) override { }
   virtual void exitTest_expr(MyCriteriaParser::Test_exprContext * /*ctx*/) override { }
 
+  virtual void enterJsonPointerInner(MyCriteriaParser::JsonPointerInnerContext * /*ctx*/) override { }
+  virtual void exitJsonPointerInner(MyCriteriaParser::JsonPointerInnerContext * /*ctx*/) override { }
+
+  virtual void enterJsonPointer(MyCriteriaParser::JsonPointerContext * /*ctx*/) override { }
+  virtual void exitJsonPointer(MyCriteriaParser::JsonPointerContext * /*ctx*/) override { }
+
   virtual void enterObjectAccessParser(MyCriteriaParser::ObjectAccessParserContext * /*ctx*/) override { }
   virtual void exitObjectAccessParser(MyCriteriaParser::ObjectAccessParserContext * /*ctx*/) override { }
 

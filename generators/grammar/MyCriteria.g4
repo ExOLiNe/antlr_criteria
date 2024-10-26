@@ -5,6 +5,24 @@ grammar MyCriteria;
 
 app: expr;
 
+// Lexer rules
+SLASH: '/';
+DOT: '.';
+COMMA: ',';
+SQR_L: '[';
+SQR_R: ']';
+IN: 'in';
+BOOL: 'true' | 'false';
+EXCL: '!';
+INT: [0-9]+;
+STR_LITERAL: S_Q STR S_Q | D_Q STR D_Q;
+STR: [a-zA-Z0-9]+;
+NULL_T: 'null';
+S_Q: '\'';
+D_Q: '"';
+
+WS: [ \t\r\n]+ -> skip;
+
 // Parser rules
 expr: inArrayParser             # InArray
     | expr op=('*'|'/') expr    # MulDiv
@@ -40,23 +58,9 @@ test_expr: inArrayParser
     | NULL_T
     ;
 
-objectAccessParser: 'object' SQR_L + STR_LITERAL + SQR_R;
+jsonPointerInner: SLASH? STR (SLASH STR)* SLASH?;
+jsonPointer: (S_Q jsonPointerInner S_Q) | (D_Q jsonPointerInner D_Q) | STR_LITERAL;
+objectAccessParser: 'object' SQR_L + jsonPointer + SQR_R;
 strOrNum: STR_LITERAL | numb;
 numb: INT | (INT DOT INT);
 inArrayParser: objectAccessParser (IN | EXCL IN) SQR_L strOrNum (COMMA strOrNum)* SQR_R;
-
-// Lexer rules
-SLASH: '/';
-DOT: '.';
-COMMA: ',';
-SQR_L: '[';
-SQR_R: ']';
-IN: 'in';
-BOOL: 'true' | 'false';
-EXCL: '!';
-INT: [0-9]+;
-STR_LITERAL: '\'' STR '\'' | '"' STR '"';
-STR: [a-zA-Z0-9]+;
-NULL_T: 'null';
-
-WS: [ \t\r\n]+ -> skip;

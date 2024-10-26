@@ -208,6 +208,26 @@ public interface MyCriteriaListener extends ParseTreeListener {
 	 */
 	void exitTest_expr(MyCriteriaParser.Test_exprContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link MyCriteriaParser#jsonPointerInner}.
+	 * @param ctx the parse tree
+	 */
+	void enterJsonPointerInner(MyCriteriaParser.JsonPointerInnerContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link MyCriteriaParser#jsonPointerInner}.
+	 * @param ctx the parse tree
+	 */
+	void exitJsonPointerInner(MyCriteriaParser.JsonPointerInnerContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link MyCriteriaParser#jsonPointer}.
+	 * @param ctx the parse tree
+	 */
+	void enterJsonPointer(MyCriteriaParser.JsonPointerContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link MyCriteriaParser#jsonPointer}.
+	 * @param ctx the parse tree
+	 */
+	void exitJsonPointer(MyCriteriaParser.JsonPointerContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link MyCriteriaParser#objectAccessParser}.
 	 * @param ctx the parse tree
 	 */

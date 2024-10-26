@@ -137,6 +137,20 @@ public class MyCriteriaBaseVisitor<T> extends AbstractParseTreeVisitor<T> implem
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
+	@Override public T visitJsonPointerInner(MyCriteriaParser.JsonPointerInnerContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
+	@Override public T visitJsonPointer(MyCriteriaParser.JsonPointerContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
 	@Override public T visitObjectAccessParser(MyCriteriaParser.ObjectAccessParserContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}

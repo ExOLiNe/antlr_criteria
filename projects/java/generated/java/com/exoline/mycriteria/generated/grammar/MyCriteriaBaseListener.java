@@ -221,6 +221,30 @@ public class MyCriteriaBaseListener implements MyCriteriaListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterJsonPointerInner(MyCriteriaParser.JsonPointerInnerContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitJsonPointerInner(MyCriteriaParser.JsonPointerInnerContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterJsonPointer(MyCriteriaParser.JsonPointerContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitJsonPointer(MyCriteriaParser.JsonPointerContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterObjectAccessParser(MyCriteriaParser.ObjectAccessParserContext ctx) { }
 	/**
 	 * {@inheritDoc}
