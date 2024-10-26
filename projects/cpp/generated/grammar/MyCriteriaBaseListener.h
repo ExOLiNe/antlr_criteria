@@ -16,11 +16,17 @@
 class  MyCriteriaBaseListener : public MyCriteriaListener {
 public:
 
+  virtual void enterApp(MyCriteriaParser::AppContext * /*ctx*/) override { }
+  virtual void exitApp(MyCriteriaParser::AppContext * /*ctx*/) override { }
+
   virtual void enterNull(MyCriteriaParser::NullContext * /*ctx*/) override { }
   virtual void exitNull(MyCriteriaParser::NullContext * /*ctx*/) override { }
 
   virtual void enterComparison(MyCriteriaParser::ComparisonContext * /*ctx*/) override { }
   virtual void exitComparison(MyCriteriaParser::ComparisonContext * /*ctx*/) override { }
+
+  virtual void enterOr(MyCriteriaParser::OrContext * /*ctx*/) override { }
+  virtual void exitOr(MyCriteriaParser::OrContext * /*ctx*/) override { }
 
   virtual void enterMulDiv(MyCriteriaParser::MulDivContext * /*ctx*/) override { }
   virtual void exitMulDiv(MyCriteriaParser::MulDivContext * /*ctx*/) override { }
@@ -31,17 +37,23 @@ public:
   virtual void enterInfixFuncCall(MyCriteriaParser::InfixFuncCallContext * /*ctx*/) override { }
   virtual void exitInfixFuncCall(MyCriteriaParser::InfixFuncCallContext * /*ctx*/) override { }
 
-  virtual void enterInt(MyCriteriaParser::IntContext * /*ctx*/) override { }
-  virtual void exitInt(MyCriteriaParser::IntContext * /*ctx*/) override { }
-
   virtual void enterStrLiteral(MyCriteriaParser::StrLiteralContext * /*ctx*/) override { }
   virtual void exitStrLiteral(MyCriteriaParser::StrLiteralContext * /*ctx*/) override { }
+
+  virtual void enterInArray(MyCriteriaParser::InArrayContext * /*ctx*/) override { }
+  virtual void exitInArray(MyCriteriaParser::InArrayContext * /*ctx*/) override { }
 
   virtual void enterFuncCall(MyCriteriaParser::FuncCallContext * /*ctx*/) override { }
   virtual void exitFuncCall(MyCriteriaParser::FuncCallContext * /*ctx*/) override { }
 
+  virtual void enterNumber(MyCriteriaParser::NumberContext * /*ctx*/) override { }
+  virtual void exitNumber(MyCriteriaParser::NumberContext * /*ctx*/) override { }
+
   virtual void enterBool(MyCriteriaParser::BoolContext * /*ctx*/) override { }
   virtual void exitBool(MyCriteriaParser::BoolContext * /*ctx*/) override { }
+
+  virtual void enterAnd(MyCriteriaParser::AndContext * /*ctx*/) override { }
+  virtual void exitAnd(MyCriteriaParser::AndContext * /*ctx*/) override { }
 
   virtual void enterObjectAccess(MyCriteriaParser::ObjectAccessContext * /*ctx*/) override { }
   virtual void exitObjectAccess(MyCriteriaParser::ObjectAccessContext * /*ctx*/) override { }
@@ -52,14 +64,20 @@ public:
   virtual void enterParenExpr(MyCriteriaParser::ParenExprContext * /*ctx*/) override { }
   virtual void exitParenExpr(MyCriteriaParser::ParenExprContext * /*ctx*/) override { }
 
-  virtual void enterAndOr(MyCriteriaParser::AndOrContext * /*ctx*/) override { }
-  virtual void exitAndOr(MyCriteriaParser::AndOrContext * /*ctx*/) override { }
-
-  virtual void enterApp(MyCriteriaParser::AppContext * /*ctx*/) override { }
-  virtual void exitApp(MyCriteriaParser::AppContext * /*ctx*/) override { }
+  virtual void enterTest_expr(MyCriteriaParser::Test_exprContext * /*ctx*/) override { }
+  virtual void exitTest_expr(MyCriteriaParser::Test_exprContext * /*ctx*/) override { }
 
   virtual void enterObjectAccessParser(MyCriteriaParser::ObjectAccessParserContext * /*ctx*/) override { }
   virtual void exitObjectAccessParser(MyCriteriaParser::ObjectAccessParserContext * /*ctx*/) override { }
+
+  virtual void enterStrOrNum(MyCriteriaParser::StrOrNumContext * /*ctx*/) override { }
+  virtual void exitStrOrNum(MyCriteriaParser::StrOrNumContext * /*ctx*/) override { }
+
+  virtual void enterNumb(MyCriteriaParser::NumbContext * /*ctx*/) override { }
+  virtual void exitNumb(MyCriteriaParser::NumbContext * /*ctx*/) override { }
+
+  virtual void enterInArrayParser(MyCriteriaParser::InArrayParserContext * /*ctx*/) override { }
+  virtual void exitInArrayParser(MyCriteriaParser::InArrayParserContext * /*ctx*/) override { }
 
 
   virtual void enterEveryRule(antlr4::ParserRuleContext * /*ctx*/) override { }

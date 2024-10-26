@@ -4,6 +4,23 @@ import com.exoline.mycriteria.generated.grammar.MyCriteriaBaseVisitor
 import com.exoline.mycriteria.generated.grammar.MyCriteriaParser
 
 class PrettyVisitor : MyCriteriaBaseVisitor<String>() {
+    override fun visitInArray(ctx: MyCriteriaParser.InArrayContext): String {
+        val obj = visit(ctx.inArrayParser().objectAccessParser())
+        val values = ctx.inArrayParser().strOrNum().map {
+            visit(it)
+        }
+        val nt = if (ctx.inArrayParser().EXCL().text == null) {
+            ""
+        } else {
+            "!"
+        }
+        return "$obj ${nt}in [${values.joinToString(", ")}]"
+    }
+
+    /*override fun visitStrOrNum(ctx: MyCriteriaParser.StrOrNumContext): String {
+        return super.visitStrOrNum(ctx)
+    }*/
+
     private var indentLevel = 0
     companion object {
         private val SPECIAL_SYMBOL = ""
@@ -72,16 +89,25 @@ class PrettyVisitor : MyCriteriaBaseVisitor<String>() {
         return visit(ctx.expr())
     }
 
-    override fun visitAndOr(ctx: MyCriteriaParser.AndOrContext): String {
+    override fun visitAnd(ctx: MyCriteriaParser.AndContext): String {
         indentLevel++
         val l = visit(ctx.expr(0))
         val r = visit(ctx.expr(1))
         indentLevel--
         //return indent() + "($l ${ctx.op.text} $r)"
-        return indentBinary(l, ctx.op.text, r)
+        return indentBinary(l, "&&", r)
     }
 
-    override fun visitInt(ctx: MyCriteriaParser.IntContext): String {
+    override fun visitOr(ctx: MyCriteriaParser.OrContext): String {
+        indentLevel++
+        val l = visit(ctx.expr(0))
+        val r = visit(ctx.expr(1))
+        indentLevel--
+        //return indent() + "($l ${ctx.op.text} $r)"
+        return indentBinary(l, "||", r)
+    }
+
+    override fun visitNumb(ctx: MyCriteriaParser.NumbContext): String {
         return indent() + ctx.text
     }
 

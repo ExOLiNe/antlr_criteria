@@ -1,0 +1,8 @@
+{
+  "map": {
+    "some": {
+      "some2": true
+    }
+  },
+  "expected": true
+}

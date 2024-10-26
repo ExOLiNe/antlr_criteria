@@ -17,6 +17,18 @@ public class MyCriteriaBaseListener implements MyCriteriaListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterApp(MyCriteriaParser.AppContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitApp(MyCriteriaParser.AppContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterNull(MyCriteriaParser.NullContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -36,6 +48,18 @@ public class MyCriteriaBaseListener implements MyCriteriaListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitComparison(MyCriteriaParser.ComparisonContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterOr(MyCriteriaParser.OrContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitOr(MyCriteriaParser.OrContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -77,18 +101,6 @@ public class MyCriteriaBaseListener implements MyCriteriaListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterInt(MyCriteriaParser.IntContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitInt(MyCriteriaParser.IntContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
 	@Override public void enterStrLiteral(MyCriteriaParser.StrLiteralContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -96,6 +108,18 @@ public class MyCriteriaBaseListener implements MyCriteriaListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitStrLiteral(MyCriteriaParser.StrLiteralContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterInArray(MyCriteriaParser.InArrayContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitInArray(MyCriteriaParser.InArrayContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -113,6 +137,18 @@ public class MyCriteriaBaseListener implements MyCriteriaListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterNumber(MyCriteriaParser.NumberContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitNumber(MyCriteriaParser.NumberContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterBool(MyCriteriaParser.BoolContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -120,6 +156,18 @@ public class MyCriteriaBaseListener implements MyCriteriaListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitBool(MyCriteriaParser.BoolContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterAnd(MyCriteriaParser.AndContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitAnd(MyCriteriaParser.AndContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -161,25 +209,13 @@ public class MyCriteriaBaseListener implements MyCriteriaListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterAndOr(MyCriteriaParser.AndOrContext ctx) { }
+	@Override public void enterTest_expr(MyCriteriaParser.Test_exprContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitAndOr(MyCriteriaParser.AndOrContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterApp(MyCriteriaParser.AppContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitApp(MyCriteriaParser.AppContext ctx) { }
+	@Override public void exitTest_expr(MyCriteriaParser.Test_exprContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -192,6 +228,42 @@ public class MyCriteriaBaseListener implements MyCriteriaListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitObjectAccessParser(MyCriteriaParser.ObjectAccessParserContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterStrOrNum(MyCriteriaParser.StrOrNumContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitStrOrNum(MyCriteriaParser.StrOrNumContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterNumb(MyCriteriaParser.NumbContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitNumb(MyCriteriaParser.NumbContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterInArrayParser(MyCriteriaParser.InArrayParserContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitInArrayParser(MyCriteriaParser.InArrayParserContext ctx) { }
 
 	/**
 	 * {@inheritDoc}

@@ -1,0 +1,10 @@
+{
+  "map": {
+    "some": 5,
+    "some2": 15,
+    "someStr": "something",
+    "someStr2": "something3"
+  },
+  "fields": ["some", "some2", "someStr", "someStr2"],
+  "expected": true
+}

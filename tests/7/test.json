@@ -1,0 +1,7 @@
+{
+  "map": {
+    "some": "blabla"
+  },
+  "fields": ["some"],
+  "expected": true
+}

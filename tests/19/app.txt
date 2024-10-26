@@ -1,0 +1,1 @@
+object['some'] == null && object['some/some2'] == null
