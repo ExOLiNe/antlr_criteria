@@ -19,6 +19,9 @@ public:
   virtual void enterApp(MyCriteriaParser::AppContext * /*ctx*/) override { }
   virtual void exitApp(MyCriteriaParser::AppContext * /*ctx*/) override { }
 
+  virtual void enterStatements(MyCriteriaParser::StatementsContext * /*ctx*/) override { }
+  virtual void exitStatements(MyCriteriaParser::StatementsContext * /*ctx*/) override { }
+
   virtual void enterStatement(MyCriteriaParser::StatementContext * /*ctx*/) override { }
   virtual void exitStatement(MyCriteriaParser::StatementContext * /*ctx*/) override { }
 
@@ -72,6 +75,12 @@ public:
 
   virtual void enterTest_expr(MyCriteriaParser::Test_exprContext * /*ctx*/) override { }
   virtual void exitTest_expr(MyCriteriaParser::Test_exprContext * /*ctx*/) override { }
+
+  virtual void enterImportStatement(MyCriteriaParser::ImportStatementContext * /*ctx*/) override { }
+  virtual void exitImportStatement(MyCriteriaParser::ImportStatementContext * /*ctx*/) override { }
+
+  virtual void enterIdentifierDefinitions(MyCriteriaParser::IdentifierDefinitionsContext * /*ctx*/) override { }
+  virtual void exitIdentifierDefinitions(MyCriteriaParser::IdentifierDefinitionsContext * /*ctx*/) override { }
 
   virtual void enterIdentifierDefinition(MyCriteriaParser::IdentifierDefinitionContext * /*ctx*/) override { }
   virtual void exitIdentifierDefinition(MyCriteriaParser::IdentifierDefinitionContext * /*ctx*/) override { }

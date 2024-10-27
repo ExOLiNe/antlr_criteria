@@ -21,6 +21,8 @@ public:
    */
     virtual std::any visitApp(MyCriteriaParser::AppContext *context) = 0;
 
+    virtual std::any visitStatements(MyCriteriaParser::StatementsContext *context) = 0;
+
     virtual std::any visitStatement(MyCriteriaParser::StatementContext *context) = 0;
 
     virtual std::any visitNull(MyCriteriaParser::NullContext *context) = 0;
@@ -56,6 +58,10 @@ public:
     virtual std::any visitParenExpr(MyCriteriaParser::ParenExprContext *context) = 0;
 
     virtual std::any visitTest_expr(MyCriteriaParser::Test_exprContext *context) = 0;
+
+    virtual std::any visitImportStatement(MyCriteriaParser::ImportStatementContext *context) = 0;
+
+    virtual std::any visitIdentifierDefinitions(MyCriteriaParser::IdentifierDefinitionsContext *context) = 0;
 
     virtual std::any visitIdentifierDefinition(MyCriteriaParser::IdentifierDefinitionContext *context) = 0;
 

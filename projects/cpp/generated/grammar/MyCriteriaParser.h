@@ -14,15 +14,16 @@ public:
   enum {
     T__0 = 1, T__1 = 2, T__2 = 3, T__3 = 4, T__4 = 5, T__5 = 6, T__6 = 7, 
     T__7 = 8, T__8 = 9, T__9 = 10, T__10 = 11, T__11 = 12, T__12 = 13, T__13 = 14, 
-    SLASH = 15, DOT = 16, COMMA = 17, SEMICOLON = 18, SQR_L = 19, SQR_R = 20, 
-    IN = 21, BOOL = 22, EXCL = 23, INT = 24, STR_LITERAL = 25, STR = 26, 
-    NULL_T = 27, S_Q = 28, D_Q = 29, BUCK = 30, EQUALS = 31, WS = 32
+    IMPORT = 15, SLASH = 16, DOT = 17, COMMA = 18, SEMICOLON = 19, SQR_L = 20, 
+    SQR_R = 21, IN = 22, BOOL = 23, EXCL = 24, NULL_T = 25, S_Q = 26, D_Q = 27, 
+    BUCK = 28, EQUALS = 29, STR_LITERAL = 30, INT = 31, STR = 32, WS = 33
   };
 
   enum {
-    RuleApp = 0, RuleStatement = 1, RuleExpr = 2, RuleTest_expr = 3, RuleIdentifierDefinition = 4, 
-    RuleIdentifierAccess = 5, RuleJsonPointerInner = 6, RuleJsonPointer = 7, 
-    RuleObjectAccessParser = 8, RuleStrOrNum = 9, RuleNumb = 10, RuleInArrayParser = 11
+    RuleApp = 0, RuleStatements = 1, RuleStatement = 2, RuleExpr = 3, RuleTest_expr = 4, 
+    RuleImportStatement = 5, RuleIdentifierDefinitions = 6, RuleIdentifierDefinition = 7, 
+    RuleIdentifierAccess = 8, RuleJsonPointerInner = 9, RuleJsonPointer = 10, 
+    RuleObjectAccessParser = 11, RuleStrOrNum = 12, RuleNumb = 13, RuleInArrayParser = 14
   };
 
   explicit MyCriteriaParser(antlr4::TokenStream *input);
@@ -43,9 +44,12 @@ public:
 
 
   class AppContext;
+  class StatementsContext;
   class StatementContext;
   class ExprContext;
   class Test_exprContext;
+  class ImportStatementContext;
+  class IdentifierDefinitionsContext;
   class IdentifierDefinitionContext;
   class IdentifierAccessContext;
   class JsonPointerInnerContext;
@@ -72,12 +76,29 @@ public:
 
   AppContext* app();
 
+  class  StatementsContext : public antlr4::ParserRuleContext {
+  public:
+    StatementsContext(antlr4::ParserRuleContext *parent, size_t invokingState);
+    virtual size_t getRuleIndex() const override;
+    std::vector<StatementContext *> statement();
+    StatementContext* statement(size_t i);
+
+    virtual void enterRule(antlr4::tree::ParseTreeListener *listener) override;
+    virtual void exitRule(antlr4::tree::ParseTreeListener *listener) override;
+
+    virtual std::any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
+   
+  };
+
+  StatementsContext* statements();
+
   class  StatementContext : public antlr4::ParserRuleContext {
   public:
     StatementContext(antlr4::ParserRuleContext *parent, size_t invokingState);
     virtual size_t getRuleIndex() const override;
-    IdentifierDefinitionContext *identifierDefinition();
+    ImportStatementContext *importStatement();
     antlr4::tree::TerminalNode *SEMICOLON();
+    IdentifierDefinitionContext *identifierDefinition();
 
     virtual void enterRule(antlr4::tree::ParseTreeListener *listener) override;
     virtual void exitRule(antlr4::tree::ParseTreeListener *listener) override;
@@ -322,6 +343,40 @@ public:
   };
 
   Test_exprContext* test_expr();
+
+  class  ImportStatementContext : public antlr4::ParserRuleContext {
+  public:
+    ImportStatementContext(antlr4::ParserRuleContext *parent, size_t invokingState);
+    virtual size_t getRuleIndex() const override;
+    antlr4::tree::TerminalNode *IMPORT();
+    antlr4::tree::TerminalNode *STR();
+
+    virtual void enterRule(antlr4::tree::ParseTreeListener *listener) override;
+    virtual void exitRule(antlr4::tree::ParseTreeListener *listener) override;
+
+    virtual std::any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
+   
+  };
+
+  ImportStatementContext* importStatement();
+
+  class  IdentifierDefinitionsContext : public antlr4::ParserRuleContext {
+  public:
+    IdentifierDefinitionsContext(antlr4::ParserRuleContext *parent, size_t invokingState);
+    virtual size_t getRuleIndex() const override;
+    std::vector<IdentifierDefinitionContext *> identifierDefinition();
+    IdentifierDefinitionContext* identifierDefinition(size_t i);
+    std::vector<antlr4::tree::TerminalNode *> SEMICOLON();
+    antlr4::tree::TerminalNode* SEMICOLON(size_t i);
+
+    virtual void enterRule(antlr4::tree::ParseTreeListener *listener) override;
+    virtual void exitRule(antlr4::tree::ParseTreeListener *listener) override;
+
+    virtual std::any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
+   
+  };
+
+  IdentifierDefinitionsContext* identifierDefinitions();
 
   class  IdentifierDefinitionContext : public antlr4::ParserRuleContext {
   public:

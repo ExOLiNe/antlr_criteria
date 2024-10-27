@@ -3,8 +3,6 @@ package com.exoline.mycriteria
 import com.exoline.mycriteria.generated.grammar.MyCriteriaLexer
 import com.exoline.mycriteria.generated.grammar.MyCriteriaParser
 import com.exoline.mycriteria.walk.MyCriteriaVisitorImpl
-import com.exoline.mycriteria.walk.PrettyVisitor
-import com.exoline.mycriteria.walk.Result
 import com.fasterxml.jackson.databind.node.ArrayNode
 import com.fasterxml.jackson.databind.node.BooleanNode
 import com.fasterxml.jackson.databind.node.TextNode
@@ -20,16 +18,15 @@ class InterpreterTest {
 
     @Test
     fun testParticular() {
-        val program = "\$some = 10;\n\$some + 5".trimIndent()
+        val program = "import something;"
         val stream = CharStreams.fromString(program)
         val lexer = MyCriteriaLexer(stream)
         val tokens = CommonTokenStream(lexer)
         val parser = MyCriteriaParser(tokens)
-        val tree = parser.app()
-        val myVisitor = MyCriteriaVisitorImpl()
-        val appResult = (myVisitor.visit(tree) as Result.App)
-        appResult.app
-        // println(tree.toStringTree())
+        val tree = parser.importStatement()
+        val myVisitor = MyCriteriaVisitorImpl({ "\$some = 5;" })
+        val appResult = myVisitor.visit(tree)
+        println(tree.toStringTree())
         println(appResult)
     }
 
@@ -38,6 +35,9 @@ class InterpreterTest {
         val testsDir = File(System.getProperty("tests.dir"))
         val only: Int = -1
         val errors = mutableListOf<() -> Unit>()
+        val importResolver = { ref: String ->
+            testsDir.resolve("${ref}.txt").readText()
+        }
         testsDir.listFiles()?.forEach { file ->
             if (file.isDirectory) {
                 if (only == -1 || file.name == only.toString()) {
@@ -48,7 +48,7 @@ class InterpreterTest {
                         val map = test["map"] as JObject
                         val expectedResult = (test["expected"] as? BooleanNode)?.booleanValue()!!
                         try {
-                            val parseResult = interpret(appStr)
+                            val parseResult = interpret(appStr, importResolver)
                             val (actualFields, tokens, tree, appResult) = parseResult
                             println("TOKENS:")
                             println(tokens)

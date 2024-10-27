@@ -6,6 +6,7 @@ grammar MyCriteria;
 app: (statement)* expr;
 
 // Lexer rules
+IMPORT: 'import';
 SLASH: '/';
 DOT: '.';
 COMMA: ',';
@@ -15,19 +16,23 @@ SQR_R: ']';
 IN: 'in';
 BOOL: 'true' | 'false';
 EXCL: '!';
-INT: [0-9]+;
-STR_LITERAL: S_Q STR S_Q | D_Q STR D_Q;
-STR: [a-zA-Z0-9]+;
 NULL_T: 'null';
 S_Q: '\'';
 D_Q: '"';
 BUCK: '$';
 EQUALS: '=';
+STR_LITERAL: S_Q STR S_Q | D_Q STR D_Q;
+INT: [0-9]+;
+STR: [a-zA-Z0-9]+;
 
 WS: [ \t\r\n]+ -> skip;
 
+statements: statement+;
+
 statement
-    : identifierDefinition SEMICOLON;
+    : importStatement SEMICOLON
+    | identifierDefinition SEMICOLON
+    ;
 
 // Parser rules
 expr
@@ -66,6 +71,8 @@ test_expr: inArrayParser
     | NULL_T
     ;
 
+importStatement: IMPORT STR;
+identifierDefinitions: (identifierDefinition SEMICOLON)+;
 identifierDefinition: BUCK STR EQUALS expr;
 identifierAccess: BUCK STR;
 jsonPointerInner: SLASH? STR (SLASH STR)* SLASH?;

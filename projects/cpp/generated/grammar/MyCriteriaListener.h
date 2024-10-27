@@ -17,6 +17,9 @@ public:
   virtual void enterApp(MyCriteriaParser::AppContext *ctx) = 0;
   virtual void exitApp(MyCriteriaParser::AppContext *ctx) = 0;
 
+  virtual void enterStatements(MyCriteriaParser::StatementsContext *ctx) = 0;
+  virtual void exitStatements(MyCriteriaParser::StatementsContext *ctx) = 0;
+
   virtual void enterStatement(MyCriteriaParser::StatementContext *ctx) = 0;
   virtual void exitStatement(MyCriteriaParser::StatementContext *ctx) = 0;
 
@@ -70,6 +73,12 @@ public:
 
   virtual void enterTest_expr(MyCriteriaParser::Test_exprContext *ctx) = 0;
   virtual void exitTest_expr(MyCriteriaParser::Test_exprContext *ctx) = 0;
+
+  virtual void enterImportStatement(MyCriteriaParser::ImportStatementContext *ctx) = 0;
+  virtual void exitImportStatement(MyCriteriaParser::ImportStatementContext *ctx) = 0;
+
+  virtual void enterIdentifierDefinitions(MyCriteriaParser::IdentifierDefinitionsContext *ctx) = 0;
+  virtual void exitIdentifierDefinitions(MyCriteriaParser::IdentifierDefinitionsContext *ctx) = 0;
 
   virtual void enterIdentifierDefinition(MyCriteriaParser::IdentifierDefinitionContext *ctx) = 0;
   virtual void exitIdentifierDefinition(MyCriteriaParser::IdentifierDefinitionContext *ctx) = 0;

@@ -25,5 +25,10 @@ object Functions {
         return any1 == any2
     }
 
+    @Infix
+    fun like(any: Any, pattern: String): Boolean {
+        TODO()
+    }
+
     fun KFunction<*>.isInfixFunction(): Boolean = hasAnnotation<Infix>()
 }

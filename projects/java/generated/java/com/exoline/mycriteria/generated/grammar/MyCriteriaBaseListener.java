@@ -29,6 +29,18 @@ public class MyCriteriaBaseListener implements MyCriteriaListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterStatements(MyCriteriaParser.StatementsContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitStatements(MyCriteriaParser.StatementsContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterStatement(MyCriteriaParser.StatementContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -240,6 +252,30 @@ public class MyCriteriaBaseListener implements MyCriteriaListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitTest_expr(MyCriteriaParser.Test_exprContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterImportStatement(MyCriteriaParser.ImportStatementContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitImportStatement(MyCriteriaParser.ImportStatementContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterIdentifierDefinitions(MyCriteriaParser.IdentifierDefinitionsContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitIdentifierDefinitions(MyCriteriaParser.IdentifierDefinitionsContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

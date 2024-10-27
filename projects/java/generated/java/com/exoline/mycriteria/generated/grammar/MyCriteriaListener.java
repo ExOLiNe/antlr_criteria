@@ -18,6 +18,16 @@ public interface MyCriteriaListener extends ParseTreeListener {
 	 */
 	void exitApp(MyCriteriaParser.AppContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link MyCriteriaParser#statements}.
+	 * @param ctx the parse tree
+	 */
+	void enterStatements(MyCriteriaParser.StatementsContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link MyCriteriaParser#statements}.
+	 * @param ctx the parse tree
+	 */
+	void exitStatements(MyCriteriaParser.StatementsContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link MyCriteriaParser#statement}.
 	 * @param ctx the parse tree
 	 */
@@ -229,6 +239,26 @@ public interface MyCriteriaListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitTest_expr(MyCriteriaParser.Test_exprContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link MyCriteriaParser#importStatement}.
+	 * @param ctx the parse tree
+	 */
+	void enterImportStatement(MyCriteriaParser.ImportStatementContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link MyCriteriaParser#importStatement}.
+	 * @param ctx the parse tree
+	 */
+	void exitImportStatement(MyCriteriaParser.ImportStatementContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link MyCriteriaParser#identifierDefinitions}.
+	 * @param ctx the parse tree
+	 */
+	void enterIdentifierDefinitions(MyCriteriaParser.IdentifierDefinitionsContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link MyCriteriaParser#identifierDefinitions}.
+	 * @param ctx the parse tree
+	 */
+	void exitIdentifierDefinitions(MyCriteriaParser.IdentifierDefinitionsContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link MyCriteriaParser#identifierDefinition}.
 	 * @param ctx the parse tree

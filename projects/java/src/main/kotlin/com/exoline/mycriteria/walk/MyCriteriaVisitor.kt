@@ -1,10 +1,14 @@
 package com.exoline.mycriteria.walk
 
 import com.exoline.mycriteria.*
+import com.exoline.mycriteria.exception.RecursiveImportException
 import com.exoline.mycriteria.functions.Functions
 import com.exoline.mycriteria.functions.Functions.isInfixFunction
 import com.exoline.mycriteria.generated.grammar.MyCriteriaBaseVisitor
+import com.exoline.mycriteria.generated.grammar.MyCriteriaLexer
 import com.exoline.mycriteria.generated.grammar.MyCriteriaParser
+import org.antlr.v4.runtime.CharStreams
+import org.antlr.v4.runtime.CommonTokenStream
 import kotlin.reflect.KFunction
 import kotlin.reflect.KParameter
 import kotlin.reflect.javaType
@@ -33,9 +37,6 @@ sealed class Result {
         override fun getValue(): Any? = vl
     }
 
-    /*class Func { val value: Any?) : Result( } {
-        override fun invoke(it: VarType): Any? = value
-    }*/
     class App(
         val fields: Set<String>,
         val app: AppF
@@ -52,8 +53,29 @@ sealed class Result {
     abstract fun getValue(): Any?
 }
 
-class MyCriteriaVisitorImpl : MyCriteriaBaseVisitor<Result>() {
+class MyCriteriaVisitorImpl(
+    private val importResolver: (String) -> String?
+) : MyCriteriaBaseVisitor<Result>() {
+    private val imports = mutableSetOf<String>()
     private val memory = mutableMapOf<String, Result.Runtime>()
+
+    override fun visitImportStatement(ctx: MyCriteriaParser.ImportStatementContext): Result {
+        val importRef = ctx.STR().text
+        if (!imports.add(importRef)) {
+            throw RecursiveImportException("Import $importRef has already used")
+        }
+
+        val importCode = importResolver(importRef) ?: throw IllegalArgumentException("Import $importRef not found")
+        val stream = CharStreams.fromString(importCode)
+        val lexer = MyCriteriaLexer(stream)
+        val tokens = CommonTokenStream(lexer)
+        val parser = MyCriteriaParser(tokens)
+        val tree = parser.statements().apply {
+            visit(this)
+        }
+        println(tree)
+        return Result.CompileTime { }
+    }
 
     override fun visitIdentifierDefinition(ctx: MyCriteriaParser.IdentifierDefinitionContext): Result {
         val expr = visit(ctx.expr())
@@ -105,6 +127,7 @@ class MyCriteriaVisitorImpl : MyCriteriaBaseVisitor<Result>() {
     private val fields = mutableSetOf<String>()
 
     private fun resetState() {
+        imports.clear()
         memory.clear()
         fields.clear()
     }

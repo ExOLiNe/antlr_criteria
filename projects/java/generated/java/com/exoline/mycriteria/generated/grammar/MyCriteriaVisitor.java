@@ -17,6 +17,12 @@ public interface MyCriteriaVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitApp(MyCriteriaParser.AppContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link MyCriteriaParser#statements}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitStatements(MyCriteriaParser.StatementsContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link MyCriteriaParser#statement}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
@@ -140,6 +146,18 @@ public interface MyCriteriaVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitTest_expr(MyCriteriaParser.Test_exprContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link MyCriteriaParser#importStatement}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitImportStatement(MyCriteriaParser.ImportStatementContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link MyCriteriaParser#identifierDefinitions}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitIdentifierDefinitions(MyCriteriaParser.IdentifierDefinitionsContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link MyCriteriaParser#identifierDefinition}.
 	 * @param ctx the parse tree

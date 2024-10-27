@@ -3,7 +3,6 @@ package com.exoline.mycriteria
 import com.exoline.mycriteria.generated.grammar.MyCriteriaLexer
 import com.exoline.mycriteria.generated.grammar.MyCriteriaParser
 import com.exoline.mycriteria.generated.grammar.MyCriteriaParser.AppContext
-import com.exoline.mycriteria.generated.grammar.MyCriteriaParser.ExprContext
 import com.exoline.mycriteria.walk.MyCriteriaVisitorImpl
 import com.exoline.mycriteria.walk.PrettyVisitor
 import com.exoline.mycriteria.walk.Result
@@ -31,13 +30,13 @@ data class ParseResult (
     }
 }
 
-fun interpret(program: String): ParseResult {
+fun interpret(program: String, importResolver: (String) -> String): ParseResult {
     val stream = CharStreams.fromString(program)
     val lexer = MyCriteriaLexer(stream)
     val tokens = CommonTokenStream(lexer)
     val parser = MyCriteriaParser(tokens)
     val tree = parser.app()
-    val myVisitor = MyCriteriaVisitorImpl()
+    val myVisitor = MyCriteriaVisitorImpl(importResolver)
     val appResult = (myVisitor.visit(tree) as Result.App)
     return ParseResult(
         appResult.fields,
