@@ -10,9 +10,29 @@ import kotlin.reflect.KParameter
 import kotlin.reflect.javaType
 
 sealed class Result {
-    class Func(val f: F) : Result() {
-        override fun invoke(it: VarType): Any? = f(it)
+    class Runtime(val f: F) : Result() {
+        private var value: Any? = null
+        private var computed: Boolean = false
+        override fun invoke(it: VarType): Any? {
+            if (!computed) {
+                value = f(it)
+                computed = true
+            }
+            return value
+        }
+        override fun getValue(): Any? = if (computed) {
+            value
+        } else {
+            throw IllegalStateException("Value not computed yet")
+        }
     }
+
+    class CompileTime(private val vl: Any?): Result() {
+        constructor(lambda: () -> Any) : this(lambda())
+        override fun invoke(it: VarType): Any? = vl
+        override fun getValue(): Any? = vl
+    }
+
     /*class Func { val value: Any?) : Result( } {
         override fun invoke(it: VarType): Any? = value
     }*/
@@ -23,13 +43,44 @@ sealed class Result {
         override fun invoke(it: VarType): Any? {
             TODO("Not yet implemented")
         }
+
+        override fun getValue(): Any? {
+            TODO("Not yet implemented")
+        }
     }
     abstract operator fun invoke(it: VarType): Any?
+    abstract fun getValue(): Any?
 }
 
 class MyCriteriaVisitorImpl : MyCriteriaBaseVisitor<Result>() {
+    private val memory = mutableMapOf<String, Result.Runtime>()
+
+    override fun visitIdentifierDefinition(ctx: MyCriteriaParser.IdentifierDefinitionContext): Result {
+        val expr = visit(ctx.expr())
+        val idName = ctx.STR().text
+        if (idName in memory) {
+            throw IllegalArgumentException("Redefinition of $idName")
+        }
+        memory[idName] = expr as Result.Runtime
+        return Result.Runtime {}
+    }
+
+    override fun visitIdAccess(ctx: MyCriteriaParser.IdAccessContext): Result {
+        val idName = visit(ctx.identifierAccess()).getValue()
+        if (idName !in memory) {
+            throw IllegalStateException("Unresolved identifier $idName")
+        }
+        return Result.Runtime {
+            memory[idName]!!(it)
+        }
+    }
+
+    override fun visitIdentifierAccess(ctx: MyCriteriaParser.IdentifierAccessContext): Result {
+        return Result.CompileTime { ctx.STR().text }
+    }
+
     override fun visitStrOrNum(ctx: MyCriteriaParser.StrOrNumContext): Result {
-        return Result.Func { null }
+        return Result.Runtime { null }
     }
 
     override fun visitInArrayParser(ctx: MyCriteriaParser.InArrayParserContext): Result {
@@ -42,7 +93,7 @@ class MyCriteriaVisitorImpl : MyCriteriaBaseVisitor<Result>() {
             }
         }
         val isIn = ctx.EXCL() == null
-        return Result.Func { it: VarType ->
+        return Result.Runtime { it: VarType ->
             (obj(it) in values).xor(isIn).not()
         }
     }
@@ -54,32 +105,36 @@ class MyCriteriaVisitorImpl : MyCriteriaBaseVisitor<Result>() {
     private val fields = mutableSetOf<String>()
 
     private fun resetState() {
+        memory.clear()
         fields.clear()
     }
     override fun visitApp(ctx: MyCriteriaParser.AppContext): Result {
         resetState()
+        ctx.statement().forEach {
+            visit(it)
+        }
         val app = visit(ctx.expr())
         return Result.App(fields) { it: VarType ->
             ParseResult.AppResult(
-                app(it) as Boolean, mapOf()
+                app(it) as Boolean, memory.mapValues { it.value.getValue() }
             )
         }
     }
 
     override fun visitStrLiteral(ctx: MyCriteriaParser.StrLiteralContext): Result {
         val text = ctx.text.trim('\'').trim('"')
-        return Result.Func { text }
+        return Result.Runtime { text }
     }
 
     override fun visitNull(ctx: MyCriteriaParser.NullContext): Result {
-        return Result.Func { null }
+        return Result.Runtime { null }
     }
 
     override fun visitComparison(ctx: MyCriteriaParser.ComparisonContext): Result {
         val l = visit(ctx.expr(0))
         val r = visit(ctx.expr(1))
         val op = ctx.op.text
-        return Result.Func { it: VarType ->
+        return Result.Runtime { it: VarType ->
             val lEv = l(it)
             val rEv = r(it)
             compare(lEv, rEv, op)
@@ -97,13 +152,13 @@ class MyCriteriaVisitorImpl : MyCriteriaBaseVisitor<Result>() {
     }
 
     override fun visitBool(ctx: MyCriteriaParser.BoolContext): Result {
-        return Result.Func { ctx.text == "true" }
+        return Result.Runtime { ctx.text == "true" }
     }
 
     override fun visitMulDiv(ctx: MyCriteriaParser.MulDivContext): Result {
         val lF = visit(ctx.expr(0))
         val rF = visit(ctx.expr(1))
-        return Result.Func { it: VarType ->
+        return Result.Runtime { it: VarType ->
             val l = lF(it) as Number
             val r = rF(it) as Number
             when (ctx.op.text) {
@@ -117,7 +172,7 @@ class MyCriteriaVisitorImpl : MyCriteriaBaseVisitor<Result>() {
     override fun visitAddSub(ctx: MyCriteriaParser.AddSubContext): Result {
         val lF = visit(ctx.expr(0))
         val rF = visit(ctx.expr(1))
-        return Result.Func { it: VarType ->
+        return Result.Runtime { it: VarType ->
             val l = lF(it) as Number
             val r = rF(it) as Number
             when (ctx.op.text) {
@@ -131,7 +186,7 @@ class MyCriteriaVisitorImpl : MyCriteriaBaseVisitor<Result>() {
     override fun visitObjectAccessParser(ctx: MyCriteriaParser.ObjectAccessParserContext): Result {
         val field = ctx.jsonPointer(0).text.trim('\'').trim('\"')
         fields += field
-        return Result.Func { it: VarType ->
+        return Result.Runtime { it: VarType ->
             it.getRecursively(field)
         }
     }
@@ -142,7 +197,7 @@ class MyCriteriaVisitorImpl : MyCriteriaBaseVisitor<Result>() {
 
     override fun visitNotExpr(ctx: MyCriteriaParser.NotExprContext): Result {
         val exprF = visit(ctx.expr())
-        return Result.Func { it: VarType ->
+        return Result.Runtime { it: VarType ->
             (exprF(it) as Boolean).not()
         }
     }
@@ -154,7 +209,7 @@ class MyCriteriaVisitorImpl : MyCriteriaBaseVisitor<Result>() {
     override fun visitAnd(ctx: MyCriteriaParser.AndContext): Result {
         val lF = visit(ctx.expr(0))
         val rF = visit(ctx.expr(1))
-        return Result.Func { it: VarType ->
+        return Result.Runtime { it: VarType ->
             val l = lF(it) as Boolean
             val r = rF(it) as Boolean
             l && r
@@ -164,7 +219,7 @@ class MyCriteriaVisitorImpl : MyCriteriaBaseVisitor<Result>() {
     override fun visitOr(ctx: MyCriteriaParser.OrContext): Result {
         val lF = visit(ctx.expr(0))
         val rF = visit(ctx.expr(1))
-        return Result.Func { it: VarType ->
+        return Result.Runtime { it: VarType ->
             val l = lF(it) as Boolean
             val r = rF(it) as Boolean
             l || r
@@ -177,7 +232,7 @@ class MyCriteriaVisitorImpl : MyCriteriaBaseVisitor<Result>() {
         } else {
             { it.toInt() }
         }
-        return Result.Func {
+        return Result.Runtime {
             convert(ctx.text)
         }
     }
@@ -207,7 +262,7 @@ class MyCriteriaVisitorImpl : MyCriteriaBaseVisitor<Result>() {
                     "but got: $expr.size
              */
         }
-        return Result.Func { it: VarType ->
+        return Result.Runtime { it: VarType ->
             val args = expr.map { x -> x(it) }
             filteredFunctions.filter { function ->
                 val expectedArgTypes: Set<String> = function.params().map {
@@ -234,7 +289,7 @@ class MyCriteriaVisitorImpl : MyCriteriaBaseVisitor<Result>() {
         val expr = ctx.expr().map {
             visit(it)
         }
-        return Result.Func { it: VarType ->
+        return Result.Runtime { it: VarType ->
             // TODO replace `first` with something else
             filteredFunctions.first().call(Functions, *expr.map { x ->
                 x(it)

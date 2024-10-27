@@ -18,6 +18,16 @@ public interface MyCriteriaListener extends ParseTreeListener {
 	 */
 	void exitApp(MyCriteriaParser.AppContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link MyCriteriaParser#statement}.
+	 * @param ctx the parse tree
+	 */
+	void enterStatement(MyCriteriaParser.StatementContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link MyCriteriaParser#statement}.
+	 * @param ctx the parse tree
+	 */
+	void exitStatement(MyCriteriaParser.StatementContext ctx);
+	/**
 	 * Enter a parse tree produced by the {@code Null}
 	 * labeled alternative in {@link MyCriteriaParser#expr}.
 	 * @param ctx the parse tree
@@ -89,6 +99,18 @@ public interface MyCriteriaListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitInfixFuncCall(MyCriteriaParser.InfixFuncCallContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code IdAccess}
+	 * labeled alternative in {@link MyCriteriaParser#expr}.
+	 * @param ctx the parse tree
+	 */
+	void enterIdAccess(MyCriteriaParser.IdAccessContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code IdAccess}
+	 * labeled alternative in {@link MyCriteriaParser#expr}.
+	 * @param ctx the parse tree
+	 */
+	void exitIdAccess(MyCriteriaParser.IdAccessContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code StrLiteral}
 	 * labeled alternative in {@link MyCriteriaParser#expr}.
@@ -207,6 +229,26 @@ public interface MyCriteriaListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitTest_expr(MyCriteriaParser.Test_exprContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link MyCriteriaParser#identifierDefinition}.
+	 * @param ctx the parse tree
+	 */
+	void enterIdentifierDefinition(MyCriteriaParser.IdentifierDefinitionContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link MyCriteriaParser#identifierDefinition}.
+	 * @param ctx the parse tree
+	 */
+	void exitIdentifierDefinition(MyCriteriaParser.IdentifierDefinitionContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link MyCriteriaParser#identifierAccess}.
+	 * @param ctx the parse tree
+	 */
+	void enterIdentifierAccess(MyCriteriaParser.IdentifierAccessContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link MyCriteriaParser#identifierAccess}.
+	 * @param ctx the parse tree
+	 */
+	void exitIdentifierAccess(MyCriteriaParser.IdentifierAccessContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link MyCriteriaParser#jsonPointerInner}.
 	 * @param ctx the parse tree

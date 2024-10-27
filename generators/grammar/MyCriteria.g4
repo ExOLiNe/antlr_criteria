@@ -3,12 +3,13 @@
  */
 grammar MyCriteria;
 
-app: expr;
+app: (statement)* expr;
 
 // Lexer rules
 SLASH: '/';
 DOT: '.';
 COMMA: ',';
+SEMICOLON: ';';
 SQR_L: '[';
 SQR_R: ']';
 IN: 'in';
@@ -20,11 +21,18 @@ STR: [a-zA-Z0-9]+;
 NULL_T: 'null';
 S_Q: '\'';
 D_Q: '"';
+BUCK: '$';
+EQUALS: '=';
 
 WS: [ \t\r\n]+ -> skip;
 
+statement
+    : identifierDefinition SEMICOLON;
+
 // Parser rules
-expr: inArrayParser             # InArray
+expr
+    : identifierAccess          # IdAccess
+    | inArrayParser             # InArray
     | expr op=('*'|'/') expr    # MulDiv
     | expr op=('+'|'-') expr    # AddSub
     | (STR '(' (expr ',')* expr? ')') # FuncCall
@@ -58,6 +66,8 @@ test_expr: inArrayParser
     | NULL_T
     ;
 
+identifierDefinition: BUCK STR EQUALS expr;
+identifierAccess: BUCK STR;
 jsonPointerInner: SLASH? STR (SLASH STR)* SLASH?;
 jsonPointer: (S_Q jsonPointerInner S_Q) | (D_Q jsonPointerInner D_Q) | STR_LITERAL;
 objectAccessParser: 'object' SQR_L + jsonPointer + SQR_R;

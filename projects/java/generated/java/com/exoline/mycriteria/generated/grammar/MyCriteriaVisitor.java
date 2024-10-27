@@ -17,6 +17,12 @@ public interface MyCriteriaVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitApp(MyCriteriaParser.AppContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link MyCriteriaParser#statement}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitStatement(MyCriteriaParser.StatementContext ctx);
+	/**
 	 * Visit a parse tree produced by the {@code Null}
 	 * labeled alternative in {@link MyCriteriaParser#expr}.
 	 * @param ctx the parse tree
@@ -58,6 +64,13 @@ public interface MyCriteriaVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitInfixFuncCall(MyCriteriaParser.InfixFuncCallContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code IdAccess}
+	 * labeled alternative in {@link MyCriteriaParser#expr}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitIdAccess(MyCriteriaParser.IdAccessContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code StrLiteral}
 	 * labeled alternative in {@link MyCriteriaParser#expr}.
@@ -127,6 +140,18 @@ public interface MyCriteriaVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitTest_expr(MyCriteriaParser.Test_exprContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link MyCriteriaParser#identifierDefinition}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitIdentifierDefinition(MyCriteriaParser.IdentifierDefinitionContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link MyCriteriaParser#identifierAccess}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitIdentifierAccess(MyCriteriaParser.IdentifierAccessContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link MyCriteriaParser#jsonPointerInner}.
 	 * @param ctx the parse tree

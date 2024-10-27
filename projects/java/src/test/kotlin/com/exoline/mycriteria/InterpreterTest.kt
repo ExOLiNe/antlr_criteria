@@ -2,6 +2,9 @@ package com.exoline.mycriteria
 
 import com.exoline.mycriteria.generated.grammar.MyCriteriaLexer
 import com.exoline.mycriteria.generated.grammar.MyCriteriaParser
+import com.exoline.mycriteria.walk.MyCriteriaVisitorImpl
+import com.exoline.mycriteria.walk.PrettyVisitor
+import com.exoline.mycriteria.walk.Result
 import com.fasterxml.jackson.databind.node.ArrayNode
 import com.fasterxml.jackson.databind.node.BooleanNode
 import com.fasterxml.jackson.databind.node.TextNode
@@ -17,21 +20,23 @@ class InterpreterTest {
 
     @Test
     fun testParticular() {
-        val program = """
-            'blabla'
-        """.trimIndent()
+        val program = "\$some = 10;\n\$some + 5".trimIndent()
         val stream = CharStreams.fromString(program)
         val lexer = MyCriteriaLexer(stream)
         val tokens = CommonTokenStream(lexer)
         val parser = MyCriteriaParser(tokens)
-        val tree = parser.jsonPointer()
-        println(tree.toStringTree())
+        val tree = parser.app()
+        val myVisitor = MyCriteriaVisitorImpl()
+        val appResult = (myVisitor.visit(tree) as Result.App)
+        appResult.app
+        // println(tree.toStringTree())
+        println(appResult)
     }
 
     @Test
     fun test() {
         val testsDir = File(System.getProperty("tests.dir"))
-        val only: Int = 16//-1
+        val only: Int = -1
         val errors = mutableListOf<() -> Unit>()
         testsDir.listFiles()?.forEach { file ->
             if (file.isDirectory) {

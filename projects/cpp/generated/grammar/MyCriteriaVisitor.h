@@ -21,6 +21,8 @@ public:
    */
     virtual std::any visitApp(MyCriteriaParser::AppContext *context) = 0;
 
+    virtual std::any visitStatement(MyCriteriaParser::StatementContext *context) = 0;
+
     virtual std::any visitNull(MyCriteriaParser::NullContext *context) = 0;
 
     virtual std::any visitComparison(MyCriteriaParser::ComparisonContext *context) = 0;
@@ -32,6 +34,8 @@ public:
     virtual std::any visitAddSub(MyCriteriaParser::AddSubContext *context) = 0;
 
     virtual std::any visitInfixFuncCall(MyCriteriaParser::InfixFuncCallContext *context) = 0;
+
+    virtual std::any visitIdAccess(MyCriteriaParser::IdAccessContext *context) = 0;
 
     virtual std::any visitStrLiteral(MyCriteriaParser::StrLiteralContext *context) = 0;
 
@@ -52,6 +56,10 @@ public:
     virtual std::any visitParenExpr(MyCriteriaParser::ParenExprContext *context) = 0;
 
     virtual std::any visitTest_expr(MyCriteriaParser::Test_exprContext *context) = 0;
+
+    virtual std::any visitIdentifierDefinition(MyCriteriaParser::IdentifierDefinitionContext *context) = 0;
+
+    virtual std::any visitIdentifierAccess(MyCriteriaParser::IdentifierAccessContext *context) = 0;
 
     virtual std::any visitJsonPointerInner(MyCriteriaParser::JsonPointerInnerContext *context) = 0;
 

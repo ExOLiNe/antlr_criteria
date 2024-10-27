@@ -19,6 +19,9 @@ public:
   virtual void enterApp(MyCriteriaParser::AppContext * /*ctx*/) override { }
   virtual void exitApp(MyCriteriaParser::AppContext * /*ctx*/) override { }
 
+  virtual void enterStatement(MyCriteriaParser::StatementContext * /*ctx*/) override { }
+  virtual void exitStatement(MyCriteriaParser::StatementContext * /*ctx*/) override { }
+
   virtual void enterNull(MyCriteriaParser::NullContext * /*ctx*/) override { }
   virtual void exitNull(MyCriteriaParser::NullContext * /*ctx*/) override { }
 
@@ -36,6 +39,9 @@ public:
 
   virtual void enterInfixFuncCall(MyCriteriaParser::InfixFuncCallContext * /*ctx*/) override { }
   virtual void exitInfixFuncCall(MyCriteriaParser::InfixFuncCallContext * /*ctx*/) override { }
+
+  virtual void enterIdAccess(MyCriteriaParser::IdAccessContext * /*ctx*/) override { }
+  virtual void exitIdAccess(MyCriteriaParser::IdAccessContext * /*ctx*/) override { }
 
   virtual void enterStrLiteral(MyCriteriaParser::StrLiteralContext * /*ctx*/) override { }
   virtual void exitStrLiteral(MyCriteriaParser::StrLiteralContext * /*ctx*/) override { }
@@ -66,6 +72,12 @@ public:
 
   virtual void enterTest_expr(MyCriteriaParser::Test_exprContext * /*ctx*/) override { }
   virtual void exitTest_expr(MyCriteriaParser::Test_exprContext * /*ctx*/) override { }
+
+  virtual void enterIdentifierDefinition(MyCriteriaParser::IdentifierDefinitionContext * /*ctx*/) override { }
+  virtual void exitIdentifierDefinition(MyCriteriaParser::IdentifierDefinitionContext * /*ctx*/) override { }
+
+  virtual void enterIdentifierAccess(MyCriteriaParser::IdentifierAccessContext * /*ctx*/) override { }
+  virtual void exitIdentifierAccess(MyCriteriaParser::IdentifierAccessContext * /*ctx*/) override { }
 
   virtual void enterJsonPointerInner(MyCriteriaParser::JsonPointerInnerContext * /*ctx*/) override { }
   virtual void exitJsonPointerInner(MyCriteriaParser::JsonPointerInnerContext * /*ctx*/) override { }

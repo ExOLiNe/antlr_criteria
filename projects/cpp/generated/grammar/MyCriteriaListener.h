@@ -17,6 +17,9 @@ public:
   virtual void enterApp(MyCriteriaParser::AppContext *ctx) = 0;
   virtual void exitApp(MyCriteriaParser::AppContext *ctx) = 0;
 
+  virtual void enterStatement(MyCriteriaParser::StatementContext *ctx) = 0;
+  virtual void exitStatement(MyCriteriaParser::StatementContext *ctx) = 0;
+
   virtual void enterNull(MyCriteriaParser::NullContext *ctx) = 0;
   virtual void exitNull(MyCriteriaParser::NullContext *ctx) = 0;
 
@@ -34,6 +37,9 @@ public:
 
   virtual void enterInfixFuncCall(MyCriteriaParser::InfixFuncCallContext *ctx) = 0;
   virtual void exitInfixFuncCall(MyCriteriaParser::InfixFuncCallContext *ctx) = 0;
+
+  virtual void enterIdAccess(MyCriteriaParser::IdAccessContext *ctx) = 0;
+  virtual void exitIdAccess(MyCriteriaParser::IdAccessContext *ctx) = 0;
 
   virtual void enterStrLiteral(MyCriteriaParser::StrLiteralContext *ctx) = 0;
   virtual void exitStrLiteral(MyCriteriaParser::StrLiteralContext *ctx) = 0;
@@ -64,6 +70,12 @@ public:
 
   virtual void enterTest_expr(MyCriteriaParser::Test_exprContext *ctx) = 0;
   virtual void exitTest_expr(MyCriteriaParser::Test_exprContext *ctx) = 0;
+
+  virtual void enterIdentifierDefinition(MyCriteriaParser::IdentifierDefinitionContext *ctx) = 0;
+  virtual void exitIdentifierDefinition(MyCriteriaParser::IdentifierDefinitionContext *ctx) = 0;
+
+  virtual void enterIdentifierAccess(MyCriteriaParser::IdentifierAccessContext *ctx) = 0;
+  virtual void exitIdentifierAccess(MyCriteriaParser::IdentifierAccessContext *ctx) = 0;
 
   virtual void enterJsonPointerInner(MyCriteriaParser::JsonPointerInnerContext *ctx) = 0;
   virtual void exitJsonPointerInner(MyCriteriaParser::JsonPointerInnerContext *ctx) = 0;

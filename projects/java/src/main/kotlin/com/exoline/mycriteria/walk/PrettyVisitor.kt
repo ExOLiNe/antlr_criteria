@@ -4,6 +4,34 @@ import com.exoline.mycriteria.generated.grammar.MyCriteriaBaseVisitor
 import com.exoline.mycriteria.generated.grammar.MyCriteriaParser
 
 class PrettyVisitor : MyCriteriaBaseVisitor<String>() {
+
+    override fun visitIdAccess(ctx: MyCriteriaParser.IdAccessContext?): String {
+        return super.visitIdAccess(ctx)
+    }
+
+    override fun visitIdentifierDefinition(ctx: MyCriteriaParser.IdentifierDefinitionContext): String {
+        val idName = ctx.STR().text
+        val expr = visit(ctx.expr())
+        println("\$${idName}=$expr;")
+        return ""
+    }
+
+    override fun visitIdentifierAccess(ctx: MyCriteriaParser.IdentifierAccessContext): String {
+        return "\$${ctx.STR().text}"
+    }
+
+    override fun visitInArrayParser(ctx: MyCriteriaParser.InArrayParserContext?): String {
+        return super.visitInArrayParser(ctx)
+    }
+
+    override fun visitStrOrNum(ctx: MyCriteriaParser.StrOrNumContext?): String {
+        return super.visitStrOrNum(ctx)
+    }
+
+    override fun visitJsonPointer(ctx: MyCriteriaParser.JsonPointerContext?): String {
+        return super.visitJsonPointer(ctx)
+    }
+
     override fun visitInArray(ctx: MyCriteriaParser.InArrayContext): String {
         val obj = visit(ctx.inArrayParser().objectAccessParser())
         val values = ctx.inArrayParser().strOrNum().map {

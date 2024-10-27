@@ -14,9 +14,9 @@ public:
   enum {
     T__0 = 1, T__1 = 2, T__2 = 3, T__3 = 4, T__4 = 5, T__5 = 6, T__6 = 7, 
     T__7 = 8, T__8 = 9, T__9 = 10, T__10 = 11, T__11 = 12, T__12 = 13, T__13 = 14, 
-    SLASH = 15, DOT = 16, COMMA = 17, SQR_L = 18, SQR_R = 19, IN = 20, BOOL = 21, 
-    EXCL = 22, INT = 23, STR_LITERAL = 24, STR = 25, NULL_T = 26, S_Q = 27, 
-    D_Q = 28, WS = 29
+    SLASH = 15, DOT = 16, COMMA = 17, SEMICOLON = 18, SQR_L = 19, SQR_R = 20, 
+    IN = 21, BOOL = 22, EXCL = 23, INT = 24, STR_LITERAL = 25, STR = 26, 
+    NULL_T = 27, S_Q = 28, D_Q = 29, BUCK = 30, EQUALS = 31, WS = 32
   };
 
   explicit MyCriteriaLexer(antlr4::CharStream *input);

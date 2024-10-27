@@ -19,6 +19,10 @@ public:
     return visitChildren(ctx);
   }
 
+  virtual std::any visitStatement(MyCriteriaParser::StatementContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
   virtual std::any visitNull(MyCriteriaParser::NullContext *ctx) override {
     return visitChildren(ctx);
   }
@@ -40,6 +44,10 @@ public:
   }
 
   virtual std::any visitInfixFuncCall(MyCriteriaParser::InfixFuncCallContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual std::any visitIdAccess(MyCriteriaParser::IdAccessContext *ctx) override {
     return visitChildren(ctx);
   }
 
@@ -80,6 +88,14 @@ public:
   }
 
   virtual std::any visitTest_expr(MyCriteriaParser::Test_exprContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual std::any visitIdentifierDefinition(MyCriteriaParser::IdentifierDefinitionContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual std::any visitIdentifierAccess(MyCriteriaParser::IdentifierAccessContext *ctx) override {
     return visitChildren(ctx);
   }
 

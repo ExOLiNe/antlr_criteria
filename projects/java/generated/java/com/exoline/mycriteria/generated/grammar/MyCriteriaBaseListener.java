@@ -29,6 +29,18 @@ public class MyCriteriaBaseListener implements MyCriteriaListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterStatement(MyCriteriaParser.StatementContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitStatement(MyCriteriaParser.StatementContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterNull(MyCriteriaParser.NullContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -96,6 +108,18 @@ public class MyCriteriaBaseListener implements MyCriteriaListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitInfixFuncCall(MyCriteriaParser.InfixFuncCallContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterIdAccess(MyCriteriaParser.IdAccessContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitIdAccess(MyCriteriaParser.IdAccessContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -216,6 +240,30 @@ public class MyCriteriaBaseListener implements MyCriteriaListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitTest_expr(MyCriteriaParser.Test_exprContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterIdentifierDefinition(MyCriteriaParser.IdentifierDefinitionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitIdentifierDefinition(MyCriteriaParser.IdentifierDefinitionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterIdentifierAccess(MyCriteriaParser.IdentifierAccessContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitIdentifierAccess(MyCriteriaParser.IdentifierAccessContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
