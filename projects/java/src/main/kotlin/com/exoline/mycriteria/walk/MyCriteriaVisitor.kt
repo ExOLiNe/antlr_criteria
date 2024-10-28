@@ -189,19 +189,17 @@ class MyCriteriaVisitorImpl(
 
         return l.flatMap { lEv ->
             r.map { rEv ->
-                compare(lEv, rEv, op)
+                when (op) {
+                    ">" -> lEv > rEv
+                    "<" -> lEv < rEv
+                    ">=" -> lEv >= rEv
+                    "<=" -> lEv <= rEv
+                    "==" -> lEv == rEv
+                    "!=" -> lEv != rEv
+                    else -> TODO("Not implemented yet")
+                }
             }
         }
-    }
-
-    private fun compare(l: Any?, r: Any?, op: String): Boolean = when (op) {
-        ">" -> l > r
-        "<" -> l < r
-        ">=" -> l >= r
-        "<=" -> l <= r
-        "==" -> l == r
-        "!=" -> l != r
-        else -> TODO("Not implemented yet")
     }
 
     override fun visitBool(ctx: MyCriteriaParser.BoolContext): Expr {
@@ -233,8 +231,8 @@ class MyCriteriaVisitorImpl(
     }
 
     override fun visitNotExpr(ctx: MyCriteriaParser.NotExprContext): Expr {
-        val exprF = visit(ctx.expr())
-        return exprF.map {
+        val expr = visit(ctx.expr())
+        return expr.map {
             (it as Boolean).not()
         }
     }
@@ -267,12 +265,12 @@ class MyCriteriaVisitorImpl(
     @OptIn(ExperimentalStdlibApi::class)
     override fun visitFuncCall(ctx: MyCriteriaParser.FuncCallContext): Expr {
         val funcName = ctx.IDENTIFIER().text
+        val exprs = ctx.expr().map {
+            visit(it)
+        }
         val functions = Functions.getFunctions(funcName) // TODO add param filter
         if (functions.isEmpty()) {
             throw IllegalArgumentException("Unresolved function name")
-        }
-        val exprs = ctx.expr().map {
-            visit(it)
         }
         val filteredFunctions = functions.filter { function ->
             val totalArgs = function.params().size
