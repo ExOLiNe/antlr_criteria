@@ -5,7 +5,7 @@ import com.exoline.mycriteria.generated.grammar.MyCriteriaParser
 import com.exoline.mycriteria.generated.grammar.MyCriteriaParser.AppContext
 import com.exoline.mycriteria.walk.MyCriteriaVisitorImpl
 import com.exoline.mycriteria.walk.PrettyVisitor
-import com.exoline.mycriteria.walk.Result
+import com.exoline.mycriteria.walk.Expr
 import org.antlr.v4.runtime.*
 import org.antlr.v4.runtime.atn.ATNConfigSet
 import org.antlr.v4.runtime.dfa.DFA
@@ -85,7 +85,7 @@ fun interpret(program: String, importResolver: (String) -> String): ParseResult 
     val parser = MyCriteriaParser(tokens)
     val tree = parser.app()
     val myVisitor = MyCriteriaVisitorImpl(importResolver)
-    val appResult = (myVisitor.visit(tree) as Result.App)
+    val appResult = (myVisitor.visit(tree) as Expr.App)
     return ParseResult(
         appResult.fields,
         tokens.tokens,
