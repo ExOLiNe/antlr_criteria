@@ -1,3 +1,4 @@
 $some = 10;
-$anotherSome = size("str");
+$some2 = "str";
+$anotherSome = size($some2);
 object['field'] == $some + $anotherSome

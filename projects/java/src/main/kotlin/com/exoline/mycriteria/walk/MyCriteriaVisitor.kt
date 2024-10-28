@@ -22,6 +22,7 @@ sealed class Expr {
         override fun invoke(it: VarType): Any? {
             if (!computed) {
                 value = f(it)
+                println("calculated ${value}")
                 computed = true
             }
             return value
@@ -113,9 +114,7 @@ class MyCriteriaVisitorImpl(
             throw IllegalStateException("Unresolved identifier $idName")
         }
         // TODO simplify and fix new bug
-        return Expr.Runtime {
-            memory[idName]!!(it)
-        }
+        return memory[idName]!!
     }
 
     override fun visitIdentifierAccess(ctx: MyCriteriaParser.IdentifierAccessContext): Expr {
@@ -168,7 +167,9 @@ class MyCriteriaVisitorImpl(
         val app = visit(ctx.expr())
         return Expr.App(fields) { it: VarType ->
             ParseResult.AppResult(
-                app(it) as Boolean, memory.mapValues { it.value.getValue() }
+                app(it) as Boolean, memory.mapValues {
+                    it.value.getValue()
+                }
             )
         }
     }
@@ -287,18 +288,28 @@ class MyCriteriaVisitorImpl(
                     "but got: $expr.size
              */
         }
-        return Expr.Runtime { it: VarType ->
-            val args = exprs.map { x -> x(it) }
-            filteredFunctions.filter { function ->
-                val expectedArgTypes: Set<String> = function.params().map {
-                    it.type.javaType.typeName
-                }.toSet()
-                val actualArgTypes: Set<String> = args.mapNotNull {
-                    it?.javaClass?.typeName
-                }.toSet()
-                expectedArgTypes.containsAll(actualArgTypes)
-            }.first().call(Functions, *args.toTypedArray())
+        fun callF(args: List<Any?>): Any? = filteredFunctions.first { function ->
+            val expectedArgTypes: Set<String> = function.params().map {
+                it.type.javaType.typeName
+            }.toSet()
+            val actualArgTypes: Set<String> = args.mapNotNull {
+                it?.javaClass?.typeName
+            }.toSet()
+            expectedArgTypes.containsAll(actualArgTypes)
+        }.call(Functions, *args.toTypedArray())
+        val compileTimeExprs = exprs.filterIsInstance<Expr.CompileTime>()
+        val rootExpr = if (exprs.size == compileTimeExprs.size) {
+            Expr.CompileTime {
+                val args = exprs.map { x -> x.getValue() }
+                callF(args)
+            }
+        } else {
+            Expr.Runtime {
+                val args = exprs.map { x -> x(it) }
+                callF(args)
+            }
         }
+        return rootExpr
     }
 
     override fun visitInfixFuncCall(ctx: MyCriteriaParser.InfixFuncCallContext): Expr {
