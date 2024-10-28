@@ -112,6 +112,7 @@ class MyCriteriaVisitorImpl(
         if (idName !in memory) {
             throw IllegalStateException("Unresolved identifier $idName")
         }
+        // TODO simplify and fix new bug
         return Expr.Runtime {
             memory[idName]!!(it)
         }
