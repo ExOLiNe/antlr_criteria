@@ -7,6 +7,7 @@ import com.exoline.mycriteria.functions.Functions.isInfixFunction
 import com.exoline.mycriteria.generated.grammar.MyCriteriaBaseVisitor
 import com.exoline.mycriteria.generated.grammar.MyCriteriaLexer
 import com.exoline.mycriteria.generated.grammar.MyCriteriaParser
+import com.exoline.mycriteria.generated.grammar.MyCriteriaParser.ExprContext
 import org.antlr.v4.runtime.CharStreams
 import org.antlr.v4.runtime.CommonTokenStream
 import kotlin.reflect.KFunction
@@ -29,12 +30,21 @@ sealed class Result {
         } else {
             throw IllegalStateException("Value not computed yet")
         }
+
+        override fun map(transform: (Any?) -> Any?): Result = if (computed) {
+            CompileTime { transform(value) }
+        } else {
+            Runtime {
+                transform(f(it))
+            }
+        }
     }
 
     class CompileTime(private val vl: Any?): Result() {
-        constructor(lambda: () -> Any) : this(lambda())
+        constructor(lambda: () -> Any?) : this(lambda())
         override fun invoke(it: VarType): Any? = vl
         override fun getValue(): Any? = vl
+        override fun map(transform: (Any?) -> Any?): Result = CompileTime { transform(vl) }
     }
 
     class App(
@@ -48,19 +58,24 @@ sealed class Result {
         override fun getValue(): Any? {
             TODO("Not yet implemented")
         }
+
+        override fun map(transform: (Any?) -> Any?): Result {
+            TODO("Not yet implemented")
+        }
     }
     abstract operator fun invoke(it: VarType): Any?
     abstract fun getValue(): Any?
+    abstract fun map(transform: (Any?) -> Any?): Result
 }
 
 class MyCriteriaVisitorImpl(
     private val importResolver: (String) -> String?
 ) : MyCriteriaBaseVisitor<Result>() {
     private val imports = mutableSetOf<String>()
-    private val memory = mutableMapOf<String, Result.Runtime>()
+    private val memory = mutableMapOf<String, Result>()
 
     override fun visitImportStatement(ctx: MyCriteriaParser.ImportStatementContext): Result {
-        val importRef = ctx.STR().text
+        val importRef = ctx.IDENTIFIER().text
         if (!imports.add(importRef)) {
             throw RecursiveImportException("Import $importRef has already used")
         }
@@ -79,12 +94,12 @@ class MyCriteriaVisitorImpl(
 
     override fun visitIdentifierDefinition(ctx: MyCriteriaParser.IdentifierDefinitionContext): Result {
         val expr = visit(ctx.expr())
-        val idName = ctx.STR().text
+        val idName = ctx.IDENTIFIER().text
         if (idName in memory) {
             throw IllegalArgumentException("Redefinition of $idName")
         }
-        memory[idName] = expr as Result.Runtime
-        return Result.Runtime {}
+        memory[idName] = expr
+        return Result.CompileTime {}
     }
 
     override fun visitIdAccess(ctx: MyCriteriaParser.IdAccessContext): Result {
@@ -98,11 +113,19 @@ class MyCriteriaVisitorImpl(
     }
 
     override fun visitIdentifierAccess(ctx: MyCriteriaParser.IdentifierAccessContext): Result {
-        return Result.CompileTime { ctx.STR().text }
+        return Result.CompileTime { ctx.IDENTIFIER().text }
     }
 
-    override fun visitStrOrNum(ctx: MyCriteriaParser.StrOrNumContext): Result {
-        return Result.Runtime { null }
+    override fun visitObjectAccess(ctx: MyCriteriaParser.ObjectAccessContext): Result {
+        return visit(ctx.objectAccessParser())
+    }
+
+    override fun visitObjectAccessParser(ctx: MyCriteriaParser.ObjectAccessParserContext): Result {
+        val field = ctx.STR_LITERAL(0).text.trim('\'').trim('\"')
+        fields += field
+        return Result.Runtime { it: VarType ->
+            it.getRecursively(field)
+        }
     }
 
     override fun visitInArrayParser(ctx: MyCriteriaParser.InArrayParserContext): Result {
@@ -115,8 +138,8 @@ class MyCriteriaVisitorImpl(
             }
         }
         val isIn = ctx.EXCL() == null
-        return Result.Runtime { it: VarType ->
-            (obj(it) in values).xor(isIn).not()
+        return obj.map {
+            (it in values).xor(isIn).not()
         }
     }
 
@@ -146,11 +169,11 @@ class MyCriteriaVisitorImpl(
 
     override fun visitStrLiteral(ctx: MyCriteriaParser.StrLiteralContext): Result {
         val text = ctx.text.trim('\'').trim('"')
-        return Result.Runtime { text }
+        return Result.CompileTime { text }
     }
 
     override fun visitNull(ctx: MyCriteriaParser.NullContext): Result {
-        return Result.Runtime { null }
+        return Result.CompileTime { null }
     }
 
     override fun visitComparison(ctx: MyCriteriaParser.ComparisonContext): Result {
@@ -206,22 +229,10 @@ class MyCriteriaVisitorImpl(
         }
     }
 
-    override fun visitObjectAccessParser(ctx: MyCriteriaParser.ObjectAccessParserContext): Result {
-        val field = ctx.jsonPointer(0).text.trim('\'').trim('\"')
-        fields += field
-        return Result.Runtime { it: VarType ->
-            it.getRecursively(field)
-        }
-    }
-
-    override fun visitObjectAccess(ctx: MyCriteriaParser.ObjectAccessContext): Result {
-        return visitObjectAccessParser(ctx.objectAccessParser())
-    }
-
     override fun visitNotExpr(ctx: MyCriteriaParser.NotExprContext): Result {
         val exprF = visit(ctx.expr())
-        return Result.Runtime { it: VarType ->
-            (exprF(it) as Boolean).not()
+        return exprF.map {
+            (it as Boolean).not()
         }
     }
 
@@ -262,7 +273,7 @@ class MyCriteriaVisitorImpl(
 
     @OptIn(ExperimentalStdlibApi::class)
     override fun visitFuncCall(ctx: MyCriteriaParser.FuncCallContext): Result {
-        val funcName = ctx.STR().text
+        val funcName = ctx.IDENTIFIER().text
         val functions = Functions.getFunctions(funcName) // TODO add param filter
         if (functions.isEmpty()) {
             throw IllegalArgumentException("Unresolved function name")
@@ -300,8 +311,23 @@ class MyCriteriaVisitorImpl(
     }
 
     override fun visitInfixFuncCall(ctx: MyCriteriaParser.InfixFuncCallContext): Result {
-        val funcName = ctx.STR().text
-        val functions = Functions.getFunctions(ctx.STR().text)
+        val funcName = ctx.IDENTIFIER().text
+        return funcCall(funcName) {
+            ctx.expr()
+        }
+    }
+
+    override fun visitInfixFuncCallNot(ctx: MyCriteriaParser.InfixFuncCallNotContext): Result {
+        val funcName = ctx.IDENTIFIER().text
+        return funcCall(funcName) {
+            ctx.expr()
+        }.map {
+            (it as Boolean).not()
+        }
+    }
+
+    private fun funcCall(funcName: String, expr: () -> List<ExprContext>): Result {
+        val functions = Functions.getFunctions(funcName)
         if (functions.isEmpty()) {
             throw IllegalArgumentException("Unresolved function name")
         }
@@ -309,7 +335,7 @@ class MyCriteriaVisitorImpl(
         if (filteredFunctions.isEmpty()) {
             throw IllegalArgumentException("Function $funcName is not infix")
         }
-        val expr = ctx.expr().map {
+        val expr = expr().map {
             visit(it)
         }
         return Result.Runtime { it: VarType ->

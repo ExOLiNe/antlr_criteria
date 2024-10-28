@@ -10,14 +10,14 @@ class PrettyVisitor : MyCriteriaBaseVisitor<String>() {
     }
 
     override fun visitIdentifierDefinition(ctx: MyCriteriaParser.IdentifierDefinitionContext): String {
-        val idName = ctx.STR().text
+        val idName = ctx.IDENTIFIER().text
         val expr = visit(ctx.expr())
         println("\$${idName}=$expr;")
         return ""
     }
 
     override fun visitIdentifierAccess(ctx: MyCriteriaParser.IdentifierAccessContext): String {
-        return "\$${ctx.STR().text}"
+        return "\$${ctx.IDENTIFIER().text}"
     }
 
     override fun visitInArrayParser(ctx: MyCriteriaParser.InArrayParserContext?): String {
@@ -28,9 +28,9 @@ class PrettyVisitor : MyCriteriaBaseVisitor<String>() {
         return super.visitStrOrNum(ctx)
     }
 
-    override fun visitJsonPointer(ctx: MyCriteriaParser.JsonPointerContext?): String {
+    /*override fun visitJsonPointer(ctx: MyCriteriaParser.JsonPointerContext?): String {
         return super.visitJsonPointer(ctx)
-    }
+    }*/
 
     override fun visitInArray(ctx: MyCriteriaParser.InArrayContext): String {
         val obj = visit(ctx.inArrayParser().objectAccessParser())
@@ -144,7 +144,7 @@ class PrettyVisitor : MyCriteriaBaseVisitor<String>() {
     }
 
     override fun visitFuncCall(ctx: MyCriteriaParser.FuncCallContext): String {
-        return "${ctx.STR().text}(${ctx.expr().map { it.text }})"
+        return "${ctx.IDENTIFIER().text}(${ctx.expr().map { it.text }})"
     }
 
     private fun indentBinary(left: String, op: String, right: String): String {

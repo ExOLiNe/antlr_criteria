@@ -53,105 +53,75 @@ void mycriteriaParserInitialize() {
 #endif
   auto staticData = std::make_unique<MyCriteriaParserStaticData>(
     std::vector<std::string>{
-      "app", "statements", "statement", "expr", "test_expr", "importStatement", 
-      "identifierDefinitions", "identifierDefinition", "identifierAccess", 
-      "jsonPointerInner", "jsonPointer", "objectAccessParser", "strOrNum", 
-      "numb", "inArrayParser"
+      "app", "statements", "statement", "expr", "objectAccessParser", "identifierAccess", 
+      "importStatement", "identifierDefinitions", "identifierDefinition", 
+      "strOrNum", "inArrayParser", "numb"
     },
     std::vector<std::string>{
       "", "'*'", "'+'", "'-'", "'('", "')'", "'>'", "'<'", "'<='", "'>='", 
-      "'=='", "'!='", "'&&'", "'||'", "'object'", "'import'", "'/'", "'.'", 
-      "','", "';'", "'['", "']'", "'in'", "", "'!'", "'null'", "'''", "'\"'", 
-      "'$'", "'='"
+      "'=='", "'!='", "'&&'", "'||'", "'import'", "'/'", "'.'", "','", "';'", 
+      "'['", "']'", "'in'", "", "'!'", "'null'", "'$'", "'='", "'object'"
     },
     std::vector<std::string>{
-      "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "IMPORT", 
+      "", "", "", "", "", "", "", "", "", "", "", "", "", "", "IMPORT", 
       "SLASH", "DOT", "COMMA", "SEMICOLON", "SQR_L", "SQR_R", "IN", "BOOL", 
-      "EXCL", "NULL_T", "S_Q", "D_Q", "BUCK", "EQUALS", "STR_LITERAL", "INT", 
-      "STR", "WS"
+      "EXCL", "NULL_T", "BUCK", "EQUALS", "OBJECT", "INT", "IDENTIFIER", 
+      "STR_LITERAL", "WS"
     }
   );
   static const int32_t serializedATNSegment[] = {
-  	4,1,33,240,2,0,7,0,2,1,7,1,2,2,7,2,2,3,7,3,2,4,7,4,2,5,7,5,2,6,7,6,2,
-  	7,7,7,2,8,7,8,2,9,7,9,2,10,7,10,2,11,7,11,2,12,7,12,2,13,7,13,2,14,7,
-  	14,1,0,5,0,32,8,0,10,0,12,0,35,9,0,1,0,1,0,1,1,4,1,40,8,1,11,1,12,1,41,
-  	1,2,1,2,1,2,1,2,1,2,1,2,3,2,50,8,2,1,3,1,3,1,3,1,3,1,3,1,3,1,3,1,3,5,
-  	3,60,8,3,10,3,12,3,63,9,3,1,3,3,3,66,8,3,1,3,1,3,1,3,1,3,1,3,1,3,1,3,
-  	1,3,1,3,1,3,1,3,1,3,3,3,80,8,3,1,3,1,3,1,3,1,3,1,3,1,3,1,3,1,3,1,3,1,
-  	3,1,3,1,3,1,3,1,3,1,3,1,3,1,3,1,3,5,3,100,8,3,10,3,12,3,103,9,3,1,4,1,
-  	4,1,4,1,4,1,4,1,4,1,4,1,4,1,4,1,4,1,4,1,4,1,4,1,4,5,4,119,8,4,10,4,12,
-  	4,122,9,4,1,4,3,4,125,8,4,1,4,1,4,1,4,1,4,1,4,1,4,1,4,1,4,1,4,1,4,1,4,
-  	1,4,1,4,1,4,1,4,1,4,1,4,1,4,1,4,1,4,1,4,1,4,1,4,1,4,1,4,1,4,1,4,1,4,3,
-  	4,155,8,4,1,5,1,5,1,5,1,6,1,6,1,6,4,6,163,8,6,11,6,12,6,164,1,7,1,7,1,
-  	7,1,7,1,7,1,8,1,8,1,8,1,9,3,9,176,8,9,1,9,1,9,1,9,5,9,181,8,9,10,9,12,
-  	9,184,9,9,1,9,3,9,187,8,9,1,10,1,10,1,10,1,10,1,10,1,10,1,10,1,10,1,10,
-  	3,10,198,8,10,1,11,1,11,4,11,202,8,11,11,11,12,11,203,1,11,4,11,207,8,
-  	11,11,11,12,11,208,1,11,1,11,1,12,1,12,3,12,215,8,12,1,13,1,13,1,13,1,
-  	13,3,13,221,8,13,1,14,1,14,1,14,1,14,3,14,227,8,14,1,14,1,14,1,14,1,14,
-  	5,14,233,8,14,10,14,12,14,236,9,14,1,14,1,14,1,14,0,1,6,15,0,2,4,6,8,
-  	10,12,14,16,18,20,22,24,26,28,0,3,2,0,1,1,16,16,1,0,2,3,1,0,6,11,272,
-  	0,33,1,0,0,0,2,39,1,0,0,0,4,49,1,0,0,0,6,79,1,0,0,0,8,154,1,0,0,0,10,
-  	156,1,0,0,0,12,162,1,0,0,0,14,166,1,0,0,0,16,171,1,0,0,0,18,175,1,0,0,
-  	0,20,197,1,0,0,0,22,199,1,0,0,0,24,214,1,0,0,0,26,220,1,0,0,0,28,222,
-  	1,0,0,0,30,32,3,4,2,0,31,30,1,0,0,0,32,35,1,0,0,0,33,31,1,0,0,0,33,34,
-  	1,0,0,0,34,36,1,0,0,0,35,33,1,0,0,0,36,37,3,6,3,0,37,1,1,0,0,0,38,40,
-  	3,4,2,0,39,38,1,0,0,0,40,41,1,0,0,0,41,39,1,0,0,0,41,42,1,0,0,0,42,3,
-  	1,0,0,0,43,44,3,10,5,0,44,45,5,19,0,0,45,50,1,0,0,0,46,47,3,14,7,0,47,
-  	48,5,19,0,0,48,50,1,0,0,0,49,43,1,0,0,0,49,46,1,0,0,0,50,5,1,0,0,0,51,
-  	52,6,3,-1,0,52,80,3,16,8,0,53,80,3,28,14,0,54,55,5,32,0,0,55,61,5,4,0,
-  	0,56,57,3,6,3,0,57,58,5,18,0,0,58,60,1,0,0,0,59,56,1,0,0,0,60,63,1,0,
-  	0,0,61,59,1,0,0,0,61,62,1,0,0,0,62,65,1,0,0,0,63,61,1,0,0,0,64,66,3,6,
-  	3,0,65,64,1,0,0,0,65,66,1,0,0,0,66,67,1,0,0,0,67,80,5,5,0,0,68,69,5,24,
-  	0,0,69,80,3,6,3,7,70,71,5,4,0,0,71,72,3,6,3,0,72,73,5,5,0,0,73,80,1,0,
-  	0,0,74,80,5,23,0,0,75,80,3,26,13,0,76,80,3,22,11,0,77,80,5,30,0,0,78,
-  	80,5,25,0,0,79,51,1,0,0,0,79,53,1,0,0,0,79,54,1,0,0,0,79,68,1,0,0,0,79,
-  	70,1,0,0,0,79,74,1,0,0,0,79,75,1,0,0,0,79,76,1,0,0,0,79,77,1,0,0,0,79,
-  	78,1,0,0,0,80,101,1,0,0,0,81,82,10,14,0,0,82,83,7,0,0,0,83,100,3,6,3,
-  	15,84,85,10,13,0,0,85,86,7,1,0,0,86,100,3,6,3,14,87,88,10,11,0,0,88,89,
-  	5,32,0,0,89,100,3,6,3,12,90,91,10,10,0,0,91,92,7,2,0,0,92,100,3,6,3,11,
-  	93,94,10,9,0,0,94,95,5,12,0,0,95,100,3,6,3,10,96,97,10,8,0,0,97,98,5,
-  	13,0,0,98,100,3,6,3,9,99,81,1,0,0,0,99,84,1,0,0,0,99,87,1,0,0,0,99,90,
-  	1,0,0,0,99,93,1,0,0,0,99,96,1,0,0,0,100,103,1,0,0,0,101,99,1,0,0,0,101,
-  	102,1,0,0,0,102,7,1,0,0,0,103,101,1,0,0,0,104,155,3,28,14,0,105,106,3,
-  	6,3,0,106,107,7,0,0,0,107,108,3,6,3,0,108,155,1,0,0,0,109,110,3,6,3,0,
-  	110,111,7,1,0,0,111,112,3,6,3,0,112,155,1,0,0,0,113,114,5,32,0,0,114,
-  	120,5,4,0,0,115,116,3,6,3,0,116,117,5,18,0,0,117,119,1,0,0,0,118,115,
-  	1,0,0,0,119,122,1,0,0,0,120,118,1,0,0,0,120,121,1,0,0,0,121,124,1,0,0,
-  	0,122,120,1,0,0,0,123,125,3,6,3,0,124,123,1,0,0,0,124,125,1,0,0,0,125,
-  	126,1,0,0,0,126,155,5,5,0,0,127,128,3,6,3,0,128,129,5,32,0,0,129,130,
-  	3,6,3,0,130,155,1,0,0,0,131,132,3,6,3,0,132,133,7,2,0,0,133,134,3,6,3,
-  	0,134,155,1,0,0,0,135,136,3,6,3,0,136,137,5,12,0,0,137,138,3,6,3,0,138,
-  	155,1,0,0,0,139,140,3,6,3,0,140,141,5,13,0,0,141,142,3,6,3,0,142,155,
-  	1,0,0,0,143,144,5,24,0,0,144,155,3,6,3,0,145,146,5,4,0,0,146,147,3,6,
-  	3,0,147,148,5,5,0,0,148,155,1,0,0,0,149,155,5,23,0,0,150,155,5,31,0,0,
-  	151,155,3,22,11,0,152,155,5,30,0,0,153,155,5,25,0,0,154,104,1,0,0,0,154,
-  	105,1,0,0,0,154,109,1,0,0,0,154,113,1,0,0,0,154,127,1,0,0,0,154,131,1,
-  	0,0,0,154,135,1,0,0,0,154,139,1,0,0,0,154,143,1,0,0,0,154,145,1,0,0,0,
-  	154,149,1,0,0,0,154,150,1,0,0,0,154,151,1,0,0,0,154,152,1,0,0,0,154,153,
-  	1,0,0,0,155,9,1,0,0,0,156,157,5,15,0,0,157,158,5,32,0,0,158,11,1,0,0,
-  	0,159,160,3,14,7,0,160,161,5,19,0,0,161,163,1,0,0,0,162,159,1,0,0,0,163,
-  	164,1,0,0,0,164,162,1,0,0,0,164,165,1,0,0,0,165,13,1,0,0,0,166,167,5,
-  	28,0,0,167,168,5,32,0,0,168,169,5,29,0,0,169,170,3,6,3,0,170,15,1,0,0,
-  	0,171,172,5,28,0,0,172,173,5,32,0,0,173,17,1,0,0,0,174,176,5,16,0,0,175,
-  	174,1,0,0,0,175,176,1,0,0,0,176,177,1,0,0,0,177,182,5,32,0,0,178,179,
-  	5,16,0,0,179,181,5,32,0,0,180,178,1,0,0,0,181,184,1,0,0,0,182,180,1,0,
-  	0,0,182,183,1,0,0,0,183,186,1,0,0,0,184,182,1,0,0,0,185,187,5,16,0,0,
-  	186,185,1,0,0,0,186,187,1,0,0,0,187,19,1,0,0,0,188,189,5,26,0,0,189,190,
-  	3,18,9,0,190,191,5,26,0,0,191,198,1,0,0,0,192,193,5,27,0,0,193,194,3,
-  	18,9,0,194,195,5,27,0,0,195,198,1,0,0,0,196,198,5,30,0,0,197,188,1,0,
-  	0,0,197,192,1,0,0,0,197,196,1,0,0,0,198,21,1,0,0,0,199,201,5,14,0,0,200,
-  	202,5,20,0,0,201,200,1,0,0,0,202,203,1,0,0,0,203,201,1,0,0,0,203,204,
-  	1,0,0,0,204,206,1,0,0,0,205,207,3,20,10,0,206,205,1,0,0,0,207,208,1,0,
-  	0,0,208,206,1,0,0,0,208,209,1,0,0,0,209,210,1,0,0,0,210,211,5,21,0,0,
-  	211,23,1,0,0,0,212,215,5,30,0,0,213,215,3,26,13,0,214,212,1,0,0,0,214,
-  	213,1,0,0,0,215,25,1,0,0,0,216,221,5,31,0,0,217,218,5,31,0,0,218,219,
-  	5,17,0,0,219,221,5,31,0,0,220,216,1,0,0,0,220,217,1,0,0,0,221,27,1,0,
-  	0,0,222,226,3,22,11,0,223,227,5,22,0,0,224,225,5,24,0,0,225,227,5,22,
-  	0,0,226,223,1,0,0,0,226,224,1,0,0,0,227,228,1,0,0,0,228,229,5,20,0,0,
-  	229,234,3,24,12,0,230,231,5,18,0,0,231,233,3,24,12,0,232,230,1,0,0,0,
-  	233,236,1,0,0,0,234,232,1,0,0,0,234,235,1,0,0,0,235,237,1,0,0,0,236,234,
-  	1,0,0,0,237,238,5,21,0,0,238,29,1,0,0,0,22,33,41,49,61,65,79,99,101,120,
-  	124,154,164,175,182,186,197,203,208,214,220,226,234
+  	4,1,31,162,2,0,7,0,2,1,7,1,2,2,7,2,2,3,7,3,2,4,7,4,2,5,7,5,2,6,7,6,2,
+  	7,7,7,2,8,7,8,2,9,7,9,2,10,7,10,2,11,7,11,1,0,5,0,26,8,0,10,0,12,0,29,
+  	9,0,1,0,1,0,1,1,4,1,34,8,1,11,1,12,1,35,1,2,1,2,1,2,1,2,1,2,1,2,3,2,44,
+  	8,2,1,3,1,3,1,3,1,3,1,3,1,3,1,3,5,3,53,8,3,10,3,12,3,56,9,3,1,3,3,3,59,
+  	8,3,1,3,1,3,1,3,1,3,1,3,1,3,1,3,1,3,1,3,1,3,1,3,1,3,1,3,3,3,74,8,3,1,
+  	3,1,3,1,3,1,3,1,3,1,3,1,3,1,3,1,3,1,3,1,3,1,3,1,3,1,3,1,3,1,3,1,3,1,3,
+  	1,3,1,3,1,3,1,3,5,3,98,8,3,10,3,12,3,101,9,3,1,4,1,4,4,4,105,8,4,11,4,
+  	12,4,106,1,4,4,4,110,8,4,11,4,12,4,111,1,4,1,4,1,5,1,5,1,5,1,6,1,6,1,
+  	6,1,7,1,7,1,7,5,7,125,8,7,10,7,12,7,128,9,7,1,8,1,8,1,8,1,8,1,8,1,9,1,
+  	9,3,9,137,8,9,1,10,1,10,1,10,1,10,3,10,143,8,10,1,10,1,10,1,10,1,10,5,
+  	10,149,8,10,10,10,12,10,152,9,10,1,10,1,10,1,11,1,11,1,11,1,11,3,11,160,
+  	8,11,1,11,0,1,6,12,0,2,4,6,8,10,12,14,16,18,20,22,0,3,2,0,1,1,15,15,1,
+  	0,2,3,1,0,6,11,177,0,27,1,0,0,0,2,33,1,0,0,0,4,43,1,0,0,0,6,73,1,0,0,
+  	0,8,102,1,0,0,0,10,115,1,0,0,0,12,118,1,0,0,0,14,126,1,0,0,0,16,129,1,
+  	0,0,0,18,136,1,0,0,0,20,138,1,0,0,0,22,159,1,0,0,0,24,26,3,4,2,0,25,24,
+  	1,0,0,0,26,29,1,0,0,0,27,25,1,0,0,0,27,28,1,0,0,0,28,30,1,0,0,0,29,27,
+  	1,0,0,0,30,31,3,6,3,0,31,1,1,0,0,0,32,34,3,4,2,0,33,32,1,0,0,0,34,35,
+  	1,0,0,0,35,33,1,0,0,0,35,36,1,0,0,0,36,3,1,0,0,0,37,38,3,12,6,0,38,39,
+  	5,18,0,0,39,44,1,0,0,0,40,41,3,16,8,0,41,42,5,18,0,0,42,44,1,0,0,0,43,
+  	37,1,0,0,0,43,40,1,0,0,0,44,5,1,0,0,0,45,46,6,3,-1,0,46,74,3,20,10,0,
+  	47,48,5,29,0,0,48,54,5,4,0,0,49,50,3,6,3,0,50,51,5,17,0,0,51,53,1,0,0,
+  	0,52,49,1,0,0,0,53,56,1,0,0,0,54,52,1,0,0,0,54,55,1,0,0,0,55,58,1,0,0,
+  	0,56,54,1,0,0,0,57,59,3,6,3,0,58,57,1,0,0,0,58,59,1,0,0,0,59,60,1,0,0,
+  	0,60,74,5,5,0,0,61,62,5,23,0,0,62,74,3,6,3,8,63,64,5,4,0,0,64,65,3,6,
+  	3,0,65,66,5,5,0,0,66,74,1,0,0,0,67,74,5,22,0,0,68,74,3,22,11,0,69,74,
+  	5,24,0,0,70,74,5,30,0,0,71,74,3,10,5,0,72,74,3,8,4,0,73,45,1,0,0,0,73,
+  	47,1,0,0,0,73,61,1,0,0,0,73,63,1,0,0,0,73,67,1,0,0,0,73,68,1,0,0,0,73,
+  	69,1,0,0,0,73,70,1,0,0,0,73,71,1,0,0,0,73,72,1,0,0,0,74,99,1,0,0,0,75,
+  	76,10,16,0,0,76,77,7,0,0,0,77,98,3,6,3,17,78,79,10,15,0,0,79,80,7,1,0,
+  	0,80,98,3,6,3,16,81,82,10,13,0,0,82,83,5,29,0,0,83,98,3,6,3,14,84,85,
+  	10,12,0,0,85,86,5,23,0,0,86,87,5,29,0,0,87,98,3,6,3,13,88,89,10,11,0,
+  	0,89,90,7,2,0,0,90,98,3,6,3,12,91,92,10,10,0,0,92,93,5,12,0,0,93,98,3,
+  	6,3,11,94,95,10,9,0,0,95,96,5,13,0,0,96,98,3,6,3,10,97,75,1,0,0,0,97,
+  	78,1,0,0,0,97,81,1,0,0,0,97,84,1,0,0,0,97,88,1,0,0,0,97,91,1,0,0,0,97,
+  	94,1,0,0,0,98,101,1,0,0,0,99,97,1,0,0,0,99,100,1,0,0,0,100,7,1,0,0,0,
+  	101,99,1,0,0,0,102,104,5,27,0,0,103,105,5,19,0,0,104,103,1,0,0,0,105,
+  	106,1,0,0,0,106,104,1,0,0,0,106,107,1,0,0,0,107,109,1,0,0,0,108,110,5,
+  	30,0,0,109,108,1,0,0,0,110,111,1,0,0,0,111,109,1,0,0,0,111,112,1,0,0,
+  	0,112,113,1,0,0,0,113,114,5,20,0,0,114,9,1,0,0,0,115,116,5,25,0,0,116,
+  	117,5,29,0,0,117,11,1,0,0,0,118,119,5,14,0,0,119,120,5,29,0,0,120,13,
+  	1,0,0,0,121,122,3,16,8,0,122,123,5,18,0,0,123,125,1,0,0,0,124,121,1,0,
+  	0,0,125,128,1,0,0,0,126,124,1,0,0,0,126,127,1,0,0,0,127,15,1,0,0,0,128,
+  	126,1,0,0,0,129,130,5,25,0,0,130,131,5,29,0,0,131,132,5,26,0,0,132,133,
+  	3,6,3,0,133,17,1,0,0,0,134,137,5,30,0,0,135,137,3,22,11,0,136,134,1,0,
+  	0,0,136,135,1,0,0,0,137,19,1,0,0,0,138,142,3,8,4,0,139,143,5,21,0,0,140,
+  	141,5,23,0,0,141,143,5,21,0,0,142,139,1,0,0,0,142,140,1,0,0,0,143,144,
+  	1,0,0,0,144,145,5,19,0,0,145,150,3,18,9,0,146,147,5,17,0,0,147,149,3,
+  	18,9,0,148,146,1,0,0,0,149,152,1,0,0,0,150,148,1,0,0,0,150,151,1,0,0,
+  	0,151,153,1,0,0,0,152,150,1,0,0,0,153,154,5,20,0,0,154,21,1,0,0,0,155,
+  	160,5,28,0,0,156,157,5,28,0,0,157,158,5,16,0,0,158,160,5,28,0,0,159,155,
+  	1,0,0,0,159,156,1,0,0,0,160,23,1,0,0,0,15,27,35,43,54,58,73,97,99,106,
+  	111,126,136,142,150,159
   };
   staticData->serializedATN = antlr4::atn::SerializedATNView(serializedATNSegment, sizeof(serializedATNSegment) / sizeof(serializedATNSegment[0]));
 
@@ -257,19 +227,19 @@ MyCriteriaParser::AppContext* MyCriteriaParser::app() {
   try {
     size_t alt;
     enterOuterAlt(_localctx, 1);
-    setState(33);
+    setState(27);
     _errHandler->sync(this);
     alt = getInterpreter<atn::ParserATNSimulator>()->adaptivePredict(_input, 0, _ctx);
     while (alt != 2 && alt != atn::ATN::INVALID_ALT_NUMBER) {
       if (alt == 1) {
-        setState(30);
+        setState(24);
         statement(); 
       }
-      setState(35);
+      setState(29);
       _errHandler->sync(this);
       alt = getInterpreter<atn::ParserATNSimulator>()->adaptivePredict(_input, 0, _ctx);
     }
-    setState(36);
+    setState(30);
     expr(0);
    
   }
@@ -335,13 +305,13 @@ MyCriteriaParser::StatementsContext* MyCriteriaParser::statements() {
   });
   try {
     enterOuterAlt(_localctx, 1);
-    setState(39); 
+    setState(33); 
     _errHandler->sync(this);
     _la = _input->LA(1);
     do {
-      setState(38);
+      setState(32);
       statement();
-      setState(41); 
+      setState(35); 
       _errHandler->sync(this);
       _la = _input->LA(1);
     } while (_la == MyCriteriaParser::IMPORT
@@ -413,23 +383,23 @@ MyCriteriaParser::StatementContext* MyCriteriaParser::statement() {
     exitRule();
   });
   try {
-    setState(49);
+    setState(43);
     _errHandler->sync(this);
     switch (_input->LA(1)) {
       case MyCriteriaParser::IMPORT: {
         enterOuterAlt(_localctx, 1);
-        setState(43);
+        setState(37);
         importStatement();
-        setState(44);
+        setState(38);
         match(MyCriteriaParser::SEMICOLON);
         break;
       }
 
       case MyCriteriaParser::BUCK: {
         enterOuterAlt(_localctx, 2);
-        setState(46);
+        setState(40);
         identifierDefinition();
-        setState(47);
+        setState(41);
         match(MyCriteriaParser::SEMICOLON);
         break;
       }
@@ -485,6 +455,43 @@ void MyCriteriaParser::NullContext::exitRule(tree::ParseTreeListener *listener) 
 std::any MyCriteriaParser::NullContext::accept(tree::ParseTreeVisitor *visitor) {
   if (auto parserVisitor = dynamic_cast<MyCriteriaVisitor*>(visitor))
     return parserVisitor->visitNull(this);
+  else
+    return visitor->visitChildren(this);
+}
+//----------------- InfixFuncCallNotContext ------------------------------------------------------------------
+
+std::vector<MyCriteriaParser::ExprContext *> MyCriteriaParser::InfixFuncCallNotContext::expr() {
+  return getRuleContexts<MyCriteriaParser::ExprContext>();
+}
+
+MyCriteriaParser::ExprContext* MyCriteriaParser::InfixFuncCallNotContext::expr(size_t i) {
+  return getRuleContext<MyCriteriaParser::ExprContext>(i);
+}
+
+tree::TerminalNode* MyCriteriaParser::InfixFuncCallNotContext::EXCL() {
+  return getToken(MyCriteriaParser::EXCL, 0);
+}
+
+tree::TerminalNode* MyCriteriaParser::InfixFuncCallNotContext::IDENTIFIER() {
+  return getToken(MyCriteriaParser::IDENTIFIER, 0);
+}
+
+MyCriteriaParser::InfixFuncCallNotContext::InfixFuncCallNotContext(ExprContext *ctx) { copyFrom(ctx); }
+
+void MyCriteriaParser::InfixFuncCallNotContext::enterRule(tree::ParseTreeListener *listener) {
+  auto parserListener = dynamic_cast<MyCriteriaListener *>(listener);
+  if (parserListener != nullptr)
+    parserListener->enterInfixFuncCallNot(this);
+}
+void MyCriteriaParser::InfixFuncCallNotContext::exitRule(tree::ParseTreeListener *listener) {
+  auto parserListener = dynamic_cast<MyCriteriaListener *>(listener);
+  if (parserListener != nullptr)
+    parserListener->exitInfixFuncCallNot(this);
+}
+
+std::any MyCriteriaParser::InfixFuncCallNotContext::accept(tree::ParseTreeVisitor *visitor) {
+  if (auto parserVisitor = dynamic_cast<MyCriteriaVisitor*>(visitor))
+    return parserVisitor->visitInfixFuncCallNot(this);
   else
     return visitor->visitChildren(this);
 }
@@ -618,8 +625,8 @@ MyCriteriaParser::ExprContext* MyCriteriaParser::InfixFuncCallContext::expr(size
   return getRuleContext<MyCriteriaParser::ExprContext>(i);
 }
 
-tree::TerminalNode* MyCriteriaParser::InfixFuncCallContext::STR() {
-  return getToken(MyCriteriaParser::STR, 0);
+tree::TerminalNode* MyCriteriaParser::InfixFuncCallContext::IDENTIFIER() {
+  return getToken(MyCriteriaParser::IDENTIFIER, 0);
 }
 
 MyCriteriaParser::InfixFuncCallContext::InfixFuncCallContext(ExprContext *ctx) { copyFrom(ctx); }
@@ -638,31 +645,6 @@ void MyCriteriaParser::InfixFuncCallContext::exitRule(tree::ParseTreeListener *l
 std::any MyCriteriaParser::InfixFuncCallContext::accept(tree::ParseTreeVisitor *visitor) {
   if (auto parserVisitor = dynamic_cast<MyCriteriaVisitor*>(visitor))
     return parserVisitor->visitInfixFuncCall(this);
-  else
-    return visitor->visitChildren(this);
-}
-//----------------- IdAccessContext ------------------------------------------------------------------
-
-MyCriteriaParser::IdentifierAccessContext* MyCriteriaParser::IdAccessContext::identifierAccess() {
-  return getRuleContext<MyCriteriaParser::IdentifierAccessContext>(0);
-}
-
-MyCriteriaParser::IdAccessContext::IdAccessContext(ExprContext *ctx) { copyFrom(ctx); }
-
-void MyCriteriaParser::IdAccessContext::enterRule(tree::ParseTreeListener *listener) {
-  auto parserListener = dynamic_cast<MyCriteriaListener *>(listener);
-  if (parserListener != nullptr)
-    parserListener->enterIdAccess(this);
-}
-void MyCriteriaParser::IdAccessContext::exitRule(tree::ParseTreeListener *listener) {
-  auto parserListener = dynamic_cast<MyCriteriaListener *>(listener);
-  if (parserListener != nullptr)
-    parserListener->exitIdAccess(this);
-}
-
-std::any MyCriteriaParser::IdAccessContext::accept(tree::ParseTreeVisitor *visitor) {
-  if (auto parserVisitor = dynamic_cast<MyCriteriaVisitor*>(visitor))
-    return parserVisitor->visitIdAccess(this);
   else
     return visitor->visitChildren(this);
 }
@@ -688,6 +670,31 @@ void MyCriteriaParser::StrLiteralContext::exitRule(tree::ParseTreeListener *list
 std::any MyCriteriaParser::StrLiteralContext::accept(tree::ParseTreeVisitor *visitor) {
   if (auto parserVisitor = dynamic_cast<MyCriteriaVisitor*>(visitor))
     return parserVisitor->visitStrLiteral(this);
+  else
+    return visitor->visitChildren(this);
+}
+//----------------- IdAccessContext ------------------------------------------------------------------
+
+MyCriteriaParser::IdentifierAccessContext* MyCriteriaParser::IdAccessContext::identifierAccess() {
+  return getRuleContext<MyCriteriaParser::IdentifierAccessContext>(0);
+}
+
+MyCriteriaParser::IdAccessContext::IdAccessContext(ExprContext *ctx) { copyFrom(ctx); }
+
+void MyCriteriaParser::IdAccessContext::enterRule(tree::ParseTreeListener *listener) {
+  auto parserListener = dynamic_cast<MyCriteriaListener *>(listener);
+  if (parserListener != nullptr)
+    parserListener->enterIdAccess(this);
+}
+void MyCriteriaParser::IdAccessContext::exitRule(tree::ParseTreeListener *listener) {
+  auto parserListener = dynamic_cast<MyCriteriaListener *>(listener);
+  if (parserListener != nullptr)
+    parserListener->exitIdAccess(this);
+}
+
+std::any MyCriteriaParser::IdAccessContext::accept(tree::ParseTreeVisitor *visitor) {
+  if (auto parserVisitor = dynamic_cast<MyCriteriaVisitor*>(visitor))
+    return parserVisitor->visitIdAccess(this);
   else
     return visitor->visitChildren(this);
 }
@@ -718,8 +725,8 @@ std::any MyCriteriaParser::InArrayContext::accept(tree::ParseTreeVisitor *visito
 }
 //----------------- FuncCallContext ------------------------------------------------------------------
 
-tree::TerminalNode* MyCriteriaParser::FuncCallContext::STR() {
-  return getToken(MyCriteriaParser::STR, 0);
+tree::TerminalNode* MyCriteriaParser::FuncCallContext::IDENTIFIER() {
+  return getToken(MyCriteriaParser::IDENTIFIER, 0);
 }
 
 std::vector<MyCriteriaParser::ExprContext *> MyCriteriaParser::FuncCallContext::expr() {
@@ -941,131 +948,131 @@ MyCriteriaParser::ExprContext* MyCriteriaParser::expr(int precedence) {
   try {
     size_t alt;
     enterOuterAlt(_localctx, 1);
-    setState(79);
+    setState(73);
     _errHandler->sync(this);
     switch (getInterpreter<atn::ParserATNSimulator>()->adaptivePredict(_input, 5, _ctx)) {
     case 1: {
-      _localctx = _tracker.createInstance<IdAccessContext>(_localctx);
-      _ctx = _localctx;
-      previousContext = _localctx;
-
-      setState(52);
-      identifierAccess();
-      break;
-    }
-
-    case 2: {
       _localctx = _tracker.createInstance<InArrayContext>(_localctx);
       _ctx = _localctx;
       previousContext = _localctx;
-      setState(53);
+
+      setState(46);
       inArrayParser();
       break;
     }
 
-    case 3: {
+    case 2: {
       _localctx = _tracker.createInstance<FuncCallContext>(_localctx);
       _ctx = _localctx;
       previousContext = _localctx;
 
-      setState(54);
-      match(MyCriteriaParser::STR);
-      setState(55);
+      setState(47);
+      match(MyCriteriaParser::IDENTIFIER);
+      setState(48);
       match(MyCriteriaParser::T__3);
-      setState(61);
+      setState(54);
       _errHandler->sync(this);
       alt = getInterpreter<atn::ParserATNSimulator>()->adaptivePredict(_input, 3, _ctx);
       while (alt != 2 && alt != atn::ATN::INVALID_ALT_NUMBER) {
         if (alt == 1) {
-          setState(56);
+          setState(49);
           expr(0);
-          setState(57);
+          setState(50);
           match(MyCriteriaParser::COMMA); 
         }
-        setState(63);
+        setState(56);
         _errHandler->sync(this);
         alt = getInterpreter<atn::ParserATNSimulator>()->adaptivePredict(_input, 3, _ctx);
       }
-      setState(65);
+      setState(58);
       _errHandler->sync(this);
 
       _la = _input->LA(1);
       if ((((_la & ~ 0x3fULL) == 0) &&
-        ((1ULL << _la) & 7843364880) != 0)) {
-        setState(64);
+        ((1ULL << _la) & 2076180496) != 0)) {
+        setState(57);
         expr(0);
       }
-      setState(67);
+      setState(60);
       match(MyCriteriaParser::T__4);
+      break;
+    }
+
+    case 3: {
+      _localctx = _tracker.createInstance<NotExprContext>(_localctx);
+      _ctx = _localctx;
+      previousContext = _localctx;
+      setState(61);
+      match(MyCriteriaParser::EXCL);
+      setState(62);
+      expr(8);
       break;
     }
 
     case 4: {
-      _localctx = _tracker.createInstance<NotExprContext>(_localctx);
-      _ctx = _localctx;
-      previousContext = _localctx;
-      setState(68);
-      match(MyCriteriaParser::EXCL);
-      setState(69);
-      expr(7);
-      break;
-    }
-
-    case 5: {
       _localctx = _tracker.createInstance<ParenExprContext>(_localctx);
       _ctx = _localctx;
       previousContext = _localctx;
-      setState(70);
+      setState(63);
       match(MyCriteriaParser::T__3);
-      setState(71);
+      setState(64);
       expr(0);
-      setState(72);
+      setState(65);
       match(MyCriteriaParser::T__4);
       break;
     }
 
-    case 6: {
+    case 5: {
       _localctx = _tracker.createInstance<BoolContext>(_localctx);
       _ctx = _localctx;
       previousContext = _localctx;
-      setState(74);
+      setState(67);
       match(MyCriteriaParser::BOOL);
       break;
     }
 
-    case 7: {
+    case 6: {
       _localctx = _tracker.createInstance<NumberContext>(_localctx);
       _ctx = _localctx;
       previousContext = _localctx;
-      setState(75);
+      setState(68);
       numb();
       break;
     }
 
-    case 8: {
-      _localctx = _tracker.createInstance<ObjectAccessContext>(_localctx);
+    case 7: {
+      _localctx = _tracker.createInstance<NullContext>(_localctx);
       _ctx = _localctx;
       previousContext = _localctx;
-      setState(76);
-      objectAccessParser();
+      setState(69);
+      match(MyCriteriaParser::NULL_T);
       break;
     }
 
-    case 9: {
+    case 8: {
       _localctx = _tracker.createInstance<StrLiteralContext>(_localctx);
       _ctx = _localctx;
       previousContext = _localctx;
-      setState(77);
+      setState(70);
       match(MyCriteriaParser::STR_LITERAL);
       break;
     }
 
-    case 10: {
-      _localctx = _tracker.createInstance<NullContext>(_localctx);
+    case 9: {
+      _localctx = _tracker.createInstance<IdAccessContext>(_localctx);
       _ctx = _localctx;
       previousContext = _localctx;
-      setState(78);
-      match(MyCriteriaParser::NULL_T);
+      setState(71);
+      identifierAccess();
+      break;
+    }
+
+    case 10: {
+      _localctx = _tracker.createInstance<ObjectAccessContext>(_localctx);
+      _ctx = _localctx;
+      previousContext = _localctx;
+      setState(72);
+      objectAccessParser();
       break;
     }
 
@@ -1073,7 +1080,7 @@ MyCriteriaParser::ExprContext* MyCriteriaParser::expr(int precedence) {
       break;
     }
     _ctx->stop = _input->LT(-1);
-    setState(101);
+    setState(99);
     _errHandler->sync(this);
     alt = getInterpreter<atn::ParserATNSimulator>()->adaptivePredict(_input, 7, _ctx);
     while (alt != 2 && alt != atn::ATN::INVALID_ALT_NUMBER) {
@@ -1081,17 +1088,17 @@ MyCriteriaParser::ExprContext* MyCriteriaParser::expr(int precedence) {
         if (!_parseListeners.empty())
           triggerExitRuleEvent();
         previousContext = _localctx;
-        setState(99);
+        setState(97);
         _errHandler->sync(this);
         switch (getInterpreter<atn::ParserATNSimulator>()->adaptivePredict(_input, 6, _ctx)) {
         case 1: {
           auto newContext = _tracker.createInstance<MulDivContext>(_tracker.createInstance<ExprContext>(parentContext, parentState));
           _localctx = newContext;
           pushNewRecursionContext(newContext, startState, RuleExpr);
-          setState(81);
+          setState(75);
 
-          if (!(precpred(_ctx, 14))) throw FailedPredicateException(this, "precpred(_ctx, 14)");
-          setState(82);
+          if (!(precpred(_ctx, 16))) throw FailedPredicateException(this, "precpred(_ctx, 16)");
+          setState(76);
           antlrcpp::downCast<MulDivContext *>(_localctx)->op = _input->LT(1);
           _la = _input->LA(1);
           if (!(_la == MyCriteriaParser::T__0
@@ -1103,8 +1110,8 @@ MyCriteriaParser::ExprContext* MyCriteriaParser::expr(int precedence) {
             _errHandler->reportMatch(this);
             consume();
           }
-          setState(83);
-          expr(15);
+          setState(77);
+          expr(17);
           break;
         }
 
@@ -1112,10 +1119,10 @@ MyCriteriaParser::ExprContext* MyCriteriaParser::expr(int precedence) {
           auto newContext = _tracker.createInstance<AddSubContext>(_tracker.createInstance<ExprContext>(parentContext, parentState));
           _localctx = newContext;
           pushNewRecursionContext(newContext, startState, RuleExpr);
-          setState(84);
+          setState(78);
 
-          if (!(precpred(_ctx, 13))) throw FailedPredicateException(this, "precpred(_ctx, 13)");
-          setState(85);
+          if (!(precpred(_ctx, 15))) throw FailedPredicateException(this, "precpred(_ctx, 15)");
+          setState(79);
           antlrcpp::downCast<AddSubContext *>(_localctx)->op = _input->LT(1);
           _la = _input->LA(1);
           if (!(_la == MyCriteriaParser::T__1
@@ -1127,8 +1134,8 @@ MyCriteriaParser::ExprContext* MyCriteriaParser::expr(int precedence) {
             _errHandler->reportMatch(this);
             consume();
           }
-          setState(86);
-          expr(14);
+          setState(80);
+          expr(16);
           break;
         }
 
@@ -1136,24 +1143,40 @@ MyCriteriaParser::ExprContext* MyCriteriaParser::expr(int precedence) {
           auto newContext = _tracker.createInstance<InfixFuncCallContext>(_tracker.createInstance<ExprContext>(parentContext, parentState));
           _localctx = newContext;
           pushNewRecursionContext(newContext, startState, RuleExpr);
-          setState(87);
+          setState(81);
 
-          if (!(precpred(_ctx, 11))) throw FailedPredicateException(this, "precpred(_ctx, 11)");
-          setState(88);
-          match(MyCriteriaParser::STR);
-          setState(89);
-          expr(12);
+          if (!(precpred(_ctx, 13))) throw FailedPredicateException(this, "precpred(_ctx, 13)");
+          setState(82);
+          match(MyCriteriaParser::IDENTIFIER);
+          setState(83);
+          expr(14);
           break;
         }
 
         case 4: {
+          auto newContext = _tracker.createInstance<InfixFuncCallNotContext>(_tracker.createInstance<ExprContext>(parentContext, parentState));
+          _localctx = newContext;
+          pushNewRecursionContext(newContext, startState, RuleExpr);
+          setState(84);
+
+          if (!(precpred(_ctx, 12))) throw FailedPredicateException(this, "precpred(_ctx, 12)");
+          setState(85);
+          match(MyCriteriaParser::EXCL);
+          setState(86);
+          match(MyCriteriaParser::IDENTIFIER);
+          setState(87);
+          expr(13);
+          break;
+        }
+
+        case 5: {
           auto newContext = _tracker.createInstance<ComparisonContext>(_tracker.createInstance<ExprContext>(parentContext, parentState));
           _localctx = newContext;
           pushNewRecursionContext(newContext, startState, RuleExpr);
-          setState(90);
+          setState(88);
 
-          if (!(precpred(_ctx, 10))) throw FailedPredicateException(this, "precpred(_ctx, 10)");
-          setState(91);
+          if (!(precpred(_ctx, 11))) throw FailedPredicateException(this, "precpred(_ctx, 11)");
+          setState(89);
           antlrcpp::downCast<ComparisonContext *>(_localctx)->op = _input->LT(1);
           _la = _input->LA(1);
           if (!((((_la & ~ 0x3fULL) == 0) &&
@@ -1164,36 +1187,36 @@ MyCriteriaParser::ExprContext* MyCriteriaParser::expr(int precedence) {
             _errHandler->reportMatch(this);
             consume();
           }
-          setState(92);
-          expr(11);
-          break;
-        }
-
-        case 5: {
-          auto newContext = _tracker.createInstance<AndContext>(_tracker.createInstance<ExprContext>(parentContext, parentState));
-          _localctx = newContext;
-          pushNewRecursionContext(newContext, startState, RuleExpr);
-          setState(93);
-
-          if (!(precpred(_ctx, 9))) throw FailedPredicateException(this, "precpred(_ctx, 9)");
-          setState(94);
-          match(MyCriteriaParser::T__11);
-          setState(95);
-          expr(10);
+          setState(90);
+          expr(12);
           break;
         }
 
         case 6: {
+          auto newContext = _tracker.createInstance<AndContext>(_tracker.createInstance<ExprContext>(parentContext, parentState));
+          _localctx = newContext;
+          pushNewRecursionContext(newContext, startState, RuleExpr);
+          setState(91);
+
+          if (!(precpred(_ctx, 10))) throw FailedPredicateException(this, "precpred(_ctx, 10)");
+          setState(92);
+          match(MyCriteriaParser::T__11);
+          setState(93);
+          expr(11);
+          break;
+        }
+
+        case 7: {
           auto newContext = _tracker.createInstance<OrContext>(_tracker.createInstance<ExprContext>(parentContext, parentState));
           _localctx = newContext;
           pushNewRecursionContext(newContext, startState, RuleExpr);
-          setState(96);
+          setState(94);
 
-          if (!(precpred(_ctx, 8))) throw FailedPredicateException(this, "precpred(_ctx, 8)");
-          setState(97);
+          if (!(precpred(_ctx, 9))) throw FailedPredicateException(this, "precpred(_ctx, 9)");
+          setState(95);
           match(MyCriteriaParser::T__12);
-          setState(98);
-          expr(9);
+          setState(96);
+          expr(10);
           break;
         }
 
@@ -1201,7 +1224,7 @@ MyCriteriaParser::ExprContext* MyCriteriaParser::expr(int precedence) {
           break;
         } 
       }
-      setState(103);
+      setState(101);
       _errHandler->sync(this);
       alt = getInterpreter<atn::ParserATNSimulator>()->adaptivePredict(_input, 7, _ctx);
     }
@@ -1214,92 +1237,64 @@ MyCriteriaParser::ExprContext* MyCriteriaParser::expr(int precedence) {
   return _localctx;
 }
 
-//----------------- Test_exprContext ------------------------------------------------------------------
+//----------------- ObjectAccessParserContext ------------------------------------------------------------------
 
-MyCriteriaParser::Test_exprContext::Test_exprContext(ParserRuleContext *parent, size_t invokingState)
+MyCriteriaParser::ObjectAccessParserContext::ObjectAccessParserContext(ParserRuleContext *parent, size_t invokingState)
   : ParserRuleContext(parent, invokingState) {
 }
 
-MyCriteriaParser::InArrayParserContext* MyCriteriaParser::Test_exprContext::inArrayParser() {
-  return getRuleContext<MyCriteriaParser::InArrayParserContext>(0);
+tree::TerminalNode* MyCriteriaParser::ObjectAccessParserContext::OBJECT() {
+  return getToken(MyCriteriaParser::OBJECT, 0);
 }
 
-std::vector<MyCriteriaParser::ExprContext *> MyCriteriaParser::Test_exprContext::expr() {
-  return getRuleContexts<MyCriteriaParser::ExprContext>();
+tree::TerminalNode* MyCriteriaParser::ObjectAccessParserContext::SQR_R() {
+  return getToken(MyCriteriaParser::SQR_R, 0);
 }
 
-MyCriteriaParser::ExprContext* MyCriteriaParser::Test_exprContext::expr(size_t i) {
-  return getRuleContext<MyCriteriaParser::ExprContext>(i);
+std::vector<tree::TerminalNode *> MyCriteriaParser::ObjectAccessParserContext::SQR_L() {
+  return getTokens(MyCriteriaParser::SQR_L);
 }
 
-tree::TerminalNode* MyCriteriaParser::Test_exprContext::SLASH() {
-  return getToken(MyCriteriaParser::SLASH, 0);
+tree::TerminalNode* MyCriteriaParser::ObjectAccessParserContext::SQR_L(size_t i) {
+  return getToken(MyCriteriaParser::SQR_L, i);
 }
 
-tree::TerminalNode* MyCriteriaParser::Test_exprContext::STR() {
-  return getToken(MyCriteriaParser::STR, 0);
+std::vector<tree::TerminalNode *> MyCriteriaParser::ObjectAccessParserContext::STR_LITERAL() {
+  return getTokens(MyCriteriaParser::STR_LITERAL);
 }
 
-std::vector<tree::TerminalNode *> MyCriteriaParser::Test_exprContext::COMMA() {
-  return getTokens(MyCriteriaParser::COMMA);
-}
-
-tree::TerminalNode* MyCriteriaParser::Test_exprContext::COMMA(size_t i) {
-  return getToken(MyCriteriaParser::COMMA, i);
-}
-
-tree::TerminalNode* MyCriteriaParser::Test_exprContext::EXCL() {
-  return getToken(MyCriteriaParser::EXCL, 0);
-}
-
-tree::TerminalNode* MyCriteriaParser::Test_exprContext::BOOL() {
-  return getToken(MyCriteriaParser::BOOL, 0);
-}
-
-tree::TerminalNode* MyCriteriaParser::Test_exprContext::INT() {
-  return getToken(MyCriteriaParser::INT, 0);
-}
-
-MyCriteriaParser::ObjectAccessParserContext* MyCriteriaParser::Test_exprContext::objectAccessParser() {
-  return getRuleContext<MyCriteriaParser::ObjectAccessParserContext>(0);
-}
-
-tree::TerminalNode* MyCriteriaParser::Test_exprContext::STR_LITERAL() {
-  return getToken(MyCriteriaParser::STR_LITERAL, 0);
-}
-
-tree::TerminalNode* MyCriteriaParser::Test_exprContext::NULL_T() {
-  return getToken(MyCriteriaParser::NULL_T, 0);
+tree::TerminalNode* MyCriteriaParser::ObjectAccessParserContext::STR_LITERAL(size_t i) {
+  return getToken(MyCriteriaParser::STR_LITERAL, i);
 }
 
 
-size_t MyCriteriaParser::Test_exprContext::getRuleIndex() const {
-  return MyCriteriaParser::RuleTest_expr;
+size_t MyCriteriaParser::ObjectAccessParserContext::getRuleIndex() const {
+  return MyCriteriaParser::RuleObjectAccessParser;
 }
 
-void MyCriteriaParser::Test_exprContext::enterRule(tree::ParseTreeListener *listener) {
+void MyCriteriaParser::ObjectAccessParserContext::enterRule(tree::ParseTreeListener *listener) {
   auto parserListener = dynamic_cast<MyCriteriaListener *>(listener);
   if (parserListener != nullptr)
-    parserListener->enterTest_expr(this);
+    parserListener->enterObjectAccessParser(this);
 }
 
-void MyCriteriaParser::Test_exprContext::exitRule(tree::ParseTreeListener *listener) {
+void MyCriteriaParser::ObjectAccessParserContext::exitRule(tree::ParseTreeListener *listener) {
   auto parserListener = dynamic_cast<MyCriteriaListener *>(listener);
   if (parserListener != nullptr)
-    parserListener->exitTest_expr(this);
+    parserListener->exitObjectAccessParser(this);
 }
 
 
-std::any MyCriteriaParser::Test_exprContext::accept(tree::ParseTreeVisitor *visitor) {
+std::any MyCriteriaParser::ObjectAccessParserContext::accept(tree::ParseTreeVisitor *visitor) {
   if (auto parserVisitor = dynamic_cast<MyCriteriaVisitor*>(visitor))
-    return parserVisitor->visitTest_expr(this);
+    return parserVisitor->visitObjectAccessParser(this);
   else
     return visitor->visitChildren(this);
 }
 
-MyCriteriaParser::Test_exprContext* MyCriteriaParser::test_expr() {
-  Test_exprContext *_localctx = _tracker.createInstance<Test_exprContext>(_ctx, getState());
-  enterRule(_localctx, 8, MyCriteriaParser::RuleTest_expr);
+MyCriteriaParser::ObjectAccessParserContext* MyCriteriaParser::objectAccessParser() {
+  ObjectAccessParserContext *_localctx = _tracker.createInstance<ObjectAccessParserContext>(_ctx, getState());
+  enterRule(_localctx, 8, MyCriteriaParser::RuleObjectAccessParser);
   size_t _la = 0;
 
 #if __cplusplus > 201703L
@@ -1310,204 +1305,98 @@ MyCriteriaParser::Test_exprContext* MyCriteriaParser::test_expr() {
     exitRule();
   });
   try {
-    size_t alt;
-    setState(154);
+    enterOuterAlt(_localctx, 1);
+    setState(102);
+    match(MyCriteriaParser::OBJECT);
+    setState(104); 
     _errHandler->sync(this);
-    switch (getInterpreter<atn::ParserATNSimulator>()->adaptivePredict(_input, 10, _ctx)) {
-    case 1: {
-      enterOuterAlt(_localctx, 1);
-      setState(104);
-      inArrayParser();
-      break;
-    }
-
-    case 2: {
-      enterOuterAlt(_localctx, 2);
-      setState(105);
-      expr(0);
-      setState(106);
-      antlrcpp::downCast<Test_exprContext *>(_localctx)->op = _input->LT(1);
-      _la = _input->LA(1);
-      if (!(_la == MyCriteriaParser::T__0
-
-      || _la == MyCriteriaParser::SLASH)) {
-        antlrcpp::downCast<Test_exprContext *>(_localctx)->op = _errHandler->recoverInline(this);
-      }
-      else {
-        _errHandler->reportMatch(this);
-        consume();
-      }
-      setState(107);
-      expr(0);
-      break;
-    }
-
-    case 3: {
-      enterOuterAlt(_localctx, 3);
-      setState(109);
-      expr(0);
-      setState(110);
-      antlrcpp::downCast<Test_exprContext *>(_localctx)->op = _input->LT(1);
-      _la = _input->LA(1);
-      if (!(_la == MyCriteriaParser::T__1
-
-      || _la == MyCriteriaParser::T__2)) {
-        antlrcpp::downCast<Test_exprContext *>(_localctx)->op = _errHandler->recoverInline(this);
-      }
-      else {
-        _errHandler->reportMatch(this);
-        consume();
-      }
-      setState(111);
-      expr(0);
-      break;
-    }
-
-    case 4: {
-      enterOuterAlt(_localctx, 4);
-      setState(113);
-      match(MyCriteriaParser::STR);
-      setState(114);
-      match(MyCriteriaParser::T__3);
-      setState(120);
+    _la = _input->LA(1);
+    do {
+      setState(103);
+      match(MyCriteriaParser::SQR_L);
+      setState(106); 
       _errHandler->sync(this);
-      alt = getInterpreter<atn::ParserATNSimulator>()->adaptivePredict(_input, 8, _ctx);
-      while (alt != 2 && alt != atn::ATN::INVALID_ALT_NUMBER) {
-        if (alt == 1) {
-          setState(115);
-          expr(0);
-          setState(116);
-          match(MyCriteriaParser::COMMA); 
-        }
-        setState(122);
-        _errHandler->sync(this);
-        alt = getInterpreter<atn::ParserATNSimulator>()->adaptivePredict(_input, 8, _ctx);
-      }
-      setState(124);
-      _errHandler->sync(this);
-
       _la = _input->LA(1);
-      if ((((_la & ~ 0x3fULL) == 0) &&
-        ((1ULL << _la) & 7843364880) != 0)) {
-        setState(123);
-        expr(0);
-      }
-      setState(126);
-      match(MyCriteriaParser::T__4);
-      break;
-    }
-
-    case 5: {
-      enterOuterAlt(_localctx, 5);
-      setState(127);
-      expr(0);
-      setState(128);
-      match(MyCriteriaParser::STR);
-      setState(129);
-      expr(0);
-      break;
-    }
-
-    case 6: {
-      enterOuterAlt(_localctx, 6);
-      setState(131);
-      expr(0);
-      setState(132);
-      antlrcpp::downCast<Test_exprContext *>(_localctx)->op = _input->LT(1);
-      _la = _input->LA(1);
-      if (!((((_la & ~ 0x3fULL) == 0) &&
-        ((1ULL << _la) & 4032) != 0))) {
-        antlrcpp::downCast<Test_exprContext *>(_localctx)->op = _errHandler->recoverInline(this);
-      }
-      else {
-        _errHandler->reportMatch(this);
-        consume();
-      }
-      setState(133);
-      expr(0);
-      break;
-    }
-
-    case 7: {
-      enterOuterAlt(_localctx, 7);
-      setState(135);
-      expr(0);
-      setState(136);
-      match(MyCriteriaParser::T__11);
-      setState(137);
-      expr(0);
-      break;
-    }
-
-    case 8: {
-      enterOuterAlt(_localctx, 8);
-      setState(139);
-      expr(0);
-      setState(140);
-      match(MyCriteriaParser::T__12);
-      setState(141);
-      expr(0);
-      break;
-    }
-
-    case 9: {
-      enterOuterAlt(_localctx, 9);
-      setState(143);
-      match(MyCriteriaParser::EXCL);
-      setState(144);
-      expr(0);
-      break;
-    }
-
-    case 10: {
-      enterOuterAlt(_localctx, 10);
-      setState(145);
-      match(MyCriteriaParser::T__3);
-      setState(146);
-      expr(0);
-      setState(147);
-      match(MyCriteriaParser::T__4);
-      break;
-    }
-
-    case 11: {
-      enterOuterAlt(_localctx, 11);
-      setState(149);
-      match(MyCriteriaParser::BOOL);
-      break;
-    }
-
-    case 12: {
-      enterOuterAlt(_localctx, 12);
-      setState(150);
-      match(MyCriteriaParser::INT);
-      break;
-    }
-
-    case 13: {
-      enterOuterAlt(_localctx, 13);
-      setState(151);
-      objectAccessParser();
-      break;
-    }
-
-    case 14: {
-      enterOuterAlt(_localctx, 14);
-      setState(152);
+    } while (_la == MyCriteriaParser::SQR_L);
+    setState(109); 
+    _errHandler->sync(this);
+    _la = _input->LA(1);
+    do {
+      setState(108);
       match(MyCriteriaParser::STR_LITERAL);
-      break;
-    }
+      setState(111); 
+      _errHandler->sync(this);
+      _la = _input->LA(1);
+    } while (_la == MyCriteriaParser::STR_LITERAL);
+    setState(113);
+    match(MyCriteriaParser::SQR_R);
+   
+  }
+  catch (RecognitionException &e) {
+    _errHandler->reportError(this, e);
+    _localctx->exception = std::current_exception();
+    _errHandler->recover(this, _localctx->exception);
+  }
 
-    case 15: {
-      enterOuterAlt(_localctx, 15);
-      setState(153);
-      match(MyCriteriaParser::NULL_T);
-      break;
-    }
+  return _localctx;
+}
 
-    default:
-      break;
-    }
+//----------------- IdentifierAccessContext ------------------------------------------------------------------
+
+MyCriteriaParser::IdentifierAccessContext::IdentifierAccessContext(ParserRuleContext *parent, size_t invokingState)
+  : ParserRuleContext(parent, invokingState) {
+}
+
+tree::TerminalNode* MyCriteriaParser::IdentifierAccessContext::BUCK() {
+  return getToken(MyCriteriaParser::BUCK, 0);
+}
+
+tree::TerminalNode* MyCriteriaParser::IdentifierAccessContext::IDENTIFIER() {
+  return getToken(MyCriteriaParser::IDENTIFIER, 0);
+}
+
+
+size_t MyCriteriaParser::IdentifierAccessContext::getRuleIndex() const {
+  return MyCriteriaParser::RuleIdentifierAccess;
+}
+
+void MyCriteriaParser::IdentifierAccessContext::enterRule(tree::ParseTreeListener *listener) {
+  auto parserListener = dynamic_cast<MyCriteriaListener *>(listener);
+  if (parserListener != nullptr)
+    parserListener->enterIdentifierAccess(this);
+}
+
+void MyCriteriaParser::IdentifierAccessContext::exitRule(tree::ParseTreeListener *listener) {
+  auto parserListener = dynamic_cast<MyCriteriaListener *>(listener);
+  if (parserListener != nullptr)
+    parserListener->exitIdentifierAccess(this);
+}
+
+
+std::any MyCriteriaParser::IdentifierAccessContext::accept(tree::ParseTreeVisitor *visitor) {
+  if (auto parserVisitor = dynamic_cast<MyCriteriaVisitor*>(visitor))
+    return parserVisitor->visitIdentifierAccess(this);
+  else
+    return visitor->visitChildren(this);
+}
+
+MyCriteriaParser::IdentifierAccessContext* MyCriteriaParser::identifierAccess() {
+  IdentifierAccessContext *_localctx = _tracker.createInstance<IdentifierAccessContext>(_ctx, getState());
+  enterRule(_localctx, 10, MyCriteriaParser::RuleIdentifierAccess);
+
+#if __cplusplus > 201703L
+  auto onExit = finally([=, this] {
+#else
+  auto onExit = finally([=] {
+#endif
+    exitRule();
+  });
+  try {
+    enterOuterAlt(_localctx, 1);
+    setState(115);
+    match(MyCriteriaParser::BUCK);
+    setState(116);
+    match(MyCriteriaParser::IDENTIFIER);
    
   }
   catch (RecognitionException &e) {
@@ -1529,8 +1418,8 @@ tree::TerminalNode* MyCriteriaParser::ImportStatementContext::IMPORT() {
   return getToken(MyCriteriaParser::IMPORT, 0);
 }
 
-tree::TerminalNode* MyCriteriaParser::ImportStatementContext::STR() {
-  return getToken(MyCriteriaParser::STR, 0);
+tree::TerminalNode* MyCriteriaParser::ImportStatementContext::IDENTIFIER() {
+  return getToken(MyCriteriaParser::IDENTIFIER, 0);
 }
 
 
@@ -1560,7 +1449,7 @@ std::any MyCriteriaParser::ImportStatementContext::accept(tree::ParseTreeVisitor
 
 MyCriteriaParser::ImportStatementContext* MyCriteriaParser::importStatement() {
   ImportStatementContext *_localctx = _tracker.createInstance<ImportStatementContext>(_ctx, getState());
-  enterRule(_localctx, 10, MyCriteriaParser::RuleImportStatement);
+  enterRule(_localctx, 12, MyCriteriaParser::RuleImportStatement);
 
 #if __cplusplus > 201703L
   auto onExit = finally([=, this] {
@@ -1571,10 +1460,10 @@ MyCriteriaParser::ImportStatementContext* MyCriteriaParser::importStatement() {
   });
   try {
     enterOuterAlt(_localctx, 1);
-    setState(156);
+    setState(118);
     match(MyCriteriaParser::IMPORT);
-    setState(157);
-    match(MyCriteriaParser::STR);
+    setState(119);
+    match(MyCriteriaParser::IDENTIFIER);
    
   }
   catch (RecognitionException &e) {
@@ -1635,7 +1524,7 @@ std::any MyCriteriaParser::IdentifierDefinitionsContext::accept(tree::ParseTreeV
 
 MyCriteriaParser::IdentifierDefinitionsContext* MyCriteriaParser::identifierDefinitions() {
   IdentifierDefinitionsContext *_localctx = _tracker.createInstance<IdentifierDefinitionsContext>(_ctx, getState());
-  enterRule(_localctx, 12, MyCriteriaParser::RuleIdentifierDefinitions);
+  enterRule(_localctx, 14, MyCriteriaParser::RuleIdentifierDefinitions);
   size_t _la = 0;
 
 #if __cplusplus > 201703L
@@ -1647,18 +1536,18 @@ MyCriteriaParser::IdentifierDefinitionsContext* MyCriteriaParser::identifierDefi
   });
   try {
     enterOuterAlt(_localctx, 1);
-    setState(162); 
+    setState(126);
     _errHandler->sync(this);
     _la = _input->LA(1);
-    do {
-      setState(159);
+    while (_la == MyCriteriaParser::BUCK) {
+      setState(121);
       identifierDefinition();
-      setState(160);
+      setState(122);
       match(MyCriteriaParser::SEMICOLON);
-      setState(164); 
+      setState(128);
       _errHandler->sync(this);
       _la = _input->LA(1);
-    } while (_la == MyCriteriaParser::BUCK);
+    }
    
   }
   catch (RecognitionException &e) {
@@ -1680,8 +1569,8 @@ tree::TerminalNode* MyCriteriaParser::IdentifierDefinitionContext::BUCK() {
   return getToken(MyCriteriaParser::BUCK, 0);
 }
 
-tree::TerminalNode* MyCriteriaParser::IdentifierDefinitionContext::STR() {
-  return getToken(MyCriteriaParser::STR, 0);
+tree::TerminalNode* MyCriteriaParser::IdentifierDefinitionContext::IDENTIFIER() {
+  return getToken(MyCriteriaParser::IDENTIFIER, 0);
 }
 
 tree::TerminalNode* MyCriteriaParser::IdentifierDefinitionContext::EQUALS() {
@@ -1719,7 +1608,7 @@ std::any MyCriteriaParser::IdentifierDefinitionContext::accept(tree::ParseTreeVi
 
 MyCriteriaParser::IdentifierDefinitionContext* MyCriteriaParser::identifierDefinition() {
   IdentifierDefinitionContext *_localctx = _tracker.createInstance<IdentifierDefinitionContext>(_ctx, getState());
-  enterRule(_localctx, 14, MyCriteriaParser::RuleIdentifierDefinition);
+  enterRule(_localctx, 16, MyCriteriaParser::RuleIdentifierDefinition);
 
 #if __cplusplus > 201703L
   auto onExit = finally([=, this] {
@@ -1730,400 +1619,14 @@ MyCriteriaParser::IdentifierDefinitionContext* MyCriteriaParser::identifierDefin
   });
   try {
     enterOuterAlt(_localctx, 1);
-    setState(166);
+    setState(129);
     match(MyCriteriaParser::BUCK);
-    setState(167);
-    match(MyCriteriaParser::STR);
-    setState(168);
+    setState(130);
+    match(MyCriteriaParser::IDENTIFIER);
+    setState(131);
     match(MyCriteriaParser::EQUALS);
-    setState(169);
+    setState(132);
     expr(0);
-   
-  }
-  catch (RecognitionException &e) {
-    _errHandler->reportError(this, e);
-    _localctx->exception = std::current_exception();
-    _errHandler->recover(this, _localctx->exception);
-  }
-
-  return _localctx;
-}
-
-//----------------- IdentifierAccessContext ------------------------------------------------------------------
-
-MyCriteriaParser::IdentifierAccessContext::IdentifierAccessContext(ParserRuleContext *parent, size_t invokingState)
-  : ParserRuleContext(parent, invokingState) {
-}
-
-tree::TerminalNode* MyCriteriaParser::IdentifierAccessContext::BUCK() {
-  return getToken(MyCriteriaParser::BUCK, 0);
-}
-
-tree::TerminalNode* MyCriteriaParser::IdentifierAccessContext::STR() {
-  return getToken(MyCriteriaParser::STR, 0);
-}
-
-
-size_t MyCriteriaParser::IdentifierAccessContext::getRuleIndex() const {
-  return MyCriteriaParser::RuleIdentifierAccess;
-}
-
-void MyCriteriaParser::IdentifierAccessContext::enterRule(tree::ParseTreeListener *listener) {
-  auto parserListener = dynamic_cast<MyCriteriaListener *>(listener);
-  if (parserListener != nullptr)
-    parserListener->enterIdentifierAccess(this);
-}
-
-void MyCriteriaParser::IdentifierAccessContext::exitRule(tree::ParseTreeListener *listener) {
-  auto parserListener = dynamic_cast<MyCriteriaListener *>(listener);
-  if (parserListener != nullptr)
-    parserListener->exitIdentifierAccess(this);
-}
-
-
-std::any MyCriteriaParser::IdentifierAccessContext::accept(tree::ParseTreeVisitor *visitor) {
-  if (auto parserVisitor = dynamic_cast<MyCriteriaVisitor*>(visitor))
-    return parserVisitor->visitIdentifierAccess(this);
-  else
-    return visitor->visitChildren(this);
-}
-
-MyCriteriaParser::IdentifierAccessContext* MyCriteriaParser::identifierAccess() {
-  IdentifierAccessContext *_localctx = _tracker.createInstance<IdentifierAccessContext>(_ctx, getState());
-  enterRule(_localctx, 16, MyCriteriaParser::RuleIdentifierAccess);
-
-#if __cplusplus > 201703L
-  auto onExit = finally([=, this] {
-#else
-  auto onExit = finally([=] {
-#endif
-    exitRule();
-  });
-  try {
-    enterOuterAlt(_localctx, 1);
-    setState(171);
-    match(MyCriteriaParser::BUCK);
-    setState(172);
-    match(MyCriteriaParser::STR);
-   
-  }
-  catch (RecognitionException &e) {
-    _errHandler->reportError(this, e);
-    _localctx->exception = std::current_exception();
-    _errHandler->recover(this, _localctx->exception);
-  }
-
-  return _localctx;
-}
-
-//----------------- JsonPointerInnerContext ------------------------------------------------------------------
-
-MyCriteriaParser::JsonPointerInnerContext::JsonPointerInnerContext(ParserRuleContext *parent, size_t invokingState)
-  : ParserRuleContext(parent, invokingState) {
-}
-
-std::vector<tree::TerminalNode *> MyCriteriaParser::JsonPointerInnerContext::STR() {
-  return getTokens(MyCriteriaParser::STR);
-}
-
-tree::TerminalNode* MyCriteriaParser::JsonPointerInnerContext::STR(size_t i) {
-  return getToken(MyCriteriaParser::STR, i);
-}
-
-std::vector<tree::TerminalNode *> MyCriteriaParser::JsonPointerInnerContext::SLASH() {
-  return getTokens(MyCriteriaParser::SLASH);
-}
-
-tree::TerminalNode* MyCriteriaParser::JsonPointerInnerContext::SLASH(size_t i) {
-  return getToken(MyCriteriaParser::SLASH, i);
-}
-
-
-size_t MyCriteriaParser::JsonPointerInnerContext::getRuleIndex() const {
-  return MyCriteriaParser::RuleJsonPointerInner;
-}
-
-void MyCriteriaParser::JsonPointerInnerContext::enterRule(tree::ParseTreeListener *listener) {
-  auto parserListener = dynamic_cast<MyCriteriaListener *>(listener);
-  if (parserListener != nullptr)
-    parserListener->enterJsonPointerInner(this);
-}
-
-void MyCriteriaParser::JsonPointerInnerContext::exitRule(tree::ParseTreeListener *listener) {
-  auto parserListener = dynamic_cast<MyCriteriaListener *>(listener);
-  if (parserListener != nullptr)
-    parserListener->exitJsonPointerInner(this);
-}
-
-
-std::any MyCriteriaParser::JsonPointerInnerContext::accept(tree::ParseTreeVisitor *visitor) {
-  if (auto parserVisitor = dynamic_cast<MyCriteriaVisitor*>(visitor))
-    return parserVisitor->visitJsonPointerInner(this);
-  else
-    return visitor->visitChildren(this);
-}
-
-MyCriteriaParser::JsonPointerInnerContext* MyCriteriaParser::jsonPointerInner() {
-  JsonPointerInnerContext *_localctx = _tracker.createInstance<JsonPointerInnerContext>(_ctx, getState());
-  enterRule(_localctx, 18, MyCriteriaParser::RuleJsonPointerInner);
-  size_t _la = 0;
-
-#if __cplusplus > 201703L
-  auto onExit = finally([=, this] {
-#else
-  auto onExit = finally([=] {
-#endif
-    exitRule();
-  });
-  try {
-    size_t alt;
-    enterOuterAlt(_localctx, 1);
-    setState(175);
-    _errHandler->sync(this);
-
-    _la = _input->LA(1);
-    if (_la == MyCriteriaParser::SLASH) {
-      setState(174);
-      match(MyCriteriaParser::SLASH);
-    }
-    setState(177);
-    match(MyCriteriaParser::STR);
-    setState(182);
-    _errHandler->sync(this);
-    alt = getInterpreter<atn::ParserATNSimulator>()->adaptivePredict(_input, 13, _ctx);
-    while (alt != 2 && alt != atn::ATN::INVALID_ALT_NUMBER) {
-      if (alt == 1) {
-        setState(178);
-        match(MyCriteriaParser::SLASH);
-        setState(179);
-        match(MyCriteriaParser::STR); 
-      }
-      setState(184);
-      _errHandler->sync(this);
-      alt = getInterpreter<atn::ParserATNSimulator>()->adaptivePredict(_input, 13, _ctx);
-    }
-    setState(186);
-    _errHandler->sync(this);
-
-    _la = _input->LA(1);
-    if (_la == MyCriteriaParser::SLASH) {
-      setState(185);
-      match(MyCriteriaParser::SLASH);
-    }
-   
-  }
-  catch (RecognitionException &e) {
-    _errHandler->reportError(this, e);
-    _localctx->exception = std::current_exception();
-    _errHandler->recover(this, _localctx->exception);
-  }
-
-  return _localctx;
-}
-
-//----------------- JsonPointerContext ------------------------------------------------------------------
-
-MyCriteriaParser::JsonPointerContext::JsonPointerContext(ParserRuleContext *parent, size_t invokingState)
-  : ParserRuleContext(parent, invokingState) {
-}
-
-std::vector<tree::TerminalNode *> MyCriteriaParser::JsonPointerContext::S_Q() {
-  return getTokens(MyCriteriaParser::S_Q);
-}
-
-tree::TerminalNode* MyCriteriaParser::JsonPointerContext::S_Q(size_t i) {
-  return getToken(MyCriteriaParser::S_Q, i);
-}
-
-MyCriteriaParser::JsonPointerInnerContext* MyCriteriaParser::JsonPointerContext::jsonPointerInner() {
-  return getRuleContext<MyCriteriaParser::JsonPointerInnerContext>(0);
-}
-
-std::vector<tree::TerminalNode *> MyCriteriaParser::JsonPointerContext::D_Q() {
-  return getTokens(MyCriteriaParser::D_Q);
-}
-
-tree::TerminalNode* MyCriteriaParser::JsonPointerContext::D_Q(size_t i) {
-  return getToken(MyCriteriaParser::D_Q, i);
-}
-
-tree::TerminalNode* MyCriteriaParser::JsonPointerContext::STR_LITERAL() {
-  return getToken(MyCriteriaParser::STR_LITERAL, 0);
-}
-
-
-size_t MyCriteriaParser::JsonPointerContext::getRuleIndex() const {
-  return MyCriteriaParser::RuleJsonPointer;
-}
-
-void MyCriteriaParser::JsonPointerContext::enterRule(tree::ParseTreeListener *listener) {
-  auto parserListener = dynamic_cast<MyCriteriaListener *>(listener);
-  if (parserListener != nullptr)
-    parserListener->enterJsonPointer(this);
-}
-
-void MyCriteriaParser::JsonPointerContext::exitRule(tree::ParseTreeListener *listener) {
-  auto parserListener = dynamic_cast<MyCriteriaListener *>(listener);
-  if (parserListener != nullptr)
-    parserListener->exitJsonPointer(this);
-}
-
-
-std::any MyCriteriaParser::JsonPointerContext::accept(tree::ParseTreeVisitor *visitor) {
-  if (auto parserVisitor = dynamic_cast<MyCriteriaVisitor*>(visitor))
-    return parserVisitor->visitJsonPointer(this);
-  else
-    return visitor->visitChildren(this);
-}
-
-MyCriteriaParser::JsonPointerContext* MyCriteriaParser::jsonPointer() {
-  JsonPointerContext *_localctx = _tracker.createInstance<JsonPointerContext>(_ctx, getState());
-  enterRule(_localctx, 20, MyCriteriaParser::RuleJsonPointer);
-
-#if __cplusplus > 201703L
-  auto onExit = finally([=, this] {
-#else
-  auto onExit = finally([=] {
-#endif
-    exitRule();
-  });
-  try {
-    setState(197);
-    _errHandler->sync(this);
-    switch (_input->LA(1)) {
-      case MyCriteriaParser::S_Q: {
-        enterOuterAlt(_localctx, 1);
-        setState(188);
-        match(MyCriteriaParser::S_Q);
-        setState(189);
-        jsonPointerInner();
-        setState(190);
-        match(MyCriteriaParser::S_Q);
-        break;
-      }
-
-      case MyCriteriaParser::D_Q: {
-        enterOuterAlt(_localctx, 2);
-        setState(192);
-        match(MyCriteriaParser::D_Q);
-        setState(193);
-        jsonPointerInner();
-        setState(194);
-        match(MyCriteriaParser::D_Q);
-        break;
-      }
-
-      case MyCriteriaParser::STR_LITERAL: {
-        enterOuterAlt(_localctx, 3);
-        setState(196);
-        match(MyCriteriaParser::STR_LITERAL);
-        break;
-      }
-
-    default:
-      throw NoViableAltException(this);
-    }
-   
-  }
-  catch (RecognitionException &e) {
-    _errHandler->reportError(this, e);
-    _localctx->exception = std::current_exception();
-    _errHandler->recover(this, _localctx->exception);
-  }
-
-  return _localctx;
-}
-
-//----------------- ObjectAccessParserContext ------------------------------------------------------------------
-
-MyCriteriaParser::ObjectAccessParserContext::ObjectAccessParserContext(ParserRuleContext *parent, size_t invokingState)
-  : ParserRuleContext(parent, invokingState) {
-}
-
-tree::TerminalNode* MyCriteriaParser::ObjectAccessParserContext::SQR_R() {
-  return getToken(MyCriteriaParser::SQR_R, 0);
-}
-
-std::vector<tree::TerminalNode *> MyCriteriaParser::ObjectAccessParserContext::SQR_L() {
-  return getTokens(MyCriteriaParser::SQR_L);
-}
-
-tree::TerminalNode* MyCriteriaParser::ObjectAccessParserContext::SQR_L(size_t i) {
-  return getToken(MyCriteriaParser::SQR_L, i);
-}
-
-std::vector<MyCriteriaParser::JsonPointerContext *> MyCriteriaParser::ObjectAccessParserContext::jsonPointer() {
-  return getRuleContexts<MyCriteriaParser::JsonPointerContext>();
-}
-
-MyCriteriaParser::JsonPointerContext* MyCriteriaParser::ObjectAccessParserContext::jsonPointer(size_t i) {
-  return getRuleContext<MyCriteriaParser::JsonPointerContext>(i);
-}
-
-
-size_t MyCriteriaParser::ObjectAccessParserContext::getRuleIndex() const {
-  return MyCriteriaParser::RuleObjectAccessParser;
-}
-
-void MyCriteriaParser::ObjectAccessParserContext::enterRule(tree::ParseTreeListener *listener) {
-  auto parserListener = dynamic_cast<MyCriteriaListener *>(listener);
-  if (parserListener != nullptr)
-    parserListener->enterObjectAccessParser(this);
-}
-
-void MyCriteriaParser::ObjectAccessParserContext::exitRule(tree::ParseTreeListener *listener) {
-  auto parserListener = dynamic_cast<MyCriteriaListener *>(listener);
-  if (parserListener != nullptr)
-    parserListener->exitObjectAccessParser(this);
-}
-
-
-std::any MyCriteriaParser::ObjectAccessParserContext::accept(tree::ParseTreeVisitor *visitor) {
-  if (auto parserVisitor = dynamic_cast<MyCriteriaVisitor*>(visitor))
-    return parserVisitor->visitObjectAccessParser(this);
-  else
-    return visitor->visitChildren(this);
-}
-
-MyCriteriaParser::ObjectAccessParserContext* MyCriteriaParser::objectAccessParser() {
-  ObjectAccessParserContext *_localctx = _tracker.createInstance<ObjectAccessParserContext>(_ctx, getState());
-  enterRule(_localctx, 22, MyCriteriaParser::RuleObjectAccessParser);
-  size_t _la = 0;
-
-#if __cplusplus > 201703L
-  auto onExit = finally([=, this] {
-#else
-  auto onExit = finally([=] {
-#endif
-    exitRule();
-  });
-  try {
-    enterOuterAlt(_localctx, 1);
-    setState(199);
-    match(MyCriteriaParser::T__13);
-    setState(201); 
-    _errHandler->sync(this);
-    _la = _input->LA(1);
-    do {
-      setState(200);
-      match(MyCriteriaParser::SQR_L);
-      setState(203); 
-      _errHandler->sync(this);
-      _la = _input->LA(1);
-    } while (_la == MyCriteriaParser::SQR_L);
-    setState(206); 
-    _errHandler->sync(this);
-    _la = _input->LA(1);
-    do {
-      setState(205);
-      jsonPointer();
-      setState(208); 
-      _errHandler->sync(this);
-      _la = _input->LA(1);
-    } while ((((_la & ~ 0x3fULL) == 0) &&
-      ((1ULL << _la) & 1275068416) != 0));
-    setState(210);
-    match(MyCriteriaParser::SQR_R);
    
   }
   catch (RecognitionException &e) {
@@ -2176,7 +1679,7 @@ std::any MyCriteriaParser::StrOrNumContext::accept(tree::ParseTreeVisitor *visit
 
 MyCriteriaParser::StrOrNumContext* MyCriteriaParser::strOrNum() {
   StrOrNumContext *_localctx = _tracker.createInstance<StrOrNumContext>(_ctx, getState());
-  enterRule(_localctx, 24, MyCriteriaParser::RuleStrOrNum);
+  enterRule(_localctx, 18, MyCriteriaParser::RuleStrOrNum);
 
 #if __cplusplus > 201703L
   auto onExit = finally([=, this] {
@@ -2186,115 +1689,25 @@ MyCriteriaParser::StrOrNumContext* MyCriteriaParser::strOrNum() {
     exitRule();
   });
   try {
-    setState(214);
+    setState(136);
     _errHandler->sync(this);
     switch (_input->LA(1)) {
       case MyCriteriaParser::STR_LITERAL: {
         enterOuterAlt(_localctx, 1);
-        setState(212);
+        setState(134);
         match(MyCriteriaParser::STR_LITERAL);
         break;
       }
 
       case MyCriteriaParser::INT: {
         enterOuterAlt(_localctx, 2);
-        setState(213);
+        setState(135);
         numb();
         break;
       }
 
     default:
       throw NoViableAltException(this);
-    }
-   
-  }
-  catch (RecognitionException &e) {
-    _errHandler->reportError(this, e);
-    _localctx->exception = std::current_exception();
-    _errHandler->recover(this, _localctx->exception);
-  }
-
-  return _localctx;
-}
-
-//----------------- NumbContext ------------------------------------------------------------------
-
-MyCriteriaParser::NumbContext::NumbContext(ParserRuleContext *parent, size_t invokingState)
-  : ParserRuleContext(parent, invokingState) {
-}
-
-std::vector<tree::TerminalNode *> MyCriteriaParser::NumbContext::INT() {
-  return getTokens(MyCriteriaParser::INT);
-}
-
-tree::TerminalNode* MyCriteriaParser::NumbContext::INT(size_t i) {
-  return getToken(MyCriteriaParser::INT, i);
-}
-
-tree::TerminalNode* MyCriteriaParser::NumbContext::DOT() {
-  return getToken(MyCriteriaParser::DOT, 0);
-}
-
-
-size_t MyCriteriaParser::NumbContext::getRuleIndex() const {
-  return MyCriteriaParser::RuleNumb;
-}
-
-void MyCriteriaParser::NumbContext::enterRule(tree::ParseTreeListener *listener) {
-  auto parserListener = dynamic_cast<MyCriteriaListener *>(listener);
-  if (parserListener != nullptr)
-    parserListener->enterNumb(this);
-}
-
-void MyCriteriaParser::NumbContext::exitRule(tree::ParseTreeListener *listener) {
-  auto parserListener = dynamic_cast<MyCriteriaListener *>(listener);
-  if (parserListener != nullptr)
-    parserListener->exitNumb(this);
-}
-
-
-std::any MyCriteriaParser::NumbContext::accept(tree::ParseTreeVisitor *visitor) {
-  if (auto parserVisitor = dynamic_cast<MyCriteriaVisitor*>(visitor))
-    return parserVisitor->visitNumb(this);
-  else
-    return visitor->visitChildren(this);
-}
-
-MyCriteriaParser::NumbContext* MyCriteriaParser::numb() {
-  NumbContext *_localctx = _tracker.createInstance<NumbContext>(_ctx, getState());
-  enterRule(_localctx, 26, MyCriteriaParser::RuleNumb);
-
-#if __cplusplus > 201703L
-  auto onExit = finally([=, this] {
-#else
-  auto onExit = finally([=] {
-#endif
-    exitRule();
-  });
-  try {
-    setState(220);
-    _errHandler->sync(this);
-    switch (getInterpreter<atn::ParserATNSimulator>()->adaptivePredict(_input, 19, _ctx)) {
-    case 1: {
-      enterOuterAlt(_localctx, 1);
-      setState(216);
-      match(MyCriteriaParser::INT);
-      break;
-    }
-
-    case 2: {
-      enterOuterAlt(_localctx, 2);
-      setState(217);
-      match(MyCriteriaParser::INT);
-      setState(218);
-      match(MyCriteriaParser::DOT);
-      setState(219);
-      match(MyCriteriaParser::INT);
-      break;
-    }
-
-    default:
-      break;
     }
    
   }
@@ -2376,7 +1789,7 @@ std::any MyCriteriaParser::InArrayParserContext::accept(tree::ParseTreeVisitor *
 
 MyCriteriaParser::InArrayParserContext* MyCriteriaParser::inArrayParser() {
   InArrayParserContext *_localctx = _tracker.createInstance<InArrayParserContext>(_ctx, getState());
-  enterRule(_localctx, 28, MyCriteriaParser::RuleInArrayParser);
+  enterRule(_localctx, 20, MyCriteriaParser::RuleInArrayParser);
   size_t _la = 0;
 
 #if __cplusplus > 201703L
@@ -2388,21 +1801,21 @@ MyCriteriaParser::InArrayParserContext* MyCriteriaParser::inArrayParser() {
   });
   try {
     enterOuterAlt(_localctx, 1);
-    setState(222);
+    setState(138);
     objectAccessParser();
-    setState(226);
+    setState(142);
     _errHandler->sync(this);
     switch (_input->LA(1)) {
       case MyCriteriaParser::IN: {
-        setState(223);
+        setState(139);
         match(MyCriteriaParser::IN);
         break;
       }
 
       case MyCriteriaParser::EXCL: {
-        setState(224);
+        setState(140);
         match(MyCriteriaParser::EXCL);
-        setState(225);
+        setState(141);
         match(MyCriteriaParser::IN);
         break;
       }
@@ -2410,24 +1823,114 @@ MyCriteriaParser::InArrayParserContext* MyCriteriaParser::inArrayParser() {
     default:
       throw NoViableAltException(this);
     }
-    setState(228);
+    setState(144);
     match(MyCriteriaParser::SQR_L);
-    setState(229);
+    setState(145);
     strOrNum();
-    setState(234);
+    setState(150);
     _errHandler->sync(this);
     _la = _input->LA(1);
     while (_la == MyCriteriaParser::COMMA) {
-      setState(230);
+      setState(146);
       match(MyCriteriaParser::COMMA);
-      setState(231);
+      setState(147);
       strOrNum();
-      setState(236);
+      setState(152);
       _errHandler->sync(this);
       _la = _input->LA(1);
     }
-    setState(237);
+    setState(153);
     match(MyCriteriaParser::SQR_R);
+   
+  }
+  catch (RecognitionException &e) {
+    _errHandler->reportError(this, e);
+    _localctx->exception = std::current_exception();
+    _errHandler->recover(this, _localctx->exception);
+  }
+
+  return _localctx;
+}
+
+//----------------- NumbContext ------------------------------------------------------------------
+
+MyCriteriaParser::NumbContext::NumbContext(ParserRuleContext *parent, size_t invokingState)
+  : ParserRuleContext(parent, invokingState) {
+}
+
+std::vector<tree::TerminalNode *> MyCriteriaParser::NumbContext::INT() {
+  return getTokens(MyCriteriaParser::INT);
+}
+
+tree::TerminalNode* MyCriteriaParser::NumbContext::INT(size_t i) {
+  return getToken(MyCriteriaParser::INT, i);
+}
+
+tree::TerminalNode* MyCriteriaParser::NumbContext::DOT() {
+  return getToken(MyCriteriaParser::DOT, 0);
+}
+
+
+size_t MyCriteriaParser::NumbContext::getRuleIndex() const {
+  return MyCriteriaParser::RuleNumb;
+}
+
+void MyCriteriaParser::NumbContext::enterRule(tree::ParseTreeListener *listener) {
+  auto parserListener = dynamic_cast<MyCriteriaListener *>(listener);
+  if (parserListener != nullptr)
+    parserListener->enterNumb(this);
+}
+
+void MyCriteriaParser::NumbContext::exitRule(tree::ParseTreeListener *listener) {
+  auto parserListener = dynamic_cast<MyCriteriaListener *>(listener);
+  if (parserListener != nullptr)
+    parserListener->exitNumb(this);
+}
+
+
+std::any MyCriteriaParser::NumbContext::accept(tree::ParseTreeVisitor *visitor) {
+  if (auto parserVisitor = dynamic_cast<MyCriteriaVisitor*>(visitor))
+    return parserVisitor->visitNumb(this);
+  else
+    return visitor->visitChildren(this);
+}
+
+MyCriteriaParser::NumbContext* MyCriteriaParser::numb() {
+  NumbContext *_localctx = _tracker.createInstance<NumbContext>(_ctx, getState());
+  enterRule(_localctx, 22, MyCriteriaParser::RuleNumb);
+
+#if __cplusplus > 201703L
+  auto onExit = finally([=, this] {
+#else
+  auto onExit = finally([=] {
+#endif
+    exitRule();
+  });
+  try {
+    setState(159);
+    _errHandler->sync(this);
+    switch (getInterpreter<atn::ParserATNSimulator>()->adaptivePredict(_input, 14, _ctx)) {
+    case 1: {
+      enterOuterAlt(_localctx, 1);
+      setState(155);
+      match(MyCriteriaParser::INT);
+      break;
+    }
+
+    case 2: {
+      enterOuterAlt(_localctx, 2);
+      setState(156);
+      match(MyCriteriaParser::INT);
+      setState(157);
+      match(MyCriteriaParser::DOT);
+      setState(158);
+      match(MyCriteriaParser::INT);
+      break;
+    }
+
+    default:
+      break;
+    }
    
   }
   catch (RecognitionException &e) {
@@ -2451,12 +1954,13 @@ bool MyCriteriaParser::sempred(RuleContext *context, size_t ruleIndex, size_t pr
 
 bool MyCriteriaParser::exprSempred(ExprContext *_localctx, size_t predicateIndex) {
   switch (predicateIndex) {
-    case 0: return precpred(_ctx, 14);
-    case 1: return precpred(_ctx, 13);
-    case 2: return precpred(_ctx, 11);
-    case 3: return precpred(_ctx, 10);
-    case 4: return precpred(_ctx, 9);
-    case 5: return precpred(_ctx, 8);
+    case 0: return precpred(_ctx, 16);
+    case 1: return precpred(_ctx, 15);
+    case 2: return precpred(_ctx, 13);
+    case 3: return precpred(_ctx, 12);
+    case 4: return precpred(_ctx, 11);
+    case 5: return precpred(_ctx, 10);
+    case 6: return precpred(_ctx, 9);
 
   default:
     break;

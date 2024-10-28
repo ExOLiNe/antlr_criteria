@@ -31,6 +31,10 @@ public:
     return visitChildren(ctx);
   }
 
+  virtual std::any visitInfixFuncCallNot(MyCriteriaParser::InfixFuncCallNotContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
   virtual std::any visitComparison(MyCriteriaParser::ComparisonContext *ctx) override {
     return visitChildren(ctx);
   }
@@ -51,11 +55,11 @@ public:
     return visitChildren(ctx);
   }
 
-  virtual std::any visitIdAccess(MyCriteriaParser::IdAccessContext *ctx) override {
+  virtual std::any visitStrLiteral(MyCriteriaParser::StrLiteralContext *ctx) override {
     return visitChildren(ctx);
   }
 
-  virtual std::any visitStrLiteral(MyCriteriaParser::StrLiteralContext *ctx) override {
+  virtual std::any visitIdAccess(MyCriteriaParser::IdAccessContext *ctx) override {
     return visitChildren(ctx);
   }
 
@@ -91,7 +95,11 @@ public:
     return visitChildren(ctx);
   }
 
-  virtual std::any visitTest_expr(MyCriteriaParser::Test_exprContext *ctx) override {
+  virtual std::any visitObjectAccessParser(MyCriteriaParser::ObjectAccessParserContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual std::any visitIdentifierAccess(MyCriteriaParser::IdentifierAccessContext *ctx) override {
     return visitChildren(ctx);
   }
 
@@ -107,31 +115,15 @@ public:
     return visitChildren(ctx);
   }
 
-  virtual std::any visitIdentifierAccess(MyCriteriaParser::IdentifierAccessContext *ctx) override {
-    return visitChildren(ctx);
-  }
-
-  virtual std::any visitJsonPointerInner(MyCriteriaParser::JsonPointerInnerContext *ctx) override {
-    return visitChildren(ctx);
-  }
-
-  virtual std::any visitJsonPointer(MyCriteriaParser::JsonPointerContext *ctx) override {
-    return visitChildren(ctx);
-  }
-
-  virtual std::any visitObjectAccessParser(MyCriteriaParser::ObjectAccessParserContext *ctx) override {
-    return visitChildren(ctx);
-  }
-
   virtual std::any visitStrOrNum(MyCriteriaParser::StrOrNumContext *ctx) override {
     return visitChildren(ctx);
   }
 
-  virtual std::any visitNumb(MyCriteriaParser::NumbContext *ctx) override {
+  virtual std::any visitInArrayParser(MyCriteriaParser::InArrayParserContext *ctx) override {
     return visitChildren(ctx);
   }
 
-  virtual std::any visitInArrayParser(MyCriteriaParser::InArrayParserContext *ctx) override {
+  virtual std::any visitNumb(MyCriteriaParser::NumbContext *ctx) override {
     return visitChildren(ctx);
   }
 

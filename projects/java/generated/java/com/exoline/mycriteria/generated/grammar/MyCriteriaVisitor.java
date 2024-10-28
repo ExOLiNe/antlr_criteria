@@ -36,6 +36,13 @@ public interface MyCriteriaVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitNull(MyCriteriaParser.NullContext ctx);
 	/**
+	 * Visit a parse tree produced by the {@code InfixFuncCallNot}
+	 * labeled alternative in {@link MyCriteriaParser#expr}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitInfixFuncCallNot(MyCriteriaParser.InfixFuncCallNotContext ctx);
+	/**
 	 * Visit a parse tree produced by the {@code comparison}
 	 * labeled alternative in {@link MyCriteriaParser#expr}.
 	 * @param ctx the parse tree
@@ -71,19 +78,19 @@ public interface MyCriteriaVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitInfixFuncCall(MyCriteriaParser.InfixFuncCallContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code IdAccess}
-	 * labeled alternative in {@link MyCriteriaParser#expr}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitIdAccess(MyCriteriaParser.IdAccessContext ctx);
-	/**
 	 * Visit a parse tree produced by the {@code StrLiteral}
 	 * labeled alternative in {@link MyCriteriaParser#expr}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitStrLiteral(MyCriteriaParser.StrLiteralContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code IdAccess}
+	 * labeled alternative in {@link MyCriteriaParser#expr}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitIdAccess(MyCriteriaParser.IdAccessContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code InArray}
 	 * labeled alternative in {@link MyCriteriaParser#expr}.
@@ -141,11 +148,17 @@ public interface MyCriteriaVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitParenExpr(MyCriteriaParser.ParenExprContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link MyCriteriaParser#test_expr}.
+	 * Visit a parse tree produced by {@link MyCriteriaParser#objectAccessParser}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitTest_expr(MyCriteriaParser.Test_exprContext ctx);
+	T visitObjectAccessParser(MyCriteriaParser.ObjectAccessParserContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link MyCriteriaParser#identifierAccess}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitIdentifierAccess(MyCriteriaParser.IdentifierAccessContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link MyCriteriaParser#importStatement}.
 	 * @param ctx the parse tree
@@ -165,45 +178,21 @@ public interface MyCriteriaVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitIdentifierDefinition(MyCriteriaParser.IdentifierDefinitionContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link MyCriteriaParser#identifierAccess}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitIdentifierAccess(MyCriteriaParser.IdentifierAccessContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link MyCriteriaParser#jsonPointerInner}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitJsonPointerInner(MyCriteriaParser.JsonPointerInnerContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link MyCriteriaParser#jsonPointer}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitJsonPointer(MyCriteriaParser.JsonPointerContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link MyCriteriaParser#objectAccessParser}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitObjectAccessParser(MyCriteriaParser.ObjectAccessParserContext ctx);
-	/**
 	 * Visit a parse tree produced by {@link MyCriteriaParser#strOrNum}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitStrOrNum(MyCriteriaParser.StrOrNumContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link MyCriteriaParser#numb}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitNumb(MyCriteriaParser.NumbContext ctx);
-	/**
 	 * Visit a parse tree produced by {@link MyCriteriaParser#inArrayParser}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitInArrayParser(MyCriteriaParser.InArrayParserContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link MyCriteriaParser#numb}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitNumb(MyCriteriaParser.NumbContext ctx);
 }

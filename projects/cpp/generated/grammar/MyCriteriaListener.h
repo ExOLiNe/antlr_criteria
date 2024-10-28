@@ -26,6 +26,9 @@ public:
   virtual void enterNull(MyCriteriaParser::NullContext *ctx) = 0;
   virtual void exitNull(MyCriteriaParser::NullContext *ctx) = 0;
 
+  virtual void enterInfixFuncCallNot(MyCriteriaParser::InfixFuncCallNotContext *ctx) = 0;
+  virtual void exitInfixFuncCallNot(MyCriteriaParser::InfixFuncCallNotContext *ctx) = 0;
+
   virtual void enterComparison(MyCriteriaParser::ComparisonContext *ctx) = 0;
   virtual void exitComparison(MyCriteriaParser::ComparisonContext *ctx) = 0;
 
@@ -41,11 +44,11 @@ public:
   virtual void enterInfixFuncCall(MyCriteriaParser::InfixFuncCallContext *ctx) = 0;
   virtual void exitInfixFuncCall(MyCriteriaParser::InfixFuncCallContext *ctx) = 0;
 
-  virtual void enterIdAccess(MyCriteriaParser::IdAccessContext *ctx) = 0;
-  virtual void exitIdAccess(MyCriteriaParser::IdAccessContext *ctx) = 0;
-
   virtual void enterStrLiteral(MyCriteriaParser::StrLiteralContext *ctx) = 0;
   virtual void exitStrLiteral(MyCriteriaParser::StrLiteralContext *ctx) = 0;
+
+  virtual void enterIdAccess(MyCriteriaParser::IdAccessContext *ctx) = 0;
+  virtual void exitIdAccess(MyCriteriaParser::IdAccessContext *ctx) = 0;
 
   virtual void enterInArray(MyCriteriaParser::InArrayContext *ctx) = 0;
   virtual void exitInArray(MyCriteriaParser::InArrayContext *ctx) = 0;
@@ -71,8 +74,11 @@ public:
   virtual void enterParenExpr(MyCriteriaParser::ParenExprContext *ctx) = 0;
   virtual void exitParenExpr(MyCriteriaParser::ParenExprContext *ctx) = 0;
 
-  virtual void enterTest_expr(MyCriteriaParser::Test_exprContext *ctx) = 0;
-  virtual void exitTest_expr(MyCriteriaParser::Test_exprContext *ctx) = 0;
+  virtual void enterObjectAccessParser(MyCriteriaParser::ObjectAccessParserContext *ctx) = 0;
+  virtual void exitObjectAccessParser(MyCriteriaParser::ObjectAccessParserContext *ctx) = 0;
+
+  virtual void enterIdentifierAccess(MyCriteriaParser::IdentifierAccessContext *ctx) = 0;
+  virtual void exitIdentifierAccess(MyCriteriaParser::IdentifierAccessContext *ctx) = 0;
 
   virtual void enterImportStatement(MyCriteriaParser::ImportStatementContext *ctx) = 0;
   virtual void exitImportStatement(MyCriteriaParser::ImportStatementContext *ctx) = 0;
@@ -83,26 +89,14 @@ public:
   virtual void enterIdentifierDefinition(MyCriteriaParser::IdentifierDefinitionContext *ctx) = 0;
   virtual void exitIdentifierDefinition(MyCriteriaParser::IdentifierDefinitionContext *ctx) = 0;
 
-  virtual void enterIdentifierAccess(MyCriteriaParser::IdentifierAccessContext *ctx) = 0;
-  virtual void exitIdentifierAccess(MyCriteriaParser::IdentifierAccessContext *ctx) = 0;
-
-  virtual void enterJsonPointerInner(MyCriteriaParser::JsonPointerInnerContext *ctx) = 0;
-  virtual void exitJsonPointerInner(MyCriteriaParser::JsonPointerInnerContext *ctx) = 0;
-
-  virtual void enterJsonPointer(MyCriteriaParser::JsonPointerContext *ctx) = 0;
-  virtual void exitJsonPointer(MyCriteriaParser::JsonPointerContext *ctx) = 0;
-
-  virtual void enterObjectAccessParser(MyCriteriaParser::ObjectAccessParserContext *ctx) = 0;
-  virtual void exitObjectAccessParser(MyCriteriaParser::ObjectAccessParserContext *ctx) = 0;
-
   virtual void enterStrOrNum(MyCriteriaParser::StrOrNumContext *ctx) = 0;
   virtual void exitStrOrNum(MyCriteriaParser::StrOrNumContext *ctx) = 0;
 
-  virtual void enterNumb(MyCriteriaParser::NumbContext *ctx) = 0;
-  virtual void exitNumb(MyCriteriaParser::NumbContext *ctx) = 0;
-
   virtual void enterInArrayParser(MyCriteriaParser::InArrayParserContext *ctx) = 0;
   virtual void exitInArrayParser(MyCriteriaParser::InArrayParserContext *ctx) = 0;
+
+  virtual void enterNumb(MyCriteriaParser::NumbContext *ctx) = 0;
+  virtual void exitNumb(MyCriteriaParser::NumbContext *ctx) = 0;
 
 
 };

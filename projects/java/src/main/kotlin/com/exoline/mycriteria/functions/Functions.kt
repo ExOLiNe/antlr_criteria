@@ -27,7 +27,12 @@ object Functions {
 
     @Infix
     fun like(any: Any, pattern: String): Boolean {
-        TODO()
+        any as String
+        return when {
+            pattern.startsWith("%") -> any.endsWith(pattern.drop(1))
+            pattern.endsWith("%") -> any.startsWith(pattern.dropLast(1))
+            else -> throw IllegalArgumentException("Pattern must start/end with %")
+        }
     }
 
     fun KFunction<*>.isInfixFunction(): Boolean = hasAnnotation<Infix>()

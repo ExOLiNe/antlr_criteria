@@ -13,10 +13,10 @@ class  MyCriteriaLexer : public antlr4::Lexer {
 public:
   enum {
     T__0 = 1, T__1 = 2, T__2 = 3, T__3 = 4, T__4 = 5, T__5 = 6, T__6 = 7, 
-    T__7 = 8, T__8 = 9, T__9 = 10, T__10 = 11, T__11 = 12, T__12 = 13, T__13 = 14, 
-    IMPORT = 15, SLASH = 16, DOT = 17, COMMA = 18, SEMICOLON = 19, SQR_L = 20, 
-    SQR_R = 21, IN = 22, BOOL = 23, EXCL = 24, NULL_T = 25, S_Q = 26, D_Q = 27, 
-    BUCK = 28, EQUALS = 29, STR_LITERAL = 30, INT = 31, STR = 32, WS = 33
+    T__7 = 8, T__8 = 9, T__9 = 10, T__10 = 11, T__11 = 12, T__12 = 13, IMPORT = 14, 
+    SLASH = 15, DOT = 16, COMMA = 17, SEMICOLON = 18, SQR_L = 19, SQR_R = 20, 
+    IN = 21, BOOL = 22, EXCL = 23, NULL_T = 24, BUCK = 25, EQUALS = 26, 
+    OBJECT = 27, INT = 28, IDENTIFIER = 29, STR_LITERAL = 30, WS = 31
   };
 
   explicit MyCriteriaLexer(antlr4::CharStream *input);

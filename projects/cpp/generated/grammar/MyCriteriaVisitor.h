@@ -27,6 +27,8 @@ public:
 
     virtual std::any visitNull(MyCriteriaParser::NullContext *context) = 0;
 
+    virtual std::any visitInfixFuncCallNot(MyCriteriaParser::InfixFuncCallNotContext *context) = 0;
+
     virtual std::any visitComparison(MyCriteriaParser::ComparisonContext *context) = 0;
 
     virtual std::any visitOr(MyCriteriaParser::OrContext *context) = 0;
@@ -37,9 +39,9 @@ public:
 
     virtual std::any visitInfixFuncCall(MyCriteriaParser::InfixFuncCallContext *context) = 0;
 
-    virtual std::any visitIdAccess(MyCriteriaParser::IdAccessContext *context) = 0;
-
     virtual std::any visitStrLiteral(MyCriteriaParser::StrLiteralContext *context) = 0;
+
+    virtual std::any visitIdAccess(MyCriteriaParser::IdAccessContext *context) = 0;
 
     virtual std::any visitInArray(MyCriteriaParser::InArrayContext *context) = 0;
 
@@ -57,7 +59,9 @@ public:
 
     virtual std::any visitParenExpr(MyCriteriaParser::ParenExprContext *context) = 0;
 
-    virtual std::any visitTest_expr(MyCriteriaParser::Test_exprContext *context) = 0;
+    virtual std::any visitObjectAccessParser(MyCriteriaParser::ObjectAccessParserContext *context) = 0;
+
+    virtual std::any visitIdentifierAccess(MyCriteriaParser::IdentifierAccessContext *context) = 0;
 
     virtual std::any visitImportStatement(MyCriteriaParser::ImportStatementContext *context) = 0;
 
@@ -65,19 +69,11 @@ public:
 
     virtual std::any visitIdentifierDefinition(MyCriteriaParser::IdentifierDefinitionContext *context) = 0;
 
-    virtual std::any visitIdentifierAccess(MyCriteriaParser::IdentifierAccessContext *context) = 0;
-
-    virtual std::any visitJsonPointerInner(MyCriteriaParser::JsonPointerInnerContext *context) = 0;
-
-    virtual std::any visitJsonPointer(MyCriteriaParser::JsonPointerContext *context) = 0;
-
-    virtual std::any visitObjectAccessParser(MyCriteriaParser::ObjectAccessParserContext *context) = 0;
-
     virtual std::any visitStrOrNum(MyCriteriaParser::StrOrNumContext *context) = 0;
 
-    virtual std::any visitNumb(MyCriteriaParser::NumbContext *context) = 0;
-
     virtual std::any visitInArrayParser(MyCriteriaParser::InArrayParserContext *context) = 0;
+
+    virtual std::any visitNumb(MyCriteriaParser::NumbContext *context) = 0;
 
 
 };
