@@ -1,8 +1,12 @@
 package com.exoline.mycriteria
 
+import com.exoline.mycriteria.exception.IncomparableTypesException
+import com.exoline.mycriteria.exception.IncorrectCallException
+import com.exoline.mycriteria.functions.Functions
 import com.fasterxml.jackson.databind.node.*
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
+import java.lang.reflect.Method
 import java.time.Instant
 
 infix operator fun Number.plus(other: Number): Number {
@@ -92,7 +96,7 @@ operator fun Any?.compareTo(other: Any?): Int = when {
     this is Number && other is Number -> compareTo(other)
     this is Number && other is Instant -> compareTo(other)
     this is String && other is String -> compareTo(other)
-    else -> throw IllegalArgumentException("Incomparable types")
+    else -> throw IncomparableTypesException("Incomparable types")
 }
 
 fun VarType.getRecursively(field: String): Any? {
@@ -115,10 +119,29 @@ fun JElement?.toAny(): Any? = when (this) {
         }
     }
     is NullNode, null -> null
-    else -> throw RuntimeException("Unknown type")
+    else -> throw IllegalStateException("Unknown type")
 }
 
 fun String.toJObject(): JObject {
     val mapper = jacksonObjectMapper()
     return mapper.readValue(this)
+}
+
+fun List<Method>.callAny(args: List<Any?>): Any? {
+    var result: Any? = null
+    var isAnySuccess = false
+    for (function in this) {
+        val r = kotlin.runCatching {
+            function.invoke(Functions, *args.toTypedArray())
+        }
+        if (r.isSuccess) {
+            result = r.getOrNull()
+            isAnySuccess = true
+            break
+        }
+    }
+    if (!isAnySuccess) {
+        throw IncorrectCallException("Function was called with incorrect arguments")
+    }
+    return result
 }

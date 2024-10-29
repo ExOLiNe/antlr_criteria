@@ -1,84 +1,20 @@
 package com.exoline.mycriteria.walk
 
 import com.exoline.mycriteria.*
-import com.exoline.mycriteria.exception.InsufficientArgumentsException
-import com.exoline.mycriteria.exception.UNREACHABLE
-import com.exoline.mycriteria.exception.RecursiveImportException
-import com.exoline.mycriteria.functions.Functions
-import com.exoline.mycriteria.functions.Functions.isInfixFunction
+import com.exoline.mycriteria.exception.*
+import com.exoline.mycriteria.functions.FunctionResolver
 import com.exoline.mycriteria.generated.grammar.MyCriteriaBaseVisitor
 import com.exoline.mycriteria.generated.grammar.MyCriteriaLexer
 import com.exoline.mycriteria.generated.grammar.MyCriteriaParser
-import com.exoline.mycriteria.generated.grammar.MyCriteriaParser.ExprContext
 import org.antlr.v4.runtime.CharStreams
 import org.antlr.v4.runtime.CommonTokenStream
-import java.lang.reflect.Method
-import java.lang.reflect.Parameter
-
-sealed class Expr {
-    class Runtime(val f: F) : Expr() {
-        private var value: Any? = null
-        private var computed: Boolean = false
-        override fun invoke(it: VarType): Any? {
-            if (!computed) {
-                value = f(it)
-                computed = true
-            }
-            return value
-        }
-        override fun getValue(): Any? = if (computed) {
-            value
-        } else {
-            throw IllegalStateException("Value not computed yet")
-        }
-
-        override fun map(transform: (Any?) -> Any?): Expr = if (computed) {
-            CompileTime { transform(value) }
-        } else {
-            Runtime {
-                transform(f(it))
-            }
-        }
-
-        override fun flatMap(transform: (Any?) -> Expr): Expr = if (computed) {
-            Runtime {
-                transform(value)(it)
-            }
-        } else {
-            Runtime {
-                transform(this(it))(it)
-            }
-        }
-    }
-
-    class CompileTime(private val vl: Any?): Expr() {
-        constructor(lambda: () -> Any?) : this(lambda())
-        override fun invoke(it: VarType): Any? = vl
-        override fun getValue(): Any? = vl
-        override fun map(transform: (Any?) -> Any?): Expr = CompileTime { transform(vl) }
-        override fun flatMap(transform: (Any?) -> Expr): Expr = transform(vl) // TODO very suspicious impl..
-    }
-
-    class App(
-        val fields: Set<String>,
-        val app: AppF
-    ) : Expr() {
-        override fun invoke(it: VarType): Any? { UNREACHABLE() }
-        override fun getValue(): Any? { UNREACHABLE() }
-        override fun map(transform: (Any?) -> Any?): Expr { UNREACHABLE() }
-        override fun flatMap(transform: (Any?) -> Expr): Expr { UNREACHABLE() }
-    }
-    abstract operator fun invoke(it: VarType): Any?
-    abstract fun getValue(): Any?
-    abstract fun map(transform: (Any?) -> Any?): Expr
-    abstract fun flatMap(transform: (Any?) -> Expr): Expr
-}
 
 class MyCriteriaVisitorImpl(
     private val importResolver: (String) -> String?
 ) : MyCriteriaBaseVisitor<Expr>() {
     private val imports = mutableSetOf<String>()
     private val memory = mutableMapOf<String, Expr>()
+    private val fields = mutableSetOf<String>()
 
     override fun visitImportStatement(ctx: MyCriteriaParser.ImportStatementContext): Expr {
         val importRef = ctx.IDENTIFIER().text
@@ -86,7 +22,7 @@ class MyCriteriaVisitorImpl(
             throw RecursiveImportException("Import $importRef has already used")
         }
 
-        val importCode = importResolver(importRef) ?: throw IllegalArgumentException("Import $importRef not found")
+        val importCode = importResolver(importRef) ?: throw ImportNotFoundException("Import $importRef not found")
         val stream = CharStreams.fromString(importCode)
         val lexer = MyCriteriaLexer(stream)
         val tokens = CommonTokenStream(lexer)
@@ -101,7 +37,7 @@ class MyCriteriaVisitorImpl(
         val expr = visit(ctx.expr())
         val idName = ctx.IDENTIFIER().text
         if (idName in memory) {
-            throw IllegalArgumentException("Redefinition of $idName")
+            throw RedefinitionException("Redefinition of $idName")
         }
         memory[idName] = expr
         return Expr.CompileTime {}
@@ -110,7 +46,7 @@ class MyCriteriaVisitorImpl(
     override fun visitIdAccess(ctx: MyCriteriaParser.IdAccessContext): Expr {
         val idName = visit(ctx.identifierAccess()).getValue()
         if (idName !in memory) {
-            throw IllegalStateException("Unresolved identifier $idName")
+            throw UnresolvedIdentifierException("Unresolved identifier $idName")
         }
         // TODO simplify and fix new bug
         return memory[idName]!!
@@ -150,8 +86,6 @@ class MyCriteriaVisitorImpl(
     override fun visitInArray(ctx: MyCriteriaParser.InArrayContext): Expr {
         return visit(ctx.inArrayParser())
     }
-
-    private val fields = mutableSetOf<String>()
 
     private fun resetState() {
         imports.clear()
@@ -262,84 +196,31 @@ class MyCriteriaVisitorImpl(
         }
     }
 
-    @OptIn(ExperimentalStdlibApi::class)
     override fun visitFuncCall(ctx: MyCriteriaParser.FuncCallContext): Expr {
         val funcName = ctx.IDENTIFIER().text
         val exprs = ctx.expr().map {
             visit(it)
         }
-        val functions = Functions.getFunctions(funcName) // TODO add param filter
-        if (functions.isEmpty()) {
-            throw IllegalArgumentException("Unresolved function name")
-        }
-        val filteredFunctions = functions.filter { function ->
-            exprs.size == function.params().size
-        }
-        if (filteredFunctions.isEmpty()) {
-            val argsRange = filteredFunctions.map { it.params().size }.let {
-                (it.minOrNull() ?: 0)..(it.maxOrNull() ?: 0)
-            }
-            throw InsufficientArgumentsException("Function $funcName called with " +
-                    "insufficient parameters. Expected: $argsRange")
-        }
-        fun callF(args: List<Any?>): Any? {
-            return filteredFunctions.map {
-                val result = runCatching {
-                    it.invoke(Functions, *args.toTypedArray())
-                }
-                result
-            }.first { it.isSuccess }.getOrNull()
-        }
-        val compileTimeExprs = exprs.filterIsInstance<Expr.CompileTime>()
-        val rootExpr = if (exprs.size == compileTimeExprs.size) {
-            Expr.CompileTime {
-                val args = exprs.map { x -> x.getValue() }
-                callF(args)
-            }
-        } else {
-            Expr.Runtime {
-                val args = exprs.map { x -> x(it) }
-                callF(args)
-            }
-        }
-        return rootExpr
+        return FunctionResolver.callFunction(funcName, exprs)
     }
 
     override fun visitInfixFuncCall(ctx: MyCriteriaParser.InfixFuncCallContext): Expr {
         val funcName = ctx.IDENTIFIER().text
-        return callInfix(funcName) {
-            ctx.expr()
+        val exprs = ctx.expr().map {
+            visit(it)
         }
+        return FunctionResolver.callInfixFunction(funcName, exprs)
     }
 
     override fun visitInfixFuncCallNot(ctx: MyCriteriaParser.InfixFuncCallNotContext): Expr {
         val funcName = ctx.IDENTIFIER().text
-        return callInfix(funcName) { ctx.expr() }.map {
+        val exprs = ctx.expr().map {
+            visit(it)
+        }
+        return FunctionResolver.callInfixFunction(funcName, exprs).map {
             (it as Boolean).not()
         }
     }
-
-    private fun callInfix(funcName: String, expr: () -> List<ExprContext>): Expr {
-        val functions = Functions.getFunctions(funcName)
-        if (functions.isEmpty()) {
-            throw IllegalArgumentException("Unresolved function name")
-        }
-        val filteredFunctions = functions.filter { it.isInfixFunction() }
-        if (filteredFunctions.isEmpty()) {
-            throw IllegalArgumentException("Function $funcName is not infix")
-        }
-        val expr = expr().map {
-            visit(it)
-        }
-        return Expr.Runtime { it: VarType ->
-            // TODO replace `first` with something else
-            filteredFunctions.first().invoke(Functions, *expr.map { x ->
-                x(it)
-            }.toTypedArray())
-        }
-    }
-
-    private fun Method.params(): List<Parameter> = parameters.toList()
 
     private fun <T>binOp(l: Expr, r: Expr, op: (l: T, r: T) -> Any?): Expr =
         l.flatMap { lVal ->

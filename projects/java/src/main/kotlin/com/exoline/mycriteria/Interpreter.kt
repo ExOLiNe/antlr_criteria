@@ -5,7 +5,6 @@ import com.exoline.mycriteria.generated.grammar.MyCriteriaParser
 import com.exoline.mycriteria.generated.grammar.MyCriteriaParser.AppContext
 import com.exoline.mycriteria.walk.MyCriteriaVisitorImpl
 import com.exoline.mycriteria.walk.PrettyVisitor
-import com.exoline.mycriteria.walk.Expr
 import org.antlr.v4.runtime.*
 import org.antlr.v4.runtime.atn.ATNConfigSet
 import org.antlr.v4.runtime.dfa.DFA

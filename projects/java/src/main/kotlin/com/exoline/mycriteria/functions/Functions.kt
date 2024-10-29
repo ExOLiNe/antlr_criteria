@@ -1,5 +1,6 @@
 package com.exoline.mycriteria.functions
 
+import com.exoline.mycriteria.exception.RuntimeErrorException
 import java.lang.reflect.Method
 import java.time.Instant
 import java.time.LocalDateTime
@@ -8,9 +9,6 @@ import java.time.ZoneId
 object Functions {
     annotation class Infix
 
-    fun getFunctions(name: String): List<Method> = Functions::class.java.methods.filter {
-        it.name == name
-    }
     fun size(collection: ArrayList<*>): Int {
         return collection.size
     }
@@ -44,7 +42,7 @@ object Functions {
         return when {
             pattern.startsWith("%") -> any.endsWith(pattern.drop(1))
             pattern.endsWith("%") -> any.startsWith(pattern.dropLast(1))
-            else -> throw IllegalArgumentException("Pattern must start/end with %")
+            else -> throw RuntimeErrorException("Pattern must start/end with %")
         }
     }
 
