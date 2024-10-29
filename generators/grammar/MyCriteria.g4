@@ -45,7 +45,7 @@ expr
     | expr op=('+'|'-') expr                      # AddSub
     | (IDENTIFIER '(' (expr ',')* expr? ')')      # FuncCall
     | expr IDENTIFIER expr                        # InfixFuncCall
-    | expr EXCL IDENTIFIER expr                        # InfixFuncCallNot
+    | expr EXCL IDENTIFIER expr                   # InfixFuncCallNot
     | expr op=('>'|'<'|'<='|'>='|'=='|'!=') expr  # comparison
     | expr '&&' expr                              # And
     | expr '||' expr                              # Or

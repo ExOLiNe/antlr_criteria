@@ -1,6 +1,7 @@
 package com.exoline.mycriteria.walk
 
 import com.exoline.mycriteria.*
+import com.exoline.mycriteria.exception.InsufficientArgumentsException
 import com.exoline.mycriteria.exception.UNREACHABLE
 import com.exoline.mycriteria.exception.RecursiveImportException
 import com.exoline.mycriteria.functions.Functions
@@ -11,9 +12,8 @@ import com.exoline.mycriteria.generated.grammar.MyCriteriaParser
 import com.exoline.mycriteria.generated.grammar.MyCriteriaParser.ExprContext
 import org.antlr.v4.runtime.CharStreams
 import org.antlr.v4.runtime.CommonTokenStream
-import kotlin.reflect.KFunction
-import kotlin.reflect.KParameter
-import kotlin.reflect.javaType
+import java.lang.reflect.Method
+import java.lang.reflect.Parameter
 
 sealed class Expr {
     class Runtime(val f: F) : Expr() {
@@ -22,7 +22,6 @@ sealed class Expr {
         override fun invoke(it: VarType): Any? {
             if (!computed) {
                 value = f(it)
-                println("calculated ${value}")
                 computed = true
             }
             return value
@@ -274,29 +273,23 @@ class MyCriteriaVisitorImpl(
             throw IllegalArgumentException("Unresolved function name")
         }
         val filteredFunctions = functions.filter { function ->
-            val totalArgs = function.params().size
-            val nonOptionalArgs = function.params().filter {
-                !it.isOptional
-            }.size
-            exprs.size in (nonOptionalArgs..totalArgs)
+            exprs.size == function.params().size
         }
         if (filteredFunctions.isEmpty()) {
-            throw IllegalArgumentException("Function $funcName called with " +
-                    "insufficient parameters. ")
-            /* TODO
-            Expected: ($nonOptionalArgs..$totalArgs)," +
-                    "but got: $expr.size
-             */
+            val argsRange = filteredFunctions.map { it.params().size }.let {
+                (it.minOrNull() ?: 0)..(it.maxOrNull() ?: 0)
+            }
+            throw InsufficientArgumentsException("Function $funcName called with " +
+                    "insufficient parameters. Expected: $argsRange")
         }
-        fun callF(args: List<Any?>): Any? = filteredFunctions.first { function ->
-            val expectedArgTypes: Set<String> = function.params().map {
-                it.type.javaType.typeName
-            }.toSet()
-            val actualArgTypes: Set<String> = args.mapNotNull {
-                it?.javaClass?.typeName
-            }.toSet()
-            expectedArgTypes.containsAll(actualArgTypes)
-        }.call(Functions, *args.toTypedArray())
+        fun callF(args: List<Any?>): Any? {
+            return filteredFunctions.map {
+                val result = runCatching {
+                    it.invoke(Functions, *args.toTypedArray())
+                }
+                result
+            }.first { it.isSuccess }.getOrNull()
+        }
         val compileTimeExprs = exprs.filterIsInstance<Expr.CompileTime>()
         val rootExpr = if (exprs.size == compileTimeExprs.size) {
             Expr.CompileTime {
@@ -340,15 +333,13 @@ class MyCriteriaVisitorImpl(
         }
         return Expr.Runtime { it: VarType ->
             // TODO replace `first` with something else
-            filteredFunctions.first().call(Functions, *expr.map { x ->
+            filteredFunctions.first().invoke(Functions, *expr.map { x ->
                 x(it)
             }.toTypedArray())
         }
     }
 
-    private fun KFunction<*>.params(): List<KParameter> {
-        return parameters.drop(1)
-    }
+    private fun Method.params(): List<Parameter> = parameters.toList()
 
     private fun <T>binOp(l: Expr, r: Expr, op: (l: T, r: T) -> Any?): Expr =
         l.flatMap { lVal ->
