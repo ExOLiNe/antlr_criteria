@@ -114,7 +114,7 @@ class MyCriteriaVisitorImpl(
                     Lexer.LTE() -> lEv <= rEv
                     Lexer.EQUALS() -> lEv == rEv
                     Lexer.NOT_EQUALS() -> lEv != rEv
-                    else -> TODO("Not implemented yet")
+                    else -> UNREACHABLE()
                 }
             }
         }
@@ -131,7 +131,7 @@ class MyCriteriaVisitorImpl(
             when (ctx.op.text) {
                 Lexer.MUL() -> l * r
                 Lexer.SLASH() -> l / r
-                else -> TODO("Not implemented yet")
+                else -> UNREACHABLE()
             }
         }
     }
@@ -143,7 +143,7 @@ class MyCriteriaVisitorImpl(
             when (ctx.op.text) {
                 Lexer.ADD() -> l + r
                 Lexer.SUB() -> l - r
-                else -> TODO("Not implemented yet")
+                else -> UNREACHABLE()
             }
         }
     }
@@ -166,7 +166,19 @@ class MyCriteriaVisitorImpl(
 
     override fun visitOr(ctx: MyCriteriaParser.OrContext): Expr {
         val (lF, rF) = visit(ctx.expr(0)) to visit(ctx.expr(1))
-        return binOp<Boolean>(lF, rF) { l, r -> l || r }
+        // optimized one
+        return lF.flatMap { lVal ->
+            lVal as Boolean
+            if (lVal) {
+                Expr.CompileTime { true }
+            } else {
+                rF.map { rVal ->
+                    rVal as Boolean
+                    lVal || rVal
+                }
+            }
+        }
+        // return binOp<Boolean>(lF, rF) { l, r -> l || r }
     }
 
     override fun visitNumb(ctx: MyCriteriaParser.NumbContext): Expr {
