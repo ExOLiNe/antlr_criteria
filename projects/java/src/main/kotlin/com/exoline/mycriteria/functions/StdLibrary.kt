@@ -1,3 +1,5 @@
+@file:Suppress("unused")
+
 package com.exoline.mycriteria.functions
 
 import com.exoline.mycriteria.exception.RuntimeErrorException
@@ -7,12 +9,8 @@ import java.time.ZoneId
 
 object StdLibrary {
 
-    fun size(collection: ArrayList<*>): Int {
-        return collection.size
-    }
-    fun size(string: String): Int {
-        return string.length
-    }
+    fun size(collection: ArrayList<*>): Int = collection.size
+    fun size(string: String): Int = string.length
 
     @JvmOverloads
     fun date(

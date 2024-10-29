@@ -5,7 +5,6 @@ import com.exoline.mycriteria.generated.grammar.MyCriteriaParser
 import com.exoline.mycriteria.generated.grammar.MyCriteriaParser.AppContext
 import com.exoline.mycriteria.walk.MyCriteriaVisitorImpl
 import org.antlr.v4.runtime.*
-import java.util.*
 
 typealias Tree = AppContext
 
@@ -19,10 +18,6 @@ data class ParseResult (
         val result: Boolean,
         val identifiersValues: Map<String, Any?>
     )
-
-    fun getPrettyTree(): String {
-        return ""
-    }
 }
 
 class Interpreter(
