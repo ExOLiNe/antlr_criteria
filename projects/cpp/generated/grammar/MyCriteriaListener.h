@@ -44,6 +44,9 @@ public:
   virtual void enterInfixFuncCall(MyCriteriaParser::InfixFuncCallContext *ctx) = 0;
   virtual void exitInfixFuncCall(MyCriteriaParser::InfixFuncCallContext *ctx) = 0;
 
+  virtual void enterMethodCall(MyCriteriaParser::MethodCallContext *ctx) = 0;
+  virtual void exitMethodCall(MyCriteriaParser::MethodCallContext *ctx) = 0;
+
   virtual void enterStrLiteral(MyCriteriaParser::StrLiteralContext *ctx) = 0;
   virtual void exitStrLiteral(MyCriteriaParser::StrLiteralContext *ctx) = 0;
 
@@ -73,6 +76,15 @@ public:
 
   virtual void enterParenExpr(MyCriteriaParser::ParenExprContext *ctx) = 0;
   virtual void exitParenExpr(MyCriteriaParser::ParenExprContext *ctx) = 0;
+
+  virtual void enterLambda(MyCriteriaParser::LambdaContext *ctx) = 0;
+  virtual void exitLambda(MyCriteriaParser::LambdaContext *ctx) = 0;
+
+  virtual void enterLambdaParams(MyCriteriaParser::LambdaParamsContext *ctx) = 0;
+  virtual void exitLambdaParams(MyCriteriaParser::LambdaParamsContext *ctx) = 0;
+
+  virtual void enterFuncPars(MyCriteriaParser::FuncParsContext *ctx) = 0;
+  virtual void exitFuncPars(MyCriteriaParser::FuncParsContext *ctx) = 0;
 
   virtual void enterObjectAccessParser(MyCriteriaParser::ObjectAccessParserContext *ctx) = 0;
   virtual void exitObjectAccessParser(MyCriteriaParser::ObjectAccessParserContext *ctx) = 0;

@@ -39,6 +39,8 @@ public:
 
     virtual std::any visitInfixFuncCall(MyCriteriaParser::InfixFuncCallContext *context) = 0;
 
+    virtual std::any visitMethodCall(MyCriteriaParser::MethodCallContext *context) = 0;
+
     virtual std::any visitStrLiteral(MyCriteriaParser::StrLiteralContext *context) = 0;
 
     virtual std::any visitIdAccess(MyCriteriaParser::IdAccessContext *context) = 0;
@@ -58,6 +60,12 @@ public:
     virtual std::any visitNotExpr(MyCriteriaParser::NotExprContext *context) = 0;
 
     virtual std::any visitParenExpr(MyCriteriaParser::ParenExprContext *context) = 0;
+
+    virtual std::any visitLambda(MyCriteriaParser::LambdaContext *context) = 0;
+
+    virtual std::any visitLambdaParams(MyCriteriaParser::LambdaParamsContext *context) = 0;
+
+    virtual std::any visitFuncPars(MyCriteriaParser::FuncParsContext *context) = 0;
 
     virtual std::any visitObjectAccessParser(MyCriteriaParser::ObjectAccessParserContext *context) = 0;
 

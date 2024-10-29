@@ -38,4 +38,6 @@ object StdLibrary {
 
     @Infix
     fun contains(list: ArrayList<*>, value: Any?): Boolean = value in list
+
+    fun map(list: List<*>, mapF: String) = list.map { mapF }
 }

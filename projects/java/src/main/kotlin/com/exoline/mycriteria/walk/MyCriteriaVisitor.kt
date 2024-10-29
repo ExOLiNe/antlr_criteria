@@ -192,13 +192,35 @@ class MyCriteriaVisitorImpl(
         }
     }
 
+    override fun visitLambda(ctx: MyCriteriaParser.LambdaContext): Expr {
+        //ctx.altNumber
+        ctx
+        val params = visit(ctx.lambdaParams()).getValue() as List<String>
+        return Expr.CompileTime { true }
+    }
+
+    override fun visitLambdaParams(ctx: MyCriteriaParser.LambdaParamsContext): Expr =
+        Expr.CompileTime { ctx.IDENTIFIER().map { it.text } }
+
+    override fun visitMethodCall(ctx: MyCriteriaParser.MethodCallContext): Expr {
+        val methodName = ctx.IDENTIFIER().text
+        val obj = visit(ctx.expr())
+        val exprs = visit(ctx.funcPars()).getValue() as List<Expr>
+        return libraries.call(methodName, listOf(obj) + exprs, infix = false)
+    }
+
     override fun visitFuncCall(ctx: MyCriteriaParser.FuncCallContext): Expr {
         val funcName = ctx.IDENTIFIER().text
-        val exprs = ctx.expr().map {
-            visit(it)
-        }
+        val exprs = visit(ctx.funcPars()).getValue() as List<Expr>
         return libraries.call(funcName, exprs, infix = false)
     }
+
+    override fun visitFuncPars(ctx: MyCriteriaParser.FuncParsContext): Expr =
+        Expr.CompileTime {
+            ctx.expr().map {
+                visit(it)
+            }
+        }
 
     override fun visitInfixFuncCall(ctx: MyCriteriaParser.InfixFuncCallContext): Expr {
         val funcName = ctx.IDENTIFIER().text

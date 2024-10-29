@@ -9,10 +9,13 @@ SLASH: '/';
 DOT: '.';
 COMMA: ',';
 SEMICOLON: ';';
+ARROW: '->';
 SQR_L: '[';
 SQR_R: ']';
 PAR_L: '(';
 PAR_R: ')';
+CUR_L: '{';
+CUR_R: '}';
 GTE: '>=';
 LTE: '<=';
 GT: '>';
@@ -21,7 +24,6 @@ EQUALS: '==';
 NOT_EQUALS: '!=';
 AND: '&&';
 OR: '||';
-//IN: 'in';
 TRUE: 'true';
 FALSE: 'false';
 EXCL: '!';
@@ -53,10 +55,11 @@ statement
 expr
     :
       SQR_L expr (COMMA expr)* SQR_R                               # Array
-    // expr (IN | EXCL IN) SQR_L strOrNum (COMMA strOrNum)* SQR_R   # InArray
     | expr op=(MUL|SLASH) expr                                     # MulDiv
     | expr op=(ADD|SUB) expr                                       # AddSub
-    | (IDENTIFIER PAR_L (expr COMMA)* expr? PAR_R)                 # FuncCall
+    | CUR_L lambdaParams expr CUR_R                                # Lambda
+    | expr DOT IDENTIFIER funcPars                                 # MethodCall
+    | IDENTIFIER funcPars                                          # FuncCall
     | expr IDENTIFIER expr                                         # InfixFuncCall
     | expr EXCL IDENTIFIER expr                                    # InfixFuncCallNot
     | expr op=(GT|GTE|LT|LTE|EQUALS|NOT_EQUALS) expr               # comparison
@@ -72,6 +75,8 @@ expr
     | objectAccessParser                                           # ObjectAccess
     ;
 
+lambdaParams: PAR_L (IDENTIFIER COMMA)* IDENTIFIER? PAR_R ARROW;
+funcPars: PAR_L (expr COMMA)* expr? PAR_R;
 objectAccessParser: OBJECT SQR_L + STR_LITERAL + SQR_R;
 importStatement: IMPORT IDENTIFIER;
 identifierDefinitions: (identifierDefinition SEMICOLON)*;

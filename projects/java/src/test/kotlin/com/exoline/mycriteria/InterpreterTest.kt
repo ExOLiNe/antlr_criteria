@@ -33,7 +33,7 @@ class InterpreterTest {
     @Test
     fun test() {
         val testsDir = File(System.getProperty("tests.dir"))
-        val only: Int = 28//-1
+        val only: Int = 30//-1
         val errors = mutableListOf<() -> Unit>()
         val importResolver = { ref: String ->
             testsDir.resolve("${ref}.txt").readText()

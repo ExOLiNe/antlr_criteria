@@ -12,11 +12,12 @@
 class  MyCriteriaLexer : public antlr4::Lexer {
 public:
   enum {
-    IMPORT = 1, SLASH = 2, DOT = 3, COMMA = 4, SEMICOLON = 5, SQR_L = 6, 
-    SQR_R = 7, PAR_L = 8, PAR_R = 9, GTE = 10, LTE = 11, GT = 12, LT = 13, 
-    EQUALS = 14, NOT_EQUALS = 15, AND = 16, OR = 17, TRUE = 18, FALSE = 19, 
-    EXCL = 20, NULL_T = 21, BUCK = 22, ASSIGN = 23, OBJECT = 24, MUL = 25, 
-    ADD = 26, SUB = 27, INT = 28, IDENTIFIER = 29, STR_LITERAL = 30, WS = 31
+    IMPORT = 1, SLASH = 2, DOT = 3, COMMA = 4, SEMICOLON = 5, ARROW = 6, 
+    SQR_L = 7, SQR_R = 8, PAR_L = 9, PAR_R = 10, CUR_L = 11, CUR_R = 12, 
+    GTE = 13, LTE = 14, GT = 15, LT = 16, EQUALS = 17, NOT_EQUALS = 18, 
+    AND = 19, OR = 20, TRUE = 21, FALSE = 22, EXCL = 23, NULL_T = 24, BUCK = 25, 
+    ASSIGN = 26, OBJECT = 27, MUL = 28, ADD = 29, SUB = 30, INT = 31, IDENTIFIER = 32, 
+    STR_LITERAL = 33, WS = 34
   };
 
   explicit MyCriteriaLexer(antlr4::CharStream *input);

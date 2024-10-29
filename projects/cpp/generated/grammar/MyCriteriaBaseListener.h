@@ -46,6 +46,9 @@ public:
   virtual void enterInfixFuncCall(MyCriteriaParser::InfixFuncCallContext * /*ctx*/) override { }
   virtual void exitInfixFuncCall(MyCriteriaParser::InfixFuncCallContext * /*ctx*/) override { }
 
+  virtual void enterMethodCall(MyCriteriaParser::MethodCallContext * /*ctx*/) override { }
+  virtual void exitMethodCall(MyCriteriaParser::MethodCallContext * /*ctx*/) override { }
+
   virtual void enterStrLiteral(MyCriteriaParser::StrLiteralContext * /*ctx*/) override { }
   virtual void exitStrLiteral(MyCriteriaParser::StrLiteralContext * /*ctx*/) override { }
 
@@ -75,6 +78,15 @@ public:
 
   virtual void enterParenExpr(MyCriteriaParser::ParenExprContext * /*ctx*/) override { }
   virtual void exitParenExpr(MyCriteriaParser::ParenExprContext * /*ctx*/) override { }
+
+  virtual void enterLambda(MyCriteriaParser::LambdaContext * /*ctx*/) override { }
+  virtual void exitLambda(MyCriteriaParser::LambdaContext * /*ctx*/) override { }
+
+  virtual void enterLambdaParams(MyCriteriaParser::LambdaParamsContext * /*ctx*/) override { }
+  virtual void exitLambdaParams(MyCriteriaParser::LambdaParamsContext * /*ctx*/) override { }
+
+  virtual void enterFuncPars(MyCriteriaParser::FuncParsContext * /*ctx*/) override { }
+  virtual void exitFuncPars(MyCriteriaParser::FuncParsContext * /*ctx*/) override { }
 
   virtual void enterObjectAccessParser(MyCriteriaParser::ObjectAccessParserContext * /*ctx*/) override { }
   virtual void exitObjectAccessParser(MyCriteriaParser::ObjectAccessParserContext * /*ctx*/) override { }

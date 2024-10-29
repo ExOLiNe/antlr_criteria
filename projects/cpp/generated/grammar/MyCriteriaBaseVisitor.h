@@ -55,6 +55,10 @@ public:
     return visitChildren(ctx);
   }
 
+  virtual std::any visitMethodCall(MyCriteriaParser::MethodCallContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
   virtual std::any visitStrLiteral(MyCriteriaParser::StrLiteralContext *ctx) override {
     return visitChildren(ctx);
   }
@@ -92,6 +96,18 @@ public:
   }
 
   virtual std::any visitParenExpr(MyCriteriaParser::ParenExprContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual std::any visitLambda(MyCriteriaParser::LambdaContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual std::any visitLambdaParams(MyCriteriaParser::LambdaParamsContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual std::any visitFuncPars(MyCriteriaParser::FuncParsContext *ctx) override {
     return visitChildren(ctx);
   }
 
