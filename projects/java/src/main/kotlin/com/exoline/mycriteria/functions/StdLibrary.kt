@@ -6,8 +6,7 @@ import java.time.Instant
 import java.time.LocalDateTime
 import java.time.ZoneId
 
-object Functions {
-    annotation class Infix
+object StdLibrary {
 
     fun size(collection: ArrayList<*>): Int {
         return collection.size
@@ -27,15 +26,6 @@ object Functions {
     ): Instant = LocalDateTime.of(year, month, day, hours, minutes, seconds)
         .atZone(ZoneId.systemDefault()).toInstant()
 
-    @JvmOverloads
-    fun dummy(str1: String, str2: String = "defaultStr"): String = str1 + str2
-    fun dummy2() {}
-
-    @Infix
-    fun some(any1: Any, any2: Any): Boolean {
-        return any1 == any2
-    }
-
     @Infix
     fun like(any: Any, pattern: String): Boolean {
         any as String
@@ -48,6 +38,4 @@ object Functions {
 
     @Infix
     fun contains(any: ArrayList<*>, value: Any?): Boolean = value in any
-
-    fun Method.isInfixFunction(): Boolean = isAnnotationPresent(Infix::class.java)
 }

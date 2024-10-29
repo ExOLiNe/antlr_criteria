@@ -24,7 +24,7 @@ class InterpreterTest {
         val tokens = CommonTokenStream(lexer)
         val parser = MyCriteriaParser(tokens)
         val tree = parser.importStatement()
-        val myVisitor = MyCriteriaVisitorImpl({ "\$some = 5;" })
+        val myVisitor = MyCriteriaVisitorImpl({ "\$some = 5;" }, emptyList())
         val appResult = myVisitor.visit(tree)
         println(tree.toStringTree())
         println(appResult)
@@ -38,6 +38,7 @@ class InterpreterTest {
         val importResolver = { ref: String ->
             testsDir.resolve("${ref}.txt").readText()
         }
+        val interpreter = Interpreter(importResolver, listOf(TestStdLibrary))
         testsDir.listFiles()?.forEach { file ->
             if (file.isDirectory) {
                 if (only == -1 || file.name == only.toString()) {
@@ -48,7 +49,7 @@ class InterpreterTest {
                         val map = test["map"] as JObject
                         val expectedResult = (test["expected"] as? BooleanNode)?.booleanValue()!!
                         try {
-                            val parseResult = interpret(appStr, importResolver)
+                            val parseResult = interpreter.interpret(appStr)
                             val (actualFields, tokens, tree, appResult) = parseResult
                             println("TOKENS:")
                             println(tokens)

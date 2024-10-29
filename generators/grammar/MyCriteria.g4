@@ -3,8 +3,6 @@
  */
 grammar MyCriteria;
 
-app: (statement)* expr;
-
 // Lexer rules
 IMPORT: 'import';
 SLASH: '/';
@@ -22,14 +20,14 @@ EQUALS: '=';
 OBJECT: 'object';
 INT: [0-9]+;
 IDENTIFIER: [a-zA-Z0-9_]+;
-//STR: [a-zA-Z0-9]+;
 STR_LITERAL: S_Q STRING S_Q | D_Q STRING D_Q;
 fragment S_Q: '\'';
 fragment D_Q: '"';
 fragment STRING : ( '\\' . | ~['"\\] )*;
-//fragment STRING : [^'"\r\n]+ ;
 
 WS: [ \t\r\n]+ -> skip;
+
+app: (statement)* expr;
 
 statements: statement+;
 
@@ -58,25 +56,7 @@ expr
     | identifierAccess                            # IdAccess
     | objectAccessParser                          # ObjectAccess
     ;
-//test_expr: inArrayParser
-//    | expr op=('*'|'/') expr
-//    | expr op=('+'|'-') expr
-//    | (STR '(' (expr ',')* expr ? ')')
-//    | expr STR expr
-//    | expr op=('>'|'<'|'<='|'>=' |'=='|'!=') expr
-//    | expr '&&' expr
-//    | expr '||' expr
-//    | EXCL expr
-//    | '(' expr ')'
-//    | BOOL
-//    | INT
-//    | objectAccessParser
-//    | STR_LITERAL
-//    | NULL_T
-//    ;
 
-//jsonPointer: (S_Q jsonPointerInner S_Q) | (D_Q jsonPointerInner D_Q);
-//jsonPointerInner: SLASH? STR_LITERAL (SLASH STR_LITERAL)* SLASH?;
 objectAccessParser: OBJECT SQR_L + STR_LITERAL + SQR_R;
 identifierAccess: BUCK IDENTIFIER;
 importStatement: IMPORT IDENTIFIER;

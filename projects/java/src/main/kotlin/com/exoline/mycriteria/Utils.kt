@@ -2,7 +2,7 @@ package com.exoline.mycriteria
 
 import com.exoline.mycriteria.exception.IncomparableTypesException
 import com.exoline.mycriteria.exception.IncorrectCallException
-import com.exoline.mycriteria.functions.Functions
+import com.exoline.mycriteria.functions.StdLibrary
 import com.fasterxml.jackson.databind.node.*
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
@@ -127,12 +127,12 @@ fun String.toJObject(): JObject {
     return mapper.readValue(this)
 }
 
-fun List<Method>.callAny(args: List<Any?>): Any? {
+fun List<Method>.callAny(lib: Any, args: List<Any?>): Any? {
     var result: Any? = null
     var isAnySuccess = false
     for (function in this) {
         val r = kotlin.runCatching {
-            function.invoke(Functions, *args.toTypedArray())
+            function.invoke(lib, *args.toTypedArray())
         }
         if (r.isSuccess) {
             result = r.getOrNull()
@@ -141,7 +141,7 @@ fun List<Method>.callAny(args: List<Any?>): Any? {
         }
     }
     if (!isAnySuccess) {
-        throw IncorrectCallException("Function was called with incorrect arguments")
+        throw IncorrectCallException("Function ${this[0].name} was called with incorrect arguments")
     }
     return result
 }

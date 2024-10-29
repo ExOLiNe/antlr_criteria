@@ -14,3 +14,4 @@ class InsufficientArgumentsException(override val message: String?) : CompileErr
 class UnresolvedFunctionNameException(override val message: String?) : CompileErrorException()
 class ArgTypesException(override val message: String?) : CompileErrorException()
 class NotInfixException(override val message: String?) : CompileErrorException()
+class InfixException(override val message: String?) : CompileErrorException()

@@ -2,7 +2,8 @@ package com.exoline.mycriteria.walk
 
 import com.exoline.mycriteria.*
 import com.exoline.mycriteria.exception.*
-import com.exoline.mycriteria.functions.FunctionResolver
+import com.exoline.mycriteria.functions.LibraryLoader
+import com.exoline.mycriteria.functions.StdLibrary
 import com.exoline.mycriteria.generated.grammar.MyCriteriaBaseVisitor
 import com.exoline.mycriteria.generated.grammar.MyCriteriaLexer
 import com.exoline.mycriteria.generated.grammar.MyCriteriaParser
@@ -10,8 +11,11 @@ import org.antlr.v4.runtime.CharStreams
 import org.antlr.v4.runtime.CommonTokenStream
 
 class MyCriteriaVisitorImpl(
-    private val importResolver: (String) -> String?
+    private val importResolver: (String) -> String?,
+    additionalLibraries: List<Any>
 ) : MyCriteriaBaseVisitor<Expr>() {
+    private val libraries = LibraryLoader(listOf(StdLibrary) + additionalLibraries)
+
     private val imports = mutableSetOf<String>()
     private val memory = mutableMapOf<String, Expr>()
     private val fields = mutableSetOf<String>()
@@ -201,7 +205,7 @@ class MyCriteriaVisitorImpl(
         val exprs = ctx.expr().map {
             visit(it)
         }
-        return FunctionResolver.callFunction(funcName, exprs)
+        return libraries.call(funcName, exprs, infix = false)
     }
 
     override fun visitInfixFuncCall(ctx: MyCriteriaParser.InfixFuncCallContext): Expr {
@@ -209,7 +213,7 @@ class MyCriteriaVisitorImpl(
         val exprs = ctx.expr().map {
             visit(it)
         }
-        return FunctionResolver.callInfixFunction(funcName, exprs)
+        return libraries.call(funcName, exprs, infix = true)
     }
 
     override fun visitInfixFuncCallNot(ctx: MyCriteriaParser.InfixFuncCallNotContext): Expr {
@@ -217,7 +221,7 @@ class MyCriteriaVisitorImpl(
         val exprs = ctx.expr().map {
             visit(it)
         }
-        return FunctionResolver.callInfixFunction(funcName, exprs).map {
+        return libraries.call(funcName, exprs, infix = true).map {
             (it as Boolean).not()
         }
     }
