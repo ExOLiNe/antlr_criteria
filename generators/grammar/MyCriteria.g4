@@ -11,13 +11,27 @@ COMMA: ',';
 SEMICOLON: ';';
 SQR_L: '[';
 SQR_R: ']';
-IN: 'in';
-BOOL: 'true' | 'false';
+PAR_L: '(';
+PAR_R: ')';
+GTE: '>=';
+LTE: '<=';
+GT: '>';
+LT: '<';
+EQUALS: '==';
+NOT_EQUALS: '!=';
+AND: '&&';
+OR: '||';
+//IN: 'in';
+TRUE: 'true';
+FALSE: 'false';
 EXCL: '!';
 NULL_T: 'null';
 BUCK: '$';
-EQUALS: '=';
+ASSIGN: '=';
 OBJECT: 'object';
+MUL: '*';
+ADD: '+';
+SUB: '-';
 INT: [0-9]+;
 IDENTIFIER: [a-zA-Z0-9_]+;
 STR_LITERAL: S_Q STRING S_Q | D_Q STRING D_Q;
@@ -36,32 +50,31 @@ statement
     | identifierDefinition SEMICOLON
     ;
 
-// Parser rules
 expr
-    : inArrayParser                               # InArray
-    | expr op=('*'|'/') expr                      # MulDiv
-    | expr op=('+'|'-') expr                      # AddSub
-    | (IDENTIFIER '(' (expr ',')* expr? ')')      # FuncCall
-    | expr IDENTIFIER expr                        # InfixFuncCall
-    | expr EXCL IDENTIFIER expr                   # InfixFuncCallNot
-    | expr op=('>'|'<'|'<='|'>='|'=='|'!=') expr  # comparison
-    | expr '&&' expr                              # And
-    | expr '||' expr                              # Or
-    | '!' expr                                    # NotExpr
-    | '(' expr ')'                                # ParenExpr
-    | BOOL                                        # Bool
-    | numb                                        # Number
-    | NULL_T                                      # Null
-    | STR_LITERAL                                 # StrLiteral
-    | identifierAccess                            # IdAccess
-    | objectAccessParser                          # ObjectAccess
+    :
+      SQR_L expr (COMMA expr)* SQR_R                               # Array
+    // expr (IN | EXCL IN) SQR_L strOrNum (COMMA strOrNum)* SQR_R   # InArray
+    | expr op=(MUL|SLASH) expr                                     # MulDiv
+    | expr op=(ADD|SUB) expr                                       # AddSub
+    | (IDENTIFIER PAR_L (expr COMMA)* expr? PAR_R)                 # FuncCall
+    | expr IDENTIFIER expr                                         # InfixFuncCall
+    | expr EXCL IDENTIFIER expr                                    # InfixFuncCallNot
+    | expr op=(GT|GTE|LT|LTE|EQUALS|NOT_EQUALS) expr               # comparison
+    | expr AND expr                                                # And
+    | expr OR expr                                                 # Or
+    | EXCL expr                                                    # NotExpr
+    | PAR_L expr PAR_R                                             # ParenExpr
+    | (TRUE | FALSE)                                               # Bool
+    | numb                                                         # Number
+    | NULL_T                                                       # Null
+    | STR_LITERAL                                                  # StrLiteral
+    | BUCK IDENTIFIER                                              # IdAccess
+    | objectAccessParser                                           # ObjectAccess
     ;
 
 objectAccessParser: OBJECT SQR_L + STR_LITERAL + SQR_R;
-identifierAccess: BUCK IDENTIFIER;
 importStatement: IMPORT IDENTIFIER;
 identifierDefinitions: (identifierDefinition SEMICOLON)*;
-identifierDefinition: BUCK IDENTIFIER EQUALS expr;
+identifierDefinition: BUCK IDENTIFIER ASSIGN expr;
 strOrNum: STR_LITERAL | numb;
-inArrayParser: objectAccessParser (IN | EXCL IN) SQR_L strOrNum (COMMA strOrNum)* SQR_R;
 numb: INT | (INT DOT INT);

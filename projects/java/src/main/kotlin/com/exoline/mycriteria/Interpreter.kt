@@ -4,10 +4,7 @@ import com.exoline.mycriteria.generated.grammar.MyCriteriaLexer
 import com.exoline.mycriteria.generated.grammar.MyCriteriaParser
 import com.exoline.mycriteria.generated.grammar.MyCriteriaParser.AppContext
 import com.exoline.mycriteria.walk.MyCriteriaVisitorImpl
-import com.exoline.mycriteria.walk.PrettyVisitor
 import org.antlr.v4.runtime.*
-import org.antlr.v4.runtime.atn.ATNConfigSet
-import org.antlr.v4.runtime.dfa.DFA
 import java.util.*
 
 typealias Tree = AppContext
@@ -24,9 +21,7 @@ data class ParseResult (
     )
 
     fun getPrettyTree(): String {
-        val prettyVisitor = PrettyVisitor()
-        val prettyTree = prettyVisitor.visit(tree)
-        return prettyTree
+        return ""
     }
 }
 

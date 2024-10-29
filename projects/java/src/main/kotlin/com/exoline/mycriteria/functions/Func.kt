@@ -80,7 +80,7 @@ class Func(
         }
     }.let {
         Func(library, name, it.ifEmpty {
-            throw ArgTypesException("Function $name parameter types are incorrect")
+            throw ArgTypesException("Function `$name` parameter types are incorrect")
         }, infix)
     }
 }

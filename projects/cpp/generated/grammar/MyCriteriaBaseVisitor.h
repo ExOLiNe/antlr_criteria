@@ -63,7 +63,7 @@ public:
     return visitChildren(ctx);
   }
 
-  virtual std::any visitInArray(MyCriteriaParser::InArrayContext *ctx) override {
+  virtual std::any visitArray(MyCriteriaParser::ArrayContext *ctx) override {
     return visitChildren(ctx);
   }
 
@@ -99,10 +99,6 @@ public:
     return visitChildren(ctx);
   }
 
-  virtual std::any visitIdentifierAccess(MyCriteriaParser::IdentifierAccessContext *ctx) override {
-    return visitChildren(ctx);
-  }
-
   virtual std::any visitImportStatement(MyCriteriaParser::ImportStatementContext *ctx) override {
     return visitChildren(ctx);
   }
@@ -116,10 +112,6 @@ public:
   }
 
   virtual std::any visitStrOrNum(MyCriteriaParser::StrOrNumContext *ctx) override {
-    return visitChildren(ctx);
-  }
-
-  virtual std::any visitInArrayParser(MyCriteriaParser::InArrayParserContext *ctx) override {
     return visitChildren(ctx);
   }
 

@@ -43,7 +43,7 @@ public:
 
     virtual std::any visitIdAccess(MyCriteriaParser::IdAccessContext *context) = 0;
 
-    virtual std::any visitInArray(MyCriteriaParser::InArrayContext *context) = 0;
+    virtual std::any visitArray(MyCriteriaParser::ArrayContext *context) = 0;
 
     virtual std::any visitFuncCall(MyCriteriaParser::FuncCallContext *context) = 0;
 
@@ -61,8 +61,6 @@ public:
 
     virtual std::any visitObjectAccessParser(MyCriteriaParser::ObjectAccessParserContext *context) = 0;
 
-    virtual std::any visitIdentifierAccess(MyCriteriaParser::IdentifierAccessContext *context) = 0;
-
     virtual std::any visitImportStatement(MyCriteriaParser::ImportStatementContext *context) = 0;
 
     virtual std::any visitIdentifierDefinitions(MyCriteriaParser::IdentifierDefinitionsContext *context) = 0;
@@ -70,8 +68,6 @@ public:
     virtual std::any visitIdentifierDefinition(MyCriteriaParser::IdentifierDefinitionContext *context) = 0;
 
     virtual std::any visitStrOrNum(MyCriteriaParser::StrOrNumContext *context) = 0;
-
-    virtual std::any visitInArrayParser(MyCriteriaParser::InArrayParserContext *context) = 0;
 
     virtual std::any visitNumb(MyCriteriaParser::NumbContext *context) = 0;
 

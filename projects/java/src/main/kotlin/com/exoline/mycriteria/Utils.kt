@@ -1,12 +1,10 @@
 package com.exoline.mycriteria
 
 import com.exoline.mycriteria.exception.IncomparableTypesException
-import com.exoline.mycriteria.exception.IncorrectCallException
-import com.exoline.mycriteria.functions.StdLibrary
+import com.exoline.mycriteria.exception.UNREACHABLE
 import com.fasterxml.jackson.databind.node.*
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
-import java.lang.reflect.Method
 import java.time.Instant
 
 infix operator fun Number.plus(other: Number): Number {
@@ -14,14 +12,14 @@ infix operator fun Number.plus(other: Number): Number {
         is Int -> when (other) {
             is Int -> this + other
             is Double -> this + other
-            else -> TODO("Not implemented yet")
+            else -> UNREACHABLE()
         }
         is Double -> when (other) {
             is Int -> this + other
             is Double -> this + other
-            else -> TODO("Not implemented yet")
+            else -> UNREACHABLE()
         }
-        else -> TODO("Not implemented yet")
+        else -> UNREACHABLE()
     }
 }
 
@@ -30,14 +28,14 @@ infix operator fun Number.minus(other: Number): Number {
         is Int -> when (other) {
             is Int -> this - other
             is Double -> this - other
-            else -> TODO("Not implemented yet")
+            else -> UNREACHABLE()
         }
         is Double -> when (other) {
             is Int -> this - other
             is Double -> this - other
-            else -> TODO("Not implemented yet")
+            else -> UNREACHABLE()
         }
-        else -> TODO("Not implemented yet")
+        else -> UNREACHABLE()
     }
 }
 
@@ -46,14 +44,14 @@ infix operator fun Number.times(other: Number): Number {
         is Int -> when (other) {
             is Int -> this * other
             is Double -> this * other
-            else -> TODO("Not implemented yet")
+            else -> UNREACHABLE()
         }
         is Double -> when (other) {
             is Int -> this * other
             is Double -> this * other
-            else -> TODO("Not implemented yet")
+            else -> UNREACHABLE()
         }
-        else -> TODO("Not implemented yet")
+        else -> UNREACHABLE()
     }
 }
 
@@ -62,14 +60,14 @@ infix operator fun Number.div(other: Number): Number {
         is Int -> when (other) {
             is Int -> this / other
             is Double -> this / other
-            else -> TODO("Not implemented yet")
+            else -> UNREACHABLE()
         }
         is Double -> when (other) {
             is Int -> this / other
             is Double -> this / other
-            else -> TODO("Not implemented yet")
+            else -> UNREACHABLE()
         }
-        else -> TODO("Not implemented yet")
+        else -> UNREACHABLE()
     }
 }
 
@@ -78,14 +76,14 @@ operator fun Number.compareTo(other: Number): Int {
         is Int -> when (other) {
             is Int -> this.compareTo(other)
             is Double -> this.compareTo(other)
-            else -> TODO("Not implemented yet")
+            else -> UNREACHABLE()
         }
         is Double -> when (other) {
             is Int -> this.compareTo(other)
             is Double -> this.compareTo(other)
-            else -> TODO("Not implemented yet")
+            else -> UNREACHABLE()
         }
-        else -> TODO("Not implemented yet")
+        else -> UNREACHABLE()
     }
 }
 
@@ -125,23 +123,4 @@ fun JElement?.toAny(): Any? = when (this) {
 fun String.toJObject(): JObject {
     val mapper = jacksonObjectMapper()
     return mapper.readValue(this)
-}
-
-fun List<Method>.callAny(lib: Any, args: List<Any?>): Any? {
-    var result: Any? = null
-    var isAnySuccess = false
-    for (function in this) {
-        val r = kotlin.runCatching {
-            function.invoke(lib, *args.toTypedArray())
-        }
-        if (r.isSuccess) {
-            result = r.getOrNull()
-            isAnySuccess = true
-            break
-        }
-    }
-    if (!isAnySuccess) {
-        throw IncorrectCallException("Function ${this[0].name} was called with incorrect arguments")
-    }
-    return result
 }

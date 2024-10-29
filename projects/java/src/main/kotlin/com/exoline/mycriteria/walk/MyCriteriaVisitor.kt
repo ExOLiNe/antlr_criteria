@@ -5,7 +5,7 @@ import com.exoline.mycriteria.exception.*
 import com.exoline.mycriteria.functions.LibraryLoader
 import com.exoline.mycriteria.functions.StdLibrary
 import com.exoline.mycriteria.generated.grammar.MyCriteriaBaseVisitor
-import com.exoline.mycriteria.generated.grammar.MyCriteriaLexer
+import com.exoline.mycriteria.generated.grammar.MyCriteriaLexer as Lexer
 import com.exoline.mycriteria.generated.grammar.MyCriteriaParser
 import org.antlr.v4.runtime.CharStreams
 import org.antlr.v4.runtime.CommonTokenStream
@@ -14,6 +14,7 @@ class MyCriteriaVisitorImpl(
     private val importResolver: (String) -> String?,
     additionalLibraries: List<Any>
 ) : MyCriteriaBaseVisitor<Expr>() {
+    private operator fun Int.invoke() = Lexer.VOCABULARY.getLiteralName(this).trim('\'')
     private val libraries = LibraryLoader(listOf(StdLibrary) + additionalLibraries)
 
     private val imports = mutableSetOf<String>()
@@ -28,7 +29,7 @@ class MyCriteriaVisitorImpl(
 
         val importCode = importResolver(importRef) ?: throw ImportNotFoundException("Import $importRef not found")
         val stream = CharStreams.fromString(importCode)
-        val lexer = MyCriteriaLexer(stream)
+        val lexer = Lexer(stream)
         val tokens = CommonTokenStream(lexer)
         val parser = MyCriteriaParser(tokens)
         parser.statements().apply {
@@ -48,16 +49,11 @@ class MyCriteriaVisitorImpl(
     }
 
     override fun visitIdAccess(ctx: MyCriteriaParser.IdAccessContext): Expr {
-        val idName = visit(ctx.identifierAccess()).getValue()
+        val idName = ctx.IDENTIFIER().text
         if (idName !in memory) {
             throw UnresolvedIdentifierException("Unresolved identifier $idName")
         }
-        // TODO simplify and fix new bug
         return memory[idName]!!
-    }
-
-    override fun visitIdentifierAccess(ctx: MyCriteriaParser.IdentifierAccessContext): Expr {
-        return Expr.CompileTime { ctx.IDENTIFIER().text }
     }
 
     override fun visitObjectAccess(ctx: MyCriteriaParser.ObjectAccessContext): Expr {
@@ -65,31 +61,15 @@ class MyCriteriaVisitorImpl(
     }
 
     override fun visitObjectAccessParser(ctx: MyCriteriaParser.ObjectAccessParserContext): Expr {
-        val field = ctx.STR_LITERAL(0).text.trim('\'').trim('\"')
+        val field = ctx.STR_LITERAL(0).text.trimQuotes()
         fields += field
         return Expr.Runtime { it: VarType ->
             it.getRecursively(field)
         }
     }
 
-    override fun visitInArrayParser(ctx: MyCriteriaParser.InArrayParserContext): Expr {
-        val obj = visitObjectAccessParser(ctx.objectAccessParser())
-        val values = ctx.strOrNum().map {
-            when {
-                it.numb() != null -> it.text.toInt()
-                it.STR_LITERAL() != null -> it.text.trim('\'').trim('"')
-                else -> throw IllegalStateException("???")
-            }
-        }
-        val isIn = ctx.EXCL() == null
-        return obj.map {
-            (it in values).xor(isIn).not()
-        }
-    }
-
-    override fun visitInArray(ctx: MyCriteriaParser.InArrayContext): Expr {
-        return visit(ctx.inArrayParser())
-    }
+    override fun visitArray(ctx: MyCriteriaParser.ArrayContext): Expr =
+        ctx.expr().map { visit(it) }.sequence()
 
     private fun resetState() {
         imports.clear()
@@ -112,7 +92,7 @@ class MyCriteriaVisitorImpl(
     }
 
     override fun visitStrLiteral(ctx: MyCriteriaParser.StrLiteralContext): Expr {
-        val text = ctx.text.trim('\'').trim('"')
+        val text = ctx.text.trimQuotes()
         return Expr.CompileTime { text }
     }
 
@@ -128,12 +108,12 @@ class MyCriteriaVisitorImpl(
         return l.flatMap { lEv ->
             r.map { rEv ->
                 when (op) {
-                    ">" -> lEv > rEv
-                    "<" -> lEv < rEv
-                    ">=" -> lEv >= rEv
-                    "<=" -> lEv <= rEv
-                    "==" -> lEv == rEv
-                    "!=" -> lEv != rEv
+                    Lexer.GT() -> lEv > rEv
+                    Lexer.LT() -> lEv < rEv
+                    Lexer.GTE() -> lEv >= rEv
+                    Lexer.LTE() -> lEv <= rEv
+                    Lexer.EQUALS() -> lEv == rEv
+                    Lexer.NOT_EQUALS() -> lEv != rEv
                     else -> TODO("Not implemented yet")
                 }
             }
@@ -141,7 +121,7 @@ class MyCriteriaVisitorImpl(
     }
 
     override fun visitBool(ctx: MyCriteriaParser.BoolContext): Expr {
-        return Expr.CompileTime { ctx.text == "true" }
+        return Expr.CompileTime { ctx.text == Lexer.TRUE() }
     }
 
     override fun visitMulDiv(ctx: MyCriteriaParser.MulDivContext): Expr {
@@ -149,8 +129,8 @@ class MyCriteriaVisitorImpl(
         val rF = visit(ctx.expr(1))
         return binOp<Number>(lF, rF) { l, r ->
             when (ctx.op.text) {
-                "*" -> l * r
-                "/" -> l / r
+                Lexer.MUL() -> l * r
+                Lexer.SLASH() -> l / r
                 else -> TODO("Not implemented yet")
             }
         }
@@ -161,8 +141,8 @@ class MyCriteriaVisitorImpl(
         val rF = visit(ctx.expr(1))
         return binOp<Number>(lF, rF) { l, r ->
             when (ctx.op.text) {
-                "+" -> l + r
-                "-" -> l - r
+                Lexer.ADD() -> l + r
+                Lexer.SUB() -> l - r
                 else -> TODO("Not implemented yet")
             }
         }
@@ -234,4 +214,6 @@ class MyCriteriaVisitorImpl(
                 op(lVal, rVal)
             }
         }
+
+    private fun String.trimQuotes(): String = trim('\'').trim('"')
 }

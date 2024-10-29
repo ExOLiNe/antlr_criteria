@@ -60,3 +60,12 @@ sealed class Expr {
     abstract fun map(transform: (Any?) -> Any?): Expr
     abstract fun flatMap(transform: (Any?) -> Expr): Expr
 }
+
+fun List<Expr>.sequence(): Expr = fold<Expr, Expr>(Expr.CompileTime { listOf<Any?>() }) { acc, expr ->
+    acc.flatMap { it1 ->
+        it1 as List<Any?>
+        expr.map { it2 ->
+            it1 + it2
+        }
+    }
+}

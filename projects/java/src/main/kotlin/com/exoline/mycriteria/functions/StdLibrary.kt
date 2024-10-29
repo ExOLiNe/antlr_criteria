@@ -1,7 +1,6 @@
 package com.exoline.mycriteria.functions
 
 import com.exoline.mycriteria.exception.RuntimeErrorException
-import java.lang.reflect.Method
 import java.time.Instant
 import java.time.LocalDateTime
 import java.time.ZoneId
@@ -37,5 +36,8 @@ object StdLibrary {
     }
 
     @Infix
-    fun contains(any: ArrayList<*>, value: Any?): Boolean = value in any
+    fun `in`(value: Any?, list: ArrayList<*>): Boolean = value in list
+
+    @Infix
+    fun contains(list: ArrayList<*>, value: Any?): Boolean = value in list
 }

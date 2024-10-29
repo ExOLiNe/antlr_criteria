@@ -50,8 +50,8 @@ public:
   virtual void enterIdAccess(MyCriteriaParser::IdAccessContext *ctx) = 0;
   virtual void exitIdAccess(MyCriteriaParser::IdAccessContext *ctx) = 0;
 
-  virtual void enterInArray(MyCriteriaParser::InArrayContext *ctx) = 0;
-  virtual void exitInArray(MyCriteriaParser::InArrayContext *ctx) = 0;
+  virtual void enterArray(MyCriteriaParser::ArrayContext *ctx) = 0;
+  virtual void exitArray(MyCriteriaParser::ArrayContext *ctx) = 0;
 
   virtual void enterFuncCall(MyCriteriaParser::FuncCallContext *ctx) = 0;
   virtual void exitFuncCall(MyCriteriaParser::FuncCallContext *ctx) = 0;
@@ -77,9 +77,6 @@ public:
   virtual void enterObjectAccessParser(MyCriteriaParser::ObjectAccessParserContext *ctx) = 0;
   virtual void exitObjectAccessParser(MyCriteriaParser::ObjectAccessParserContext *ctx) = 0;
 
-  virtual void enterIdentifierAccess(MyCriteriaParser::IdentifierAccessContext *ctx) = 0;
-  virtual void exitIdentifierAccess(MyCriteriaParser::IdentifierAccessContext *ctx) = 0;
-
   virtual void enterImportStatement(MyCriteriaParser::ImportStatementContext *ctx) = 0;
   virtual void exitImportStatement(MyCriteriaParser::ImportStatementContext *ctx) = 0;
 
@@ -91,9 +88,6 @@ public:
 
   virtual void enterStrOrNum(MyCriteriaParser::StrOrNumContext *ctx) = 0;
   virtual void exitStrOrNum(MyCriteriaParser::StrOrNumContext *ctx) = 0;
-
-  virtual void enterInArrayParser(MyCriteriaParser::InArrayParserContext *ctx) = 0;
-  virtual void exitInArrayParser(MyCriteriaParser::InArrayParserContext *ctx) = 0;
 
   virtual void enterNumb(MyCriteriaParser::NumbContext *ctx) = 0;
   virtual void exitNumb(MyCriteriaParser::NumbContext *ctx) = 0;

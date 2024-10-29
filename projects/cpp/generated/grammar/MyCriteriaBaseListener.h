@@ -52,8 +52,8 @@ public:
   virtual void enterIdAccess(MyCriteriaParser::IdAccessContext * /*ctx*/) override { }
   virtual void exitIdAccess(MyCriteriaParser::IdAccessContext * /*ctx*/) override { }
 
-  virtual void enterInArray(MyCriteriaParser::InArrayContext * /*ctx*/) override { }
-  virtual void exitInArray(MyCriteriaParser::InArrayContext * /*ctx*/) override { }
+  virtual void enterArray(MyCriteriaParser::ArrayContext * /*ctx*/) override { }
+  virtual void exitArray(MyCriteriaParser::ArrayContext * /*ctx*/) override { }
 
   virtual void enterFuncCall(MyCriteriaParser::FuncCallContext * /*ctx*/) override { }
   virtual void exitFuncCall(MyCriteriaParser::FuncCallContext * /*ctx*/) override { }
@@ -79,9 +79,6 @@ public:
   virtual void enterObjectAccessParser(MyCriteriaParser::ObjectAccessParserContext * /*ctx*/) override { }
   virtual void exitObjectAccessParser(MyCriteriaParser::ObjectAccessParserContext * /*ctx*/) override { }
 
-  virtual void enterIdentifierAccess(MyCriteriaParser::IdentifierAccessContext * /*ctx*/) override { }
-  virtual void exitIdentifierAccess(MyCriteriaParser::IdentifierAccessContext * /*ctx*/) override { }
-
   virtual void enterImportStatement(MyCriteriaParser::ImportStatementContext * /*ctx*/) override { }
   virtual void exitImportStatement(MyCriteriaParser::ImportStatementContext * /*ctx*/) override { }
 
@@ -93,9 +90,6 @@ public:
 
   virtual void enterStrOrNum(MyCriteriaParser::StrOrNumContext * /*ctx*/) override { }
   virtual void exitStrOrNum(MyCriteriaParser::StrOrNumContext * /*ctx*/) override { }
-
-  virtual void enterInArrayParser(MyCriteriaParser::InArrayParserContext * /*ctx*/) override { }
-  virtual void exitInArrayParser(MyCriteriaParser::InArrayParserContext * /*ctx*/) override { }
 
   virtual void enterNumb(MyCriteriaParser::NumbContext * /*ctx*/) override { }
   virtual void exitNumb(MyCriteriaParser::NumbContext * /*ctx*/) override { }
