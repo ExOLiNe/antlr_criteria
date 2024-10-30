@@ -53,7 +53,6 @@ statement
 expr
     :
       SQR_L expr (COMMA expr)* SQR_R                               # Array
-    // expr (IN | EXCL IN) SQR_L strOrNum (COMMA strOrNum)* SQR_R   # InArray
     | expr op=(MUL|SLASH) expr                                     # MulDiv
     | expr op=(ADD|SUB) expr                                       # AddSub
     | (IDENTIFIER PAR_L (expr COMMA)* expr? PAR_R)                 # FuncCall
